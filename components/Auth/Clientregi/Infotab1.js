@@ -166,54 +166,61 @@ const Infotab1 = () => {
             setAgreement("")
             setAgreement1("");
             setAgreement2("");
-            setAgreement3("");             
-            console.log("1")     
+            setAgreement3("");                
         }
         else{                
             setAgreement("checked")
             setAgreement1("checked");
             setAgreement2("checked");
             setAgreement3("checked");                
-            console.log("2")     
-        }
-     
+        }     
     }
     const inidivualChecked1 = () =>{
         setAgreement("");
         if (agreement1 === "checked"){
-            setAgreement1("")
-            console.log("1")     
+            setAgreement1("")  
         }
         else{
+            if (agreement1 === "" && agreement2 === "checked" && agreement3 === "checked"){
+                setAgreement("checked")
+            }else{
+                setAgreement("")
+            }
             setAgreement1("checked")
-            console.log("2")     
         }
      
     }
     const inidivualChecked2 = () =>{
         setAgreement("");
         if (agreement2 === "checked"){
-            setAgreement2("")                
-            console.log("1")     
+            setAgreement2("")      
         }
         else{
+            if (agreement1 === "checked" && agreement2 === "" && agreement3 === "checked"){
+                setAgreement("checked")
+            }else{
+                setAgreement("")
+            }
             setAgreement2("checked")
-            console.log("2")     
         }
      
     }
     const inidivualChecked3 = () =>{
         setAgreement("");
         if (agreement3 === "checked"){
-            setAgreement3("")
-            console.log("1")     
+            setAgreement3("")  
         }
         else{
+            if (agreement1 === "checked" && agreement2 === "checked" && agreement3 === ""){
+                setAgreement("checked")
+            }else{
+                setAgreement("")
+            }
             setAgreement3("checked")
-            console.log("2")     
         }
      
     }
+
     
 
     const handleSubmit = (e) => {
@@ -225,7 +232,6 @@ const Infotab1 = () => {
         console.log('password:', password);
         console.log('passwordConfirm:', passwordConfirm);
         console.log('companyName:', companyName);
-        console.log('companyNumber:', companyNumber);
         console.log('managerName:', managerName);
         console.log('managerContact:', managerContact);
         console.log('agreement:', agreement);
@@ -266,7 +272,7 @@ const Infotab1 = () => {
 //
     return (
         <div style = {appStyle}>
-            <div style = {formStyle} onSubmit = {handleSubmit}>
+            <div style = {formStyle}>
                 <Positioner>
                     <Table className="table">
                         <Tbody className="tbody">
@@ -520,7 +526,7 @@ const Infotab1 = () => {
                     onChange={inidivualChecked3}                    
                     ></Check>
                 </div>
-                <button style = {submitStyle} type="submit">저장</button>
+                <button style = {submitStyle} type="submit" onClick={handleSubmit}>저장</button>
             </div>
         </div>
     );
