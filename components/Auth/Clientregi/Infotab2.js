@@ -202,9 +202,15 @@ const Infotab2 = () => {
        
         setSuccess(true)
 
+        if (url.length === 0){
+            console.log("url을 입력해주세요.")
+            setSuccess(false)
+        }
+
         if(success === true){
             console.log('success true so form tag say hi');
         }
+    //한번만에 
     }
 
     return (
@@ -235,7 +241,7 @@ const Infotab2 = () => {
                                     name="url"
                                     placeholder="http:// 홈페이지 주소를 입력해 주세요"    
                                     value={url}
-                                    onChange={handleChange}/>
+                                    onChange={handleChange}></Input1>
 
                                 </TD>
                             </Tr>

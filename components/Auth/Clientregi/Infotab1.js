@@ -2,11 +2,11 @@ import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { Input1, Check, CompanyNo, Info1, Label1} from '.';
 import oc from 'open-color';
+import {isEmail, isLength, isAlphanumeric} from 'validator';
 // import axios from 'axios';
 // import { ExecuteBackendAPI } from '../../lib/api/restapi';
 // import { GetBackendIP } from '../../settings';
-// import { InputWithLabel } from '../../components/Auth';
-// import { AuthWrapper3 } from '../../components/Auth';
+
 
 
 const Positioner = styled.div`
@@ -113,17 +113,24 @@ const formStyle2 = {
 //     </div>
 // }
 const Infotab1 = () => {
-    const [ email_info_msg, setEmailInfoMSG ] = useState("");
     const [email, setEmail] = useState("");
+    const [email_info_msg, setEmailInfoMSG] = useState("");
     const [password, setPassword] = useState("");
+    const [password_info_msg, setPasswordInfoMSG] = useState("");
     const [passwordConfirm, setpasswordConfirm] = useState("");
+    const [passwordConfirm_info_msg, setPasswordConfirmInfoMSG] = useState("");
     const [companyName, setCompanyName] = useState("");
+    const [companyName_info_msg, setCompanyNameInfoMSG ] = useState("");
     const [companyNumber1, setCompanyNumber1] = useState("");
     const [companyNumber2, setCompanyNumber2] = useState("");
     const [companyNumber3, setCompanyNumber3] = useState("");
+    const [companyNumber_info_msg, setCompanyNumberInfoMSG ] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
+    const [fileName_info_msg, setFileNameInfoMSG ] = useState("");
     const [managerName, setMangerName] = useState("");
+    const [managerName_info_msg, setManagerNameInfoMSG ] = useState("");
     const [managerContact, setManagerContact] = useState("");
+    const [managerContact_info_msg, setManagerContactInfoMSG ] = useState("");
     const [agreement, setAgreement] = useState("");
     const [agreement1, setAgreement1] = useState("");
     const [agreement2, setAgreement2] = useState("");
@@ -161,6 +168,92 @@ const Infotab1 = () => {
         }
 
     }
+
+    const CursorFocusOut = (e) => {
+        if (e.target.name === "email"){
+            if (e.target.value === "") {
+                setEmail(e.target.value)
+                setEmailInfoMSG("이메일을 입력해주세요")
+            }else {
+                if (isEmail(e.target.value) == true) {
+                    setEmail(e.target.value)
+                    setEmailInfoMSG("")
+                } else {
+                    setEmail(e.target.value)
+                    setEmailInfoMSG("이메일을 올바르게 입력해주세요")
+                }
+            }
+        }
+        else if (e.target.name === "password"){
+            if (e.target.value === "") {
+                setPassword(e.target.value)
+                setPasswordInfoMSG("비밀번호를 입력해주세요")
+            } else {
+                setPassword(e.target.value)
+                setPasswordInfoMSG("")
+            }
+        }else if (e.target.name === "passwordConfirm"){
+            if (password !== passwordConfirm){
+                setpasswordConfirm(e.target.value)
+                setPasswordConfirmInfoMSG("비밀번호 똑같이 입력해주세요")
+            } else {
+                setpasswordConfirm(e.target.value)
+                setPasswordConfirmInfoMSG("")
+            }
+        }else if(e.target.name === "companyName"){
+            if (e.target.value === "") {
+                setCompanyName(e.target.value)
+                setCompanyNameInfoMSG("회사명을 입력해주세요")
+            } else {
+                setCompanyName(e.target.value)
+                setCompanyNameInfoMSG("")
+            }
+        }else if (e.target.name === "companyNumber1"){
+            if (e.target.value === "") {
+                setCompanyNumber1(e.target.value)
+                setCompanyNumberInfoMSG("사업자 등록번호를 올바르게 입력해주세요")
+            } else {
+                setCompanyNumber1(e.target.value)
+                setCompanyNumberInfoMSG("")
+            }
+
+        }else if (e.target.name === "companyNumber2"){
+            if (e.target.value === "") {
+                setCompanyNumber2(e.target.value)
+                setCompanyNumberInfoMSG("사업자 등록번호를 올바르게 입력해주세요")
+            } else {
+                setCompanyNumber2(e.target.value)
+                setCompanyNumberInfoMSG("")
+            }
+
+        }else if (e.target.name === "companyNumber3"){
+            if (e.target.value === "") {
+                setCompanyNumber3(e.target.value)
+                setCompanyNumberInfoMSG("사업자 등록번호를 올바르게 입력해주세요")
+            } else {
+                setCompanyNumber3(e.target.value)
+                setCompanyNumberInfoMSG("")
+            }
+        }else if (e.target.name === "managerName"){
+            if (e.target.value === "") {
+                setMangerName(e.target.value)
+                setManagerNameInfoMSG("담당자명을 입력해주세요")
+            } else {
+                setMangerName(e.target.value)
+                setManagerNameInfoMSG("")
+            }
+        }else if (e.target.name === "managerContact"){
+            if (e.target.value === "") {
+                setManagerContact(e.target.value)
+                setManagerContactInfoMSG("담당자 연락처를 입력해주세요")
+            } else {
+                setManagerContact(e.target.value)
+                setManagerContactInfoMSG("")
+            }
+
+        }
+    }
+    
     const allChecked = () =>{
         if (agreement === "checked"){
             setAgreement("")
@@ -242,6 +335,8 @@ const Infotab1 = () => {
             console.log("이메일을 입력해주세요.")
             setSuccess(false)
         }
+
+        
         //console.log(this.state.password)
         //console.log(this.state.passwordConfirm)
         if (password.length === 0 || passwordConfirm.length === 0){
@@ -252,6 +347,10 @@ const Infotab1 = () => {
             console.log("비밀번호가 다릅니다.")
             setSuccess(false)
         }
+
+
+
+
         if(success === true){
             console.log('success true so form tag say hi');
             
@@ -296,6 +395,7 @@ const Infotab1 = () => {
                                         name="email"
                                         placeholder="이메일"
                                         value={email}
+                                        onBlur={CursorFocusOut}
                                         onChange={handleChange}
                                     />
                                 </TD>
@@ -316,7 +416,8 @@ const Infotab1 = () => {
                                         type="password" 
                                         name="password"
                                         placeholder="비밀번호"
-                                        value={password} 
+                                        value={password}
+                                        onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
                                 </TD>
@@ -325,7 +426,7 @@ const Infotab1 = () => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={email_info_msg} color ="red"/>
+                                    <Info1 label={password_info_msg} color ="red"/>
                                 </TD>
                             </Tr>
                             <Tr>
@@ -337,7 +438,8 @@ const Infotab1 = () => {
                                         type="password" 
                                         name="passwordConfirm"
                                         placeholder="비밀번호 재확인"
-                                        value={passwordConfirm} 
+                                        value={passwordConfirm}
+                                        onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
                                 </TD>
@@ -346,7 +448,7 @@ const Infotab1 = () => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={email_info_msg} color ="red"/>
+                                    <Info1 label={passwordConfirm_info_msg} color ="red"/>
                                 </TD>
                             </Tr>
                             <Tr>
@@ -358,7 +460,8 @@ const Infotab1 = () => {
                                         type="text" 
                                         name="companyName"
                                         placeholder="회사명"
-                                        value={companyName} 
+                                        value={companyName}
+                                        onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
                                 </TD>
@@ -367,7 +470,7 @@ const Infotab1 = () => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={email_info_msg} color ="red"/>
+                                    <Info1 label={companyName_info_msg} color ="red"/>
                                 </TD>
                             </Tr>
                             <Tr>
@@ -381,7 +484,8 @@ const Infotab1 = () => {
                                         maxLength="3"
                                         size="15" 
                                         name="companyNumber1"
-                                        value={companyNumber1} 
+                                        value={companyNumber1}
+                                        onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     /></TD>
                                     <TD></TD>
@@ -390,7 +494,8 @@ const Infotab1 = () => {
                                             maxLength="2"
                                             size="10"
                                             name="companyNumber2"
-                                            value={companyNumber2} 
+                                            value={companyNumber2}
+                                            onBlur={CursorFocusOut} 
                                             onChange={handleChange}
                                     /></TD>
                                     <TD></TD>
@@ -398,7 +503,8 @@ const Infotab1 = () => {
                                             type="text"
                                             size="40"
                                             name="companyNumber3"
-                                            value={companyNumber3} 
+                                            value={companyNumber3}
+                                            onBlur={CursorFocusOut} 
                                             onChange={handleChange}
                                         /></TD>
                                 </TD>
@@ -407,7 +513,7 @@ const Infotab1 = () => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={email_info_msg} color ="red"/>
+                                    <Info1 label={companyNumber_info_msg} color ="red"/>
                                 </TD>
                             </Tr>
                             <Tr>
@@ -442,7 +548,7 @@ const Infotab1 = () => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={email_info_msg} color ="red"/>
+                                    <Info1 label={fileName_info_msg} color ="red"/>
                                 </TD>
                             </Tr>
                             <Tr>
@@ -454,7 +560,8 @@ const Infotab1 = () => {
                                         type="text" 
                                         name="managerName"
                                         placeholder="담당자명"
-                                        value={managerName} 
+                                        value={managerName}
+                                        onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
                                 </TD>
@@ -463,7 +570,7 @@ const Infotab1 = () => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={email_info_msg} color ="red"/>
+                                    <Info1 label={managerName_info_msg} color ="red"/>
                                 </TD>
                             </Tr>
                             <Tr>
@@ -475,7 +582,8 @@ const Infotab1 = () => {
                                         type="text" 
                                         name="managerContact"
                                         placeholder="담당자 연락처"
-                                        value={managerContact} 
+                                        value={managerContact}
+                                        onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
                                 </TD>
@@ -484,7 +592,7 @@ const Infotab1 = () => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={email_info_msg} color ="red"/>
+                                    <Info1 label={managerContact_info_msg} color ="red"/>
                                 </TD>
                             </Tr>
 
