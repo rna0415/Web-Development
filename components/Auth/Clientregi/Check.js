@@ -83,9 +83,9 @@ const Input = styled.input`
 const Check = ({label,checked_bool, ...rest}) => {
     const checkedb = checked_bool;
     const background_color = ""
-    console.log("Test Checked")
-    console.log(checkedb)
-
+    // console.log("Test Checked")
+    // console.log(checkedb)
+    
     return(
         <Div><Label>
         <input style={checkStyle} {...rest} checked= {checkedb} ></input> {label}

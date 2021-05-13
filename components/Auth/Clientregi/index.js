@@ -11,6 +11,8 @@ export { default as Check } from './Check';
 export { default as CompanyNo } from './CompanyNo';
 export { default as SelectWithLabel1 } from './SelectWithLabel1';
 export { default as SelectWithLabel2 } from './SelectWithLabel2';
+export { default as Modal } from './Modal';
+export { default as SubmitButton } from './SubmitButton';
 
 
 // export { default as SelectWithLabel} from '../SelectWithLabel';

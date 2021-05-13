@@ -1,8 +1,10 @@
 import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Input1, Input2, Info1, Label1, SelectWithLabel1, SelectWithLabel2} from '.';
+import { Input1, Input2, Info1, Label1, SelectWithLabel1, SelectWithLabel2, Modal} from '.';
 import oc from 'open-color';
 import { Label } from '../Find';
+import { useHistory } from "react-router-dom";
+
 // import axios from 'axios';
 // import { ExecuteBackendAPI } from '../../lib/api/restapi';
 // import { GetBackendIP } from '../../settings';
@@ -31,14 +33,14 @@ const Button = styled.button`
     height: 60px;
     margin-right: 0.2rem;
     margin-bottom: 0.2rem;
-    padding-top: 4rem;
+    padding-top: 3rem;
     padding-bottom: 3rem;
 
     background: #ffffff;
     color: black;
 
     text-align: bottom;
-    font-size: 0.1rem;
+    font-size: 12px;
     font-weight: 500;
 
     cursor: pointer;
@@ -111,60 +113,113 @@ const Infotab2 = () => {
     const [url, setUrl] = useState("");
     const [category1, setCategory1] = useState("선택안함");
     const [category2, setCategory2] = useState("선택안함");
-    const [success, setSuccess] = useState(false);
+    const [success1, setSuccess1] = useState(false);
+    const [success2, setSuccess2] = useState(false);
+    const [success3, setSuccess3] = useState(false);
     const [buttonColor1, setButtonColor1] = useState("clicked");
     const [button_click_num, setButtonClickNum] = useState(0);
     const [theComponent1, setTheComponent1] = useState(false);
+    const [components1, setComponents1] = useState("");
+    const [components2, setComponents2] = useState("");
     const [theComponent2, setTheComponent2] = useState(false);
+    const history = useHistory();
+    const [ modalOpen, setModalOpen ] = useState(false);
+
+    // useEffect(() => {
+    //     console.log('setState변화 감지');
+    //     console.log("유즈이펙트 석세스 상태: ",success1)
+
+
+    //     if(success1 === true && success2 === true && success3 === true){
+    //         history.push({pathname: "/auth/MainService"});
+            
+
+    //     }
+
+    // }, [success1,success2,success3]);
+
 
 
     const handleChange = (e) =>{
         if(e.target.name === "url"){
-            setUrl(e.target.value);
-
+            if (e.target.value === "") {
+                setUrl(e.target.value)
+                setSuccess1(false)          
+            } else {
+                setUrl(e.target.value)
+                setSuccess1(true)             
+            }
         } else if (e.target.name === "category1"){
             setCategory1(e.target.value);
             if (e.target.value === "기타"){
-                setTheComponent1(true)
+                setTheComponent1(true)               
     
             } else if (e.target.value === "선택안함"){
                 setTheComponent1(false)
+                setSuccess2(false) 
     
             } else if (e.target.value === "1"){
                 setTheComponent1(false)
+                setSuccess2(true)
     
             } else if (e.target.value === "2"){
                 setTheComponent1(false)
+                setSuccess2(true)
     
             } else if (e.target.value === "3"){
                 setTheComponent1(false)
+                setSuccess2(true)
     
             } else if (e.target.value === "4"){
                 setTheComponent1(false)
+                setSuccess2(true)
+            }
+        }else if(e.target.name === "components1"){
+            if(e.target.value === ""){
+                setComponents1(e.target.value)
+                setSuccess2(false)  
+            }else{
+                setComponents1(e.target.value)
+                setSuccess2(true)  
             }
         
         } else if (e.target.name === "category2"){
             setCategory2(e.target.value);
             if (e.target.value === "기타"){
-                setTheComponent2(true)
+                setTheComponent2(true)                
     
             } else if (e.target.value === "선택안함"){
                 setTheComponent2(false)
+                setSuccess3(false)
     
             } else if (e.target.value === "1"){
                 setTheComponent2(false)
+                setSuccess3(true)
     
             } else if (e.target.value === "2"){
                 setTheComponent2(false)
+                setSuccess3(true)
     
             } else if (e.target.value === "3"){
                 setTheComponent2(false)
+                setSuccess3(true)
     
             } else if (e.target.value === "4"){
                 setTheComponent2(false)
+                setSuccess3(true)
     
             } else if (e.target.value === "5"){
                 setTheComponent2(false)
+                setSuccess3(true)
+            }
+            
+        }else if(e.target.name === "components2"){
+            if(e.target.value === ""){
+                setComponents2(e.target.value)
+                setSuccess3(false)  
+            }else{
+                setComponents2(e.target.value)
+                setSuccess3(true)  
             }
         }
 
@@ -198,24 +253,43 @@ const Infotab2 = () => {
         
     }
 
-    const handleSubmit = () => {
-       
-        setSuccess(true)
+    const closeModal = () => {
+        setModalOpen(false);
+    }
 
-        if (url.length === 0){
-            console.log("url을 입력해주세요.")
-            setSuccess(false)
+    const handleSubmit = () => {       
+        if(success1 === false){
+            setModalOpen(true);
+        }
+        if(success2 === false){
+            setModalOpen(true);
+        }
+        if(success3 === false){
+            setModalOpen(true);
+        }if(button_click_num <= 0){
+            setModalOpen(true);
+        }
+        
+        if(success1 === true && success2 === true && success3 === true && button_click_num >= 1){
+            history.push({pathname: "/auth/MainService"});
+            
+
         }
 
-        if(success === true){
-            console.log('success true so form tag say hi');
-        }
+
+        // else if(success === true){
+        //     history.push({pathname: "/auth/MainService"});
+            
+
+        // }
     //한번만에 
     }
 
-    return (
-        <div style = {appStyle}>
+    return (                
+        <div style = {appStyle}>     
+        <Modal open={ modalOpen } close={ closeModal }></Modal>       
             <div style = {formStyle}>
+        
                 <Positioner>
                     <Table className="table">
                         <Tbody className="tbody">
@@ -259,7 +333,14 @@ const Infotab2 = () => {
                                     />
                                 </TD> 
                                 <TD>
-                                    <Input2 style={{width: '95%'}} type='text' placeholder="기타업종 직접 입력" component={theComponent1}></Input2>
+                                    <Input2 
+                                    style={{width: '95%'}} 
+                                    type='text' 
+                                    placeholder="기타업종 직접 입력" 
+                                    name = "components1"
+                                    value = {components1}
+                                    onChange={handleChange} 
+                                    component={theComponent1}></Input2>
                                 </TD>                               
                             </Tr>
                             <Tr>
@@ -335,18 +416,25 @@ const Infotab2 = () => {
                                     />                                    
                                 </TD>                                    
                                 <TD>
-                                    <Input2 style={{width: '95%'}} type='text' placeholder="기타 경로 직접 입력" component={theComponent2}></Input2>
+                                    <Input2 
+                                    style={{width: '95%'}} 
+                                    name="components2"
+                                    value={components2}
+                                    type='text' 
+                                    placeholder="기타 경로 직접 입력"
+                                    onChange={handleChange}  
+                                    component={theComponent2}></Input2>
                                 </TD>
                             </Tr>
                         </Tbody>
                     </Table>
                 </Positioner>
 
-                <button style = {submitStyle} type="submit" onClick = {handleSubmit}>저장</button>
+                <button style = {submitStyle} type="submit" onClick = {handleSubmit}>필수정보 저장</button>
              </div>
          </div>
                         
-
+         
     ); 
 }
 

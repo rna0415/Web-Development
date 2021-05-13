@@ -67,8 +67,6 @@ const InactiveTd = styled.td`
 
 
 const Tab1 = ({active_tab, setActiveTab}) => {
-    const history = useHistory();
-
     const componentClicked = (event_id) => {
         setActiveTab(event_id)
     }

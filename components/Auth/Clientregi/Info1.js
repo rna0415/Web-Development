@@ -5,7 +5,7 @@ import oc from 'open-color';
 // 두개가 함께 있을땐 상단 (그 사이) 에 여백을 준다
 const Wrapper = styled.div`
     display: flex;
-    width: 100%;
+    width: 300%;
 `;
 
 const RedLabel = styled.div`
@@ -57,3 +57,6 @@ const Info1 = ({label, color}) => {
 };
 
 export default Info1;
+
+
+
