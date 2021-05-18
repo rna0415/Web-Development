@@ -151,8 +151,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
         agreement3: ""
 
     });
-    const [isRemember, setIsRemember] = useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies(['rememberInfo']); 
+
     const history = useHistory();
 
 
@@ -160,36 +159,33 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
         console.log('setState변화 감지');
         console.log("유즈이펙트 석세스 상태: ",success1)
         console.log("tab1_info: ", tab1_info) 
-        if(cookies.rememberInfo !== undefined){
-            setEmail(cookies.rememberInfo);
-            setIsRemember(true);
-        } 
-        // if (tab1_info != null){
+ 
+        if (tab1_info != null){
             
-        //     console.log("객체형:", Object.values(tab1_info))
-        //     setEmail(Object.values(tab1_info)[0])
-        //     setPassword(Object.values(tab1_info)[1])
-        //     setpasswordConfirm(Object.values(tab1_info)[2])
-        //     setCompanyName(Object.values(tab1_info)[3])
-        //     setCompanyNumber(Object.values(tab1_info)[4])
-        //     setMangerName(Object.values(tab1_info)[5])
-        //     setManagerContact(Object.values(tab1_info)[6])
-        //     setAgreement(Object.values(tab1_info)[7])
-        //     setAgreement1(Object.values(tab1_info)[8])
-        //     setAgreement2(Object.values(tab1_info)[9])
-        //     setAgreement3(Object.values(tab1_info)[10])
-        //     setButtonDisabled(true)
-        //     console.log("버튼상태1",buttonDisabled)
-        //     tab1_info = null
-        //     console.log("tab_info상태는1:",tab1_info)
-        // }else{
-        //     setButtonDisabled(false)
+            console.log("객체형:", Object.values(tab1_info))
+            setEmail(Object.values(tab1_info)[0])
+            setPassword(Object.values(tab1_info)[1])
+            setpasswordConfirm(Object.values(tab1_info)[2])
+            setCompanyName(Object.values(tab1_info)[3])
+            setCompanyNumber(Object.values(tab1_info)[4])
+            setMangerName(Object.values(tab1_info)[5])
+            setManagerContact(Object.values(tab1_info)[6])
+            setAgreement(Object.values(tab1_info)[7])
+            setAgreement1(Object.values(tab1_info)[8])
+            setAgreement2(Object.values(tab1_info)[9])
+            setAgreement3(Object.values(tab1_info)[10])
+            setButtonDisabled(true)
+            console.log("버튼상태1",buttonDisabled)
+            tab1_info = null
+            console.log("tab_info상태는1:",tab1_info)
+        }else{
+            setButtonDisabled(false)
 
-        //     console.log("버튼상태2",buttonDisabled)
-        //     console.log("tab_info상태는2:",tab1_info)
+            console.log("버튼상태2",buttonDisabled)
+            console.log("tab_info상태는2:",tab1_info)
 
 
-        // }
+        }
 
 
 
