@@ -28,14 +28,16 @@ const Title = styled.div`
 const LoginButton = styled.button`
     width: 104%;
     margin-top: 1rem;
-    padding-top: 0.6rem;
-    padding-bottom: 0.5rem;
+    margin-bottom: -1rem;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+    border-color: white;
 
     background: #7f05e6;
     color: white;
 
     text-align: center;
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 500;
 
     cursor: pointer;
@@ -45,8 +47,56 @@ const LoginButton = styled.button`
 
 `;
 
+const LeftAlignedButton = styled.button`
+    width: 100%;
+    margin-top: 1rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.5rem;    
+    border: 1px solid ${oc.gray[6]};
+
+    background: white;
+    color: black;
+
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+
+    cursor: pointer;
+    user-select: none;
+    transition: .2s all;
+    text-decoration:none;
+    &:hover {
+        color: ${oc.gray[6]};
+        border: 1px solid ${oc.gray[7]};
+    }
+`;
+
+const RightAlignedButton = styled.button`
+    width: 100%;
+    margin-top: 1rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.5rem;
+    border: 1px solid ${oc.gray[6]};
+
+    background: white;
+    color: black;
+
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+
+    cursor: pointer;
+    user-select: none;
+    transition: .2s all;
+    text-decoration:none;
+    &:hover {
+        color: ${oc.gray[6]};
+        border: 1px solid ${oc.gray[7]};
+    }
+`;
+
 const Font= styled.div`
-    margin-top: 10px;
+    margin-top: 20px;
     text-align: center;
     font-size: 1.25rem;
     font-weight: bold;
@@ -55,8 +105,16 @@ const Font= styled.div`
 `;
 
 const Font2 = styled.div`
-    font-size:0.9rem;
+    margin-bottom: 0px;   
+    font-size:0.8rem;
     text-align: center;
+`;
+
+const Font3 = styled.div`
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+    color: ${oc.gray[6]};
 `;
 const Table = styled.table`
     width: 100%;
@@ -70,7 +128,7 @@ const Tbody = styled.tbody`
 `;
 
 const TrBlank = styled.td`
-    padding-top: 20px;
+    padding-top: 10px;
 `;
 
 const Labels = styled.div`
@@ -150,13 +208,25 @@ const Login = () => {
         console.log('이스리멤버:',isRemember)
     }
 
+    const checkStyle = {
+        borderRadius: '5px',
+        position: 'relative',
+        height: '16px',
+        width: '16px',
+        border: '1px solid blue',
+        borderRadius: '4px',
+        outline: 'none',
+        backgroundColor: '#41B883',
+        cursor: 'pointer',
+        color: '#41B883'
+}
     const Check = ({label,checked_bool, ...rest}) => {
         const checkedb = checked_bool;
 
         
         return(
             <div>
-            <input {...rest} checked= {checkedb} ></input> {label}
+            <input style={checkStyle} {...rest} checked= {checkedb} ></input> {label}
             <br></br>
             </div>
         )
@@ -173,6 +243,14 @@ const Login = () => {
         }else{
             removeCookie('rememberEmail'); //체크박스 값이 폴스일때
         }
+    }
+
+    const buttonClicked1 = () => {
+        history.push({pathname: "/auth/registerinf"})
+    }
+
+    const buttonClicked2 = () => {
+        history.push({pathname: "/auth/mainservice2"})
     }
 
     return(
@@ -202,7 +280,8 @@ const Login = () => {
                             />
                                 </td>
                             </Tr>
-                            <Tr></Tr>
+                            <TrBlank>                               
+                            </TrBlank>
                             <Tr>
                                 <td>
                                     <Check
@@ -236,24 +315,44 @@ const Login = () => {
                                     </Font2>
                                 </td>
                             </Tr>
-                            <TrBlank></TrBlank>
-                            <Tr style={{borderTop: '2px solid lightgray'}}>
+                            <Tr>
                                 <td></td>
-                                <td style={{paddingBottom:'15px'}}>
+                                <td>
                                     <Font>
-                                        회원가입
+                                         
                                     </Font>
                                 </td>
                                 <td></td>
                             </Tr>
-                            <TrBlank></TrBlank>
+                            <Tr style={{borderTop: '2px solid lightgray'}}>
+                                
+                                <td colspan = "3" style={{paddingBottom:'15px'}}>
+                                    <Font>
+                                        회원 가입
+                                    </Font>
+                                </td>
+                            </Tr>
+
                             <Tr>
                                 <td>
-                                    <LeftAlignedLink to="/auth/registerinf">인플루언서 회원가입</LeftAlignedLink>
+                                    {/* <LeftAlignedLink to="/auth/registerinf">인플루언서 회원가입</LeftAlignedLink> */}
+                                    <LeftAlignedButton onClick={buttonClicked1}>인플루언서 회원가입</LeftAlignedButton>
                                 </td>
                                 <td></td>
                                 <td>
-                                    <RightAlignedLink to="/auth/mainservice2">클라이언트 회원가입</RightAlignedLink>
+                                    {/* <RightAlignedLink to="/auth/mainservice2">클라이언트 회원가입</RightAlignedLink> */}
+                                    <RightAlignedButton onClick={buttonClicked2}>클라이언트 회원가입</RightAlignedButton>
+                                </td>
+                            </Tr>
+                            <Tr>
+                                <td>
+                                    <LeftAlignedLink>인플루언서 서비스 보기</LeftAlignedLink>
+                                </td>
+                                <td>
+                                    <Font3>|</Font3>
+                                </td>
+                                <td>
+                                    <RightAlignedLink>클라이언트 서비스 보기</RightAlignedLink>
                                 </td>
                             </Tr>
                         </Tbody>
