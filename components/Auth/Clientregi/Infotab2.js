@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Input1, Input2, Info1, Label1, SelectWithLabel1, SelectWithLabel2, Modal} from '.';
+import { Input1, Input2, Info1, Label1, SelectWithLabel1, SelectWithLabel2, Modal, Infotab1} from '.';
 import oc from 'open-color';
 import { Label } from '../Find';
 import { useHistory } from "react-router-dom";
@@ -108,7 +108,9 @@ const TdButton = styled.td`
     width: 100px;
 `;
 
-const Infotab2 = () => {
+
+
+const Infotab2 = ({tab1_info}) => {
     const [ email_info_msg, setEmailInfoMSG ] = useState("");
     const [url, setUrl] = useState("");
     const [category1, setCategory1] = useState("선택안함");
@@ -125,18 +127,21 @@ const Infotab2 = () => {
     const history = useHistory();
     const [ modalOpen, setModalOpen ] = useState(false);
 
-    // useEffect(() => {
-    //     console.log('setState변화 감지');
-    //     console.log("유즈이펙트 석세스 상태: ",success1)
 
+    // const value = {
+    //     "email": <Infotab1 email ={email}/>,
+    //     "password": <Infotab1 password ={password}/>,
+    //     "passwordConfirm": <Infotab1 passwordConfirm ={passwordConfirm}/>,
+    //     "companyName": <Infotab1 companyName ={companyName}/>,
+    //     "companyNumber": <Infotab1 companyNumber ={companyNumber}/>,
+    //     "managerName": <Infotab1 managerName ={managerName}/>,
+    //     "managerContact": <Infotab1 managerContact ={managerContact}/>
 
-    //     if(success1 === true && success2 === true && success3 === true){
-    //         history.push({pathname: "/auth/MainService"});
-            
+    // }
+    useEffect(() => {
+        console.log("tab2페이지에서 tab1: ", tab1_info);
 
-    //     }
-
-    // }, [success1,success2,success3]);
+    }, []);
 
 
 
@@ -271,7 +276,9 @@ const Infotab2 = () => {
         }
         
         if(success1 === true && success2 === true && success3 === true && button_click_num >= 1){
-            history.push({pathname: "/auth/MainService"});
+            history.push({pathname: "/auth/MainService",
+                state: {companyName:tab1_info.companyName}});
+            
             
 
         }
@@ -426,6 +433,7 @@ const Infotab2 = () => {
                                     component={theComponent2}></Input2>
                                 </TD>
                             </Tr>
+                            
                         </Tbody>
                     </Table>
                 </Positioner>

@@ -30,7 +30,7 @@ const Submitbtn2 = styled.button`
 
 
 
-const SubmitButton = ({disabled, setActiveTab}) => {
+const SubmitButton = ({disabled, setActiveTab, setTab1Information, tab1Info}) => {
     const history = useHistory();
     // const history = useHistory
     const handleSubmitted = (e) => {
@@ -64,9 +64,10 @@ const SubmitButton = ({disabled, setActiveTab}) => {
         //     console.log("비밀번호가 다릅니다.")
         //     setSuccess(false)
         // }
+        console.log("버튼눌렀을때 tab1info 넘겨주기전:",tab1Info)
+        setTab1Information(tab1Info)
     
-    
-    
+        
         setActiveTab("info2")
 
         // if(success === true){

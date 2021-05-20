@@ -467,46 +467,61 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
     }
     
     const allChecked = () =>{
+        
         if (agreement === "checked"){
             setAgreement("")
             setAgreement1("");
             setAgreement2("");
             setAgreement3("");  
-            setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요")            
+            setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요")   
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement = agreement         
         }else{                
             setAgreement("checked")
             setAgreement1("checked");
             setAgreement2("checked");
             setAgreement3("checked"); 
-            setAgreementInfoMSG("")                
+            setAgreementInfoMSG("")       
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement = agreement         
         }   
          
     }
     const inidivualChecked1 = () =>{
+        
         setAgreement("");
         if (agreement1 === "checked"){
             setAgreement1("")  
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement1 = agreement1
         }else{
             if (agreement2 === "checked" && agreement3 === "checked"){
                 setAgreement("checked")
             }
             setAgreement1("checked")
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement1 = agreement1
         }
      
     }
     const inidivualChecked2 = () =>{
+
         setAgreement("");
         
         if (agreement2 === "checked"){
             setAgreement2("")
             console.log('2-1:',agreement2)
             setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요") 
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement2 = agreement2
 
         }else{
 
             setAgreement2("checked")
             console.log('2-z',agreement2)
             setAgreementInfoMSG("") 
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement2 = agreement2
             
             if (agreement1 === "checked" && agreement3 === "checked"){
                 setAgreement("checked")
@@ -520,18 +535,23 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
         }
     }
     const inidivualChecked3 = () =>{
+
         setAgreement("");
 
         if (agreement3 === "checked"){
             setAgreement3("")  
             console.log('3-1:',agreement3)
             setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요") 
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement3 = agreement3
             
         }else{
 
             setAgreement3("checked")  
             console.log('3-z',agreement3)
             setAgreementInfoMSG("") 
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement3 = agreement3
 
             if (agreement1 === "checked" && agreement2 === "checked"){
                 setAgreement("checked")
