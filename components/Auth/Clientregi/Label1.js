@@ -7,13 +7,14 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: right;
-    height: 30px;
+    height: 20px;
     width: 100%;
 `;
 
 const LabelText = styled.div`
     font-size: 0.8rem;
     width: auto;
+    
 `;
 
 

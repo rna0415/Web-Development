@@ -29,7 +29,7 @@ const Logo = styled.div`
     font-weight: 900;
     letter-spacing: 5px;
     text-decoration: none;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 `;
 
 // children 이 들어가는 곳

@@ -23,7 +23,7 @@ const BlackLabel = styled.div`
 const GrayLabel = styled.div`
     font-size: 0.7rem;
     padding: 5px;
-    color: gray;
+    color: #7f05e6;
 `;
 
 const EffectiveTimeLabel = styled.div`
@@ -47,7 +47,7 @@ const Info1 = ({label, color}) => {
                 <RedLabel>{label}</RedLabel>
             </Wrapper>
         )
-    } else if (color === "gray") {
+    } else if (color === "#7f05e6") {
         return(
             <Wrapper>
                 <GrayLabel>{label}</GrayLabel>

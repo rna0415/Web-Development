@@ -2,13 +2,16 @@ import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { Input1, Check, CompanyNo, Info1, Label1, SubmitButton, Infotab2} from '.';
 import oc from 'open-color';
-import {isEmail, isLength, isAlphanumeric} from 'validator';
+import {isEmail, isStrongPassword, isAlphanumeric} from 'validator';
 import { useHistory } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 
 // import axios from 'axios';
 // import { ExecuteBackendAPI } from '../../lib/api/restapi';
 // import { GetBackendIP } from '../../settings';
+
+import { faChalkboardTeacher, faCheck } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 
 const Positioner = styled.div`
@@ -95,6 +98,19 @@ const formStyle2 = {
     display: 'block'
 };
 
+const CheckBtn = {
+    color:"#7f05e6",
+    position: "relative",
+    left:"580px",
+    bottom:"15px",
+  }
+
+const Info_msg = styled.h3`
+    font-size: 0.7rem;
+    font-weight: 200;
+
+`;
+
 
 // const Form = ({children}) => {
 //     <div style = {appStyle}>
@@ -106,28 +122,49 @@ const formStyle2 = {
 const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
     const [email, setEmail] = useState("");
     const [email_info_msg, setEmailInfoMSG] = useState("");
+    const [email_info_msg_color, set_email_info_color] = useState("red");
+    const [email_check_icon_color,set_email_check_icon_color] =useState("white")
+
     const [password, setPassword] = useState("");
     const [password_info_msg, setPasswordInfoMSG] = useState("");
+    const [password_info_msg_color, set_password_info_color] = useState("red");
+    const [password_check_icon_color,set_password_check_icon_color] =useState("white")
+
     const [passwordConfirm, setpasswordConfirm] = useState("");
     const [passwordConfirm_info_msg, setPasswordConfirmInfoMSG] = useState("");
+    const [passwordConfirm_info_msg_color, set_passwordConfirm_info_color] = useState("red");
+    const [passwordConfirm_check_icon_color,set_passwordConfirm_check_icon_color] =useState("white")
+
     const [companyName, setCompanyName] = useState("");
     const [companyName_info_msg, setCompanyNameInfoMSG ] = useState("");
+    const [companyName_check_icon_color,set_companyName_check_icon_color] =useState("white")
+
     const [companyNumber, setCompanyNumber] = useState("");
     const [companyNumber1, setCompanyNumber1] = useState("");
     const [companyNumber2, setCompanyNumber2] = useState("");
     const [companyNumber3, setCompanyNumber3] = useState("");
     const [companyNumber_info_msg, setCompanyNumberInfoMSG ] = useState("");
+    const [companyNumber_check_icon_color,set_companyNumber_check_icon_color] =useState("white")
+
     const [selectedFile, setSelectedFile] = useState(null);
     const [fileName_info_msg, setFileNameInfoMSG ] = useState("");
+    const [selectedFile_check_icon_color,set_selectedFile_check_icon_color] =useState("white")
+
     const [managerName, setMangerName] = useState("");
     const [managerName_info_msg, setManagerNameInfoMSG ] = useState("");
+    const [managerName_check_icon_color,set_managerName_check_icon_color] =useState("white")
+
     const [managerContact, setManagerContact] = useState("");
     const [managerContact_info_msg, setManagerContactInfoMSG ] = useState("");
+    const [managerContact_check_icon_color,set_managerContact_check_icon_color] =useState("white")
+
     const [agreement, setAgreement] = useState("");
     const [agreement1, setAgreement1] = useState("");
     const [agreement2, setAgreement2] = useState("");
     const [agreement3, setAgreement3] = useState("");
     const [agreement_info_msg, setAgreementInfoMSG ] = useState("");
+    const [agreement_check_icon_color,set_agreement_check_icon_color] =useState("white")
+
     const [success1, setSuccess1] = useState(false);
     const [success2, setSuccess2] = useState(false);
     const [success3, setSuccess3] = useState(false);
@@ -322,11 +359,15 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                 setEmailInfoMSG("이메일을 입력해주세요")
                 setSuccess1(false)
                 console.log("첫번째 석세스의 상태: ",success1)
+                set_email_check_icon_color("white")
+                set_email_info_color("red")
             }else {
                 if (isEmail(e.target.value) == true) {
                     setEmail(e.target.value)
                     setSuccess1(true)
-                    setEmailInfoMSG("")
+                    setEmailInfoMSG("사용가능한 이메일입니다.")
+                    set_email_check_icon_color("#7f05e6");
+                    set_email_info_color("#7f05e6")
                     
                     // if (success === true) {
                     //     setEmailInfoMSG("true")
@@ -343,9 +384,11 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                     console.log("이프문 석세스의 상태: ",success1)
                 } else {
                     setEmail(e.target.value)
-                    setEmailInfoMSG("이메일을 올바르게 입력해주세요")
+                    setEmailInfoMSG("이메일 주소 형식이 아닙니다. 올바른 이메일 형식으로 입력해 주세요.")
                     setSuccess1(false)
                     console.log("엘스문 석세스 상태: ",success1)
+                    set_email_check_icon_color("white")
+                    set_email_info_color("red")
                     
                 }
             }
@@ -355,45 +398,68 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                 setPassword(e.target.value)
                 setPasswordInfoMSG("비밀번호를 입력해주세요")
                 console.log(success2)
-                setSuccess2(false)                
+                setSuccess2(false)
+                set_password_check_icon_color("white")  
+                set_password_info_color('red')              
             } else {
-                setPassword(e.target.value)
-                setPasswordInfoMSG("")
-                setSuccess2(true)
-                console.log(success2)                
+                if (isStrongPassword(e.target.value)==true){
+                    setPassword(e.target.value)
+                    setPasswordInfoMSG("안전한 비밀번호입니다.")
+                    setSuccess2(true)
+                    console.log(success2) 
+                    set_password_check_icon_color("#7f05e6")   
+                    set_password_info_color("#7f05e6") 
+                    
+                } else{
+                    setPassword(e.target.value)                    
+                    setPasswordInfoMSG("안전하지 않은 비밀번호입니다. 영문, 숫자, 특수기호를 조합하여 재설정해 주세요.")
+                    setSuccess2(false)
+                    console.log(success2)
+                    set_password_check_icon_color("white")  
+                    set_password_info_color('red')  
+                    
+                }
+            
             }
         }else if (e.target.name === "passwordConfirm"){
             if (password !== passwordConfirm){
                 setpasswordConfirm(e.target.value)
-                setPasswordConfirmInfoMSG("비밀번호 똑같이 입력해주세요")
+                setPasswordConfirmInfoMSG("비밀번호가 일치하지 않습니다. 재입력해 주세요.")
                 setSuccess3(false)
                 console.log(success3)
+                set_passwordConfirm_check_icon_color("white")
+                set_passwordConfirm_info_color("red")
                 
             } else {
                 setpasswordConfirm(e.target.value)
-                setPasswordConfirmInfoMSG("")
+                setPasswordConfirmInfoMSG("비밀번호가 일치합니다.")
                 setSuccess3(true)
                 console.log(success3)
+                set_passwordConfirm_check_icon_color('#7f05e6')
+                set_passwordConfirm_info_color('#7f05e6')
                 
             }
         }else if(e.target.name === "companyName"){
             if (e.target.value === "") {
                 setCompanyName(e.target.value)
-                setCompanyNameInfoMSG("회사명을 입력해주세요")
+                setCompanyNameInfoMSG("회사명을 정확히 입력하세요.")
                 setSuccess4(false)
+                set_companyName_check_icon_color('white')
                 // console.log(success)
                 
             } else {
                 setCompanyName(e.target.value)
                 setCompanyNameInfoMSG("")
                 setSuccess4(true)
+                set_companyName_check_icon_color('#7f05e6')
                 // console.log(success)
                 
             }
         }else if (e.target.name === "companyNumber"){
             if (e.target.value === "") {
                 setCompanyNumber1(e.target.value)
-                setCompanyNumberInfoMSG("사업자 등록번호를 올바르게 입력해주세요")
+                setCompanyNumberInfoMSG("사업자 등록번호를 정확히 입력하세요.")
+                set_companyNumber_check_icon_color('white')
                 setSuccess5(false)
                 // console.log(success)
                 
@@ -401,6 +467,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                 setCompanyNumber1(e.target.value)
                 setCompanyNumberInfoMSG("")
                 setSuccess5(true)
+                set_companyNumber_check_icon_color('#7f05e6')
                 // console.log(success)
                 
             }
@@ -435,8 +502,9 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
         }else if (e.target.name === "managerName"){
             if (e.target.value === "") {
                 setMangerName(e.target.value)
-                setManagerNameInfoMSG("담당자명을 입력해주세요")
+                setManagerNameInfoMSG("담당자 성함을 정확히 입력해 주세요.")
                 setSuccess7(false)
+                set_managerName_check_icon_color('white')
                 // console.log(success)
                 
 
@@ -444,15 +512,17 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                 setMangerName(e.target.value)
                 setManagerNameInfoMSG("")
                 setSuccess7(true)
+                set_managerName_check_icon_color('#7f05e6')
                 // console.log(success)
                 
             }
         }else if (e.target.name === "managerContact"){
             if (e.target.value === "") {
                 setManagerContact(e.target.value)
-                setManagerContactInfoMSG("담당자 연락처를 입력해주세요")
+                setManagerContactInfoMSG("담당자 연락처를 정확히 입력해 주세요.")
                 setSuccess8(false)
                 console.log(success8)
+                set_managerContact_check_icon_color('white')
                 
 
             }else {
@@ -460,107 +530,123 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                 setManagerContactInfoMSG("")
                 setSuccess8(true)
                 console.log(success8)
+                set_managerContact_check_icon_color('#7f05e6')
                 
             }
 
         }
     }
     
-    const allChecked = () =>{
+    const allChecked = (e) =>{
+        let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement = e.target.checked_bool
+            setTab1Info(temp_tab1Info);     
         
         if (agreement === "checked"){
             setAgreement("")
             setAgreement1("");
             setAgreement2("");
             setAgreement3("");  
-            setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요")   
-            let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement = agreement         
+            setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")   
+                 
         }else{                
             setAgreement("checked")
             setAgreement1("checked");
             setAgreement2("checked");
             setAgreement3("checked"); 
             setAgreementInfoMSG("")       
-            let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement = agreement         
+
         }   
          
     }
-    const inidivualChecked1 = () =>{
+    const inidivualChecked1 = (e) =>{
         
         setAgreement("");
         if (agreement1 === "checked"){
             setAgreement1("")  
             let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement1 = agreement1
+            temp_tab1Info.agreement1 = e.target.checked_bool
+            setTab1Info(temp_tab1Info); 
         }else{
             if (agreement2 === "checked" && agreement3 === "checked"){
                 setAgreement("checked")
             }
             setAgreement1("checked")
             let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement1 = agreement1
+            temp_tab1Info.agreement1 = e.target.checked_bool
+            setTab1Info(temp_tab1Info); 
         }
      
     }
-    const inidivualChecked2 = () =>{
+    const inidivualChecked2 = (e) =>{
 
         setAgreement("");
         
         if (agreement2 === "checked"){
             setAgreement2("")
             console.log('2-1:',agreement2)
-            setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요") 
+            setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.") 
+            // set_agreement_check_icon_color('white') 
             let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement2 = agreement2
+            temp_tab1Info.agreement2 = e.target.checked_bool
+            setTab1Info(temp_tab1Info); 
 
         }else{
 
             setAgreement2("checked")
             console.log('2-z',agreement2)
             setAgreementInfoMSG("") 
+            // set_agreement_check_icon_color('#7f05e6') 
             let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement2 = agreement2
+            temp_tab1Info.agreement2 = e.target.checked_bool
+            setTab1Info(temp_tab1Info); 
             
             if (agreement1 === "checked" && agreement3 === "checked"){
                 setAgreement("checked")
                 console.log('2-2:',agreement2) 
                 setAgreementInfoMSG("") 
+                // set_agreement_check_icon_color('#7f05e6')
                 
             }else if(agreement3 === ""){
-                setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요")
+                setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")
                 console.log('2-2-2:',agreement3)
+                // set_agreement_check_icon_color('white') 
             }
         }
     }
-    const inidivualChecked3 = () =>{
+    const inidivualChecked3 = (e) =>{
 
         setAgreement("");
 
         if (agreement3 === "checked"){
             setAgreement3("")  
             console.log('3-1:',agreement3)
-            setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요") 
+            setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")
+            // set_agreement_check_icon_color('white')  
             let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement3 = agreement3
+            temp_tab1Info.agreement3 = e.target.checked_bool
+            setTab1Info(temp_tab1Info); 
             
         }else{
 
             setAgreement3("checked")  
             console.log('3-z',agreement3)
             setAgreementInfoMSG("") 
+            // set_agreement_check_icon_color('#7f05e6') 
             let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement3 = agreement3
+            temp_tab1Info.agreement3 = e.target.checked_bool
+            setTab1Info(temp_tab1Info); 
 
             if (agreement1 === "checked" && agreement2 === "checked"){
                 setAgreement("checked")
                 console.log('3-2:',agreement3)
-                setAgreementInfoMSG("") 
+                setAgreementInfoMSG("")
+                // set_agreement_check_icon_color('#7f05e6') 
                 
             }else if(agreement2 === ""){
-                setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요")
+                setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")
                 console.log('3-2-2:',agreement3)
+                // set_agreement_check_icon_color('white') 
             }     
         }      
     }
@@ -606,13 +692,14 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
     // const hiddenFileInput = React.useRef(null);
 
     const fileHandle = (e) => {
-        hiddenFileInput.current.click();
+        //hiddenFileInput.current.click();
+        // console.log("test")
     }
 //
-    const handleFileput=(e)=> {
-        setSelectedFile(e.target.files[0],            
-        )
-    }
+    // const handleFileput=(e)=> {
+    //     setSelectedFile(e.target.files[0],            
+    //     )
+    // }
 
 
     
@@ -637,6 +724,8 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                             <Tr>
                                 <TdLable>
                                     <Label1 label="이메일"/>
+                                    <FontAwesomeIcon style={{color:email_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} />
                                 </TdLable>
                                 <TD colSpan ="2">
                                     <Input1
@@ -653,12 +742,14 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={email_info_msg} color ="red"/>
+                                    <Info1 label={email_info_msg} color ={email_info_msg_color}/>                                      
                                 </TD>
                             </Tr>
                             <Tr>
                                 <TdLable>
                                     <Label1 label="비밀번호"/>
+                                    <FontAwesomeIcon style={{color:password_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} />
                                 </TdLable>
                                 <TD colSpan ="2">
                                     <Input1
@@ -674,16 +765,18 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                             <Tr>
                                 <TD>                                    
                                 </TD>
-                                <TD colSpan ="2">
-                                    <Info1 label={password_info_msg} color ="red"/>
+                                <TD colSpan ="2">          
+                                    <Info1 label={password_info_msg} color ={password_info_msg_color}/>                       
                                 </TD>
                             </Tr>
                             <Tr>
                                 <TdLable>
                                     <Label1 label="비밀번호 재확인"/>
+                                    <FontAwesomeIcon style={{color:passwordConfirm_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} />
                                 </TdLable>
                                 <TD colSpan ="2">
-                                    <Input1                                        
+                                    <Input1                                      
                                         type="password" 
                                         name="passwordConfirm"
                                         placeholder="비밀번호 재확인"
@@ -697,12 +790,21 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                 <TD>                                    
                                 </TD>
                                 <TD colSpan ="2">
-                                    <Info1 label={passwordConfirm_info_msg} color ="red"/>
+                                    <Info1 label={passwordConfirm_info_msg} color ={passwordConfirm_info_msg_color}/>
+
+                                    {/* <Info_msg
+                                        className="info_msg"
+                                        style={{ color: passwordConfirm_info_msg_color }}
+                                    >
+                                        {passwordConfirm_info_msg}
+                                    </Info_msg> */}
                                 </TD>
                             </Tr>
                             <Tr>
                                 <TdLable>
                                     <Label1 label="회사명"/>
+                                    <FontAwesomeIcon style={{color:companyName_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} />
                                 </TdLable>
                                 <TD colSpan ="2">
                                     <Input1
@@ -725,6 +827,8 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                             <Tr>
                                 <TdLable>
                                     <Label1 label="사업자등록번호"/>
+                                    <FontAwesomeIcon style={{color:companyNumber_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} />
                                 </TdLable>
                                 <TD colSpan ="2">
                                     <Input1
@@ -746,6 +850,8 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                             <Tr>
                                 <TdLable>
                                     <Label1 label="사업자등록증 첨부"/>
+                                    {/* <FontAwesomeIcon style={{color:selectedFile_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} /> */}
                                 </TdLable>
                                 <TD colSpan ="2">
                                     <TD>
@@ -761,7 +867,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                         <Input1
                                         type="file" 
                                         name="fileHref" 
-                                        onChange={handleFileput} //이거는 경로지정필요
+                                        // onChange={handleFileput} //이거는 경로지정필요
                                         value={selectedFile}
                                         style = {{display:'none'}}
                                         // ref={hiddenFileInput}
@@ -781,6 +887,8 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                             <Tr>
                                 <TdLable>
                                     <Label1 label="담당자명"/>
+                                    <FontAwesomeIcon style={{color:managerName_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} />
                                 </TdLable>
                                 <TD colSpan ="2">
                                     <Input1
@@ -803,6 +911,8 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                             <Tr>
                                 <TdLable>
                                     <Label1 label="담당자연락처"/>
+                                    <FontAwesomeIcon style={{color:managerContact_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} />
                                 </TdLable>
                                 <TD colSpan ="2">
                                     <Input1
@@ -836,6 +946,8 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                     value = {agreement}                                  
                     onChange={allChecked}                    
                     ></Check><Info1 label={agreement_info_msg} color ="red"/></div>
+                    {/* <FontAwesomeIcon style={{color:agreement_check_icon_color, left: "50px",
+                                        position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} /> */}
                     <div style={formStyle2}>
                     <Check
                     label = "[선택] SampleLife에서 추천하는 캠페인 및 이벤트 정보 수신 동의"
