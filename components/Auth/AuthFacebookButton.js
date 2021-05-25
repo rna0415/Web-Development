@@ -9,6 +9,28 @@ import {GetBackendIP} from '../../settings';
 const AlignerCenter = styled.div`
     margin-top: 1rem;
     text-align: center;
+    
+`;
+
+const LoginButton = styled.button`
+    width: 104%;
+    margin-top: 1rem;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    border-color: white;
+
+    background: #4C69BA;
+    color: white;
+
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+
+    cursor: pointer;
+    user-select: none;
+    transition: .2s all;
+
+
 `;
 
 class AuthFacebookButton extends Component {
@@ -134,16 +156,12 @@ class AuthFacebookButton extends Component {
             fields="name,email,picture"
             onClick={this.componentClicked}
             callback={this.responseFacebook}
-            icon="fa-facebook"
+            icon="fa-facebook"   
+            style={{LoginButton}}    
             />)
-        return (
-            <div>
-                <AlignerCenter>
-                    <div>
-                        {fbContent}
-                    </div>
-                </AlignerCenter>
-            </div>
+        return (<LoginButton>
+                  {fbContent}        
+                </LoginButton>        
         )
     }
 }

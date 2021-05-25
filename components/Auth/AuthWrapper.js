@@ -14,13 +14,13 @@ const Positioner = styled.div`
 
 // 너비, 그림자 설정
 const ShadowedBox = styled.div`
-    width: 600px;
+    width: 500px;
     ${shadow(2)}
 `;
 
 // 로고
 const LogoWrapper = styled.div`
-    background: ${oc.teal[7]};
+    background: white;
     height: 5rem;
     display: flex;
     align-items: center;
@@ -28,11 +28,13 @@ const LogoWrapper = styled.div`
 `;
 
 const Logo = styled(Link)`
-    color: white;
+    color: #7f05e6;
     font-family: 'Rajdhani';
-    font-size: 2.4rem;
+    font-size: 3.5rem;
+    font-weight: 900;
     letter-spacing: 5px;
     text-decoration: none;
+    margin-bottom: 0px;
 `;
 
 // children 이 들어가는 곳
@@ -46,7 +48,7 @@ const AuthWrapper = ({children}) => (
     <Positioner>
         <ShadowedBox>
             <LogoWrapper>
-                <Logo to="/">IPC Partners</Logo>
+                <Logo to="/">SAMPLE LIFE</Logo>
             </LogoWrapper>
             <Contents>
                 {children}
