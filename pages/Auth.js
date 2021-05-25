@@ -4,8 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as baseActions from '../redux/modules/base';
 import { AuthWrapper } from '../components/Auth';
 import { Route } from 'react-router-dom';
-import { Login, Register, RegisterInf, Find, FindID, FindPassword, MainService} from '../containers/Auth';
-import MainService2 from '../containers/Auth/MainService2';
+import { Login, Register, RegisterInf, Find, FindID, FindPassword, MainService, MainService2 } from '../containers/Auth';
 
 class Auth extends Component {
     // 페이지에 진입 할 때 헤더를 비활성화
@@ -27,8 +26,8 @@ class Auth extends Component {
                 <Route exact path="/auth/find" component={Find}/>
                 <Route exact path="/auth/find/id" component={FindID}/>
                 <Route exact path="/auth/find/password" component={FindPassword}/>
-                <Route exact path="/auth/mainservice" component={MainService}/>
-                <Route exact path="/auth/mainservice2" component={MainService2}/>
+                <Route exact path="/auth/MainService" component={MainService}/>
+                <Route exact path="/auth/MainService2" component={MainService2}/>
             </div>
         );
     }
