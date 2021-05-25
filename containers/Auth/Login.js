@@ -29,8 +29,8 @@ const LoginButton = styled.button`
     width: 104%;
     margin-top: 1rem;
     margin-bottom: -1rem;
-    padding-top: 0.9rem;
-    padding-bottom: 0.9rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     border-color: white;
 
     background: #7f05e6;
@@ -66,8 +66,8 @@ const LeftAlignedButton = styled.button`
     transition: .2s all;
     text-decoration:none;
     &:hover {
-        color: ${oc.gray[6]};
-        border: 1px solid ${oc.gray[7]};
+        color: #7f05e6;
+        border: 1px solid #7f05e6;
     }
 `;
 
@@ -90,8 +90,8 @@ const RightAlignedButton = styled.button`
     transition: .2s all;
     text-decoration:none;
     &:hover {
-        color: ${oc.gray[6]};
-        border: 1px solid ${oc.gray[7]};
+        color: #7f05e6;
+        border: 1px solid #7f05e6;
     }
 `;
 

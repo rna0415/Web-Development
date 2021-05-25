@@ -9,7 +9,7 @@ const Positioner = styled.div`
 `;
 
 const Font= styled.div`
-    margin-top: 20px;
+    margin-top: 40px;
     text-align: center;
     font-size: 1.6rem;
     font-weight: bold;
@@ -21,6 +21,7 @@ const Font2 = styled.div`
     margin-bottom: 5px;   
     font-size:1rem;
     text-align: center;
+    font-weight: 500;
 `;
 
 const Table = styled.table`
@@ -53,6 +54,7 @@ const formStyle = {
 };
 
 const FlexDiv = styled.div`
+    padding-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,8 +108,8 @@ const MainService = ({}) =>{
                     <div style = {formStyle}>    
                         <Positioner>                   
                             <Table align="center">        
-                                <Tbody>       
-                                    <Tr style={{borderTop: '2px solid gray'}}>
+                                <Tbody>                                           
+                                    <Tr style={{borderTop: '2px solid #495057'}}>                                        
                                         <td colspan="3">
                                             <Font>
                                                 회원가입 완료 
@@ -176,7 +178,7 @@ const MainService = ({}) =>{
                                     <TrBlank></TrBlank>
                                     <Tr></Tr>
                                     <TrBlank></TrBlank>
-                                    <Tr style={{borderTop: '2px solid gray'}}>
+                                    <Tr style={{borderTop: '2px solid #495057'}}>
                                         <FlexDiv>
                                         <td><AlignedButton>캠페인 사례</AlignedButton></td>
                                         <td><AlignedButton>클라이언트 서비스 이용안내</AlignedButton></td>

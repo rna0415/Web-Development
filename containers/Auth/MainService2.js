@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom"
 import { useHistory } from "react-router-dom";
+import axios from 'axios';
 // import styled from 'styled-components';
 // import oc from 'open-color';
 // import { Link } from 'react-router-dom';
@@ -16,7 +17,8 @@ class MainService2 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            active_tab: "info1"
+            active_tab: "info1",
+            tab1_info: ""
         }
         
         this.setActiveTab = (e) => {
@@ -27,6 +29,13 @@ class MainService2 extends Component {
                 this.setState({active_tab: "info2"});
             }
         }
+
+        this.setTab1Information = (tab1Info) => {
+            console.log("test")
+            console.log(tab1Info)
+            this.setState({tab1_info: tab1Info})
+        }
+
         if (this.props.location.state == null) {
             this.state = {
                 active_tab: "info1"
@@ -38,8 +47,8 @@ class MainService2 extends Component {
     }
     render() {
         const tabs = {
-            "info1": <Infotab1 setActiveTab={this.setActiveTab}/>,
-            "info2": <Infotab2 setActiveTab={this.setActiveTab}/>
+            "info1": <Infotab1 setActiveTab={this.setActiveTab} setTab1Information={this.setTab1Information} tab1_info={this.state.tab1_info}/>,
+            "info2": <Infotab2 setActiveTab={this.setActiveTab} tab1_info= {this.state.tab1_info}/>
         }
 
         return (
