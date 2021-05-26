@@ -2,12 +2,13 @@ import React, { useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { Footer, Modal, RecommendationCampaign } from '../../components/Influencer/campaign_status';
+import { LoginModal,BrandBox } from '../../components/Home';
 import oc from 'open-color';
 
 const CampaignStatusBox = styled.div`
     width: 100%;
     height: 100%;
-    position: relative;
+    position: fixed;
     left: 0;
     overflow: auto;
 `;
@@ -26,7 +27,7 @@ const Image = styled.img`
 const Button = styled.button`
     background-color: #7f05e6; 
     border-radius: 24px;   
-    border: 1px solid ${oc.gray[6]};
+    border: 1px solid #7f05e6;
     padding: 10px 32px;
     color:white;
     cursor: pointer;
@@ -71,6 +72,7 @@ const FlexDiv = styled.div`
 `;
 
 //화면사이즈를 줄일때 layout변경되지않고 윈도우즈창만 줄어들게하려면??
+//로그인화면 갔다가 툴바 사라짐.
 
 // 화면의 중앙에 위치시킨다
 const Positioner1 = styled.div`
@@ -111,7 +113,7 @@ const Positioner2 = styled.div`
 const Positioner2_1 = styled.div`
     display: flex;
     width:100%;
-    height: 500px;
+    height: 100%;
     justify-content: center;
     position: absolute;
 
@@ -128,7 +130,7 @@ const Positioner2_2 = styled.div`
 //그림 div (용도는 2개 div사이 간격조절)
 const Position2_3 = styled.div`
     margin-left:20px;
-    width:35%;
+    width:30%;
 `;
 
 
@@ -161,11 +163,12 @@ const Positioner3_1_1 = styled.div`
 
 //상하조절
 const Positioner3_2 = styled.div` 
-    margin-top:10%;
-    margin-bottom:10%;
+    margin-top:100px;
+    margin-bottom:100px;
     display:flex;
     justify-content: flex-end;
     width:50%;
+    margin-left:100px;
 
 `;
 
@@ -173,7 +176,7 @@ const Position3_3 = styled.div`
     margin-left:10px;    
     padding:30px;
     width:50%;
-    margin-right:10%;
+    margin-right:100px;
 
 `;
 
@@ -223,23 +226,236 @@ const Positioner5_1 = styled.div`
 `;
 //상하조절
 const Positioner5_2 = styled.div` 
-    margin-top:80px;
+    margin-top:50px;
     color:black;
 `;
+
+
 
 const ContentsBox5 = styled.div`
     padding: 50px;
     color : #7f05e6;
 `;
 
+const Table = styled.table`
+    width: 950px;
+
+`;
+
+const Tbody = styled.tbody`
+    width: 950px;
+`;
+
+const Tr = styled.tr`
+`;
+
+const Td = styled.td`
+    width: 100%; 
+    justify-content: center;
+    align-items: center;
+`;
+
+const Label = styled.div`
+    width: 100%; 
+    text-align: center;
+    font-size: 2.6rem;
+    font-family: 'Rajdhani';
+    font-weight: 1000;
+`;
+
+const ExplanationLabel = styled.div`
+    width: 100%; 
+    text-align: center;
+    font-size: 0.7rem;
+    font-family: 'Rajdhani';
+    font-weight: 1000;
+    color: ${oc.gray[7]};
+`;
+
+const TableLabel = styled.div`
+    width: 100%;
+    height: 100%;
+    font-size: 0.6rem;
+    font-family: 'Rajdhani';
+    font-weight: 600;
+    color: black;
+    text-align: center;
+    line-height: 40px;
+    background: #f1f1f1;
+    &:hover {
+        color: white;
+        background: #7f05e6;
+    }
+`;
+
+const TableContentLabel2 = styled.div`
+    width: 100%;
+    height: 100%;
+    font-size: 0.6rem;
+    font-family: 'Rajdhani';
+    font-weight: 600;
+    color: #7f05e6;
+    text-align: center;
+    line-height: 40px;
+    &:hover {
+        color: white;
+        background: #7f05e6;
+    }
+`;
+
+const NextCampaignButton = styled.div`
+    width: 100%; 
+    height: 30%;
+    cursor: pointer;
+`;
+
+const NextCampaignImage = styled.img`
+    width: 100%; 
+    height: 100%;
+`;
 
 
 const Home_Main = () => {
     const history = useHistory(); 
+    
+    const [campaign_status_modal, setCampaignStatusModalState] = useState([])
 
-    const buttonClick = () =>{
-        history.push({pathname: "/influencer/main/campaign_status"})
+    let recommendation_client_data = []
+    const [ recommend_items, setRecommendItemsState ] = useState([]);
+    const [ recomendation_client_data_component, setRecomendationClientDataComponent] = useState([])
+
+    const setCloseModal = () => {
+        console.log("close clicked")
+        //setCampaignApplyModalState(false)
+        setCampaignStatusModalState([])
     }
+    
+    const CampaignStatusClicked = () => {
+        console.log("status clicked")
+        //setCampaignApplyModalState(true)
+        let temp_campaign_status_modal = <LoginModal setCloseModal={setCloseModal} />
+        setCampaignStatusModalState(temp_campaign_status_modal)
+        
+    }
+
+    const brandClick = (e) => {
+        if (e === "next") {
+            let temp_client_data = recommend_items[0]
+            console.log(temp_client_data)
+            for (let i in recommend_items) {
+                console.log(i)
+                if (Number(i) === (recommend_items.length-1)){
+                    recommend_items[(recommend_items.length-1)] = temp_client_data
+                }else {
+                    recommend_items[i] = recommend_items[(Number(i)+1)]
+                }
+                
+            }
+            let temp_recommendation_items = []
+            for (let i = 0; i< recommend_items.length; i++){
+                temp_recommendation_items.push(recommend_items[i])
+            }
+            setRecommendItemsState(temp_recommendation_items)
+        }
+        else if (e === "before") {
+            let temp_client_data = recommend_items[recommend_items.length-1]
+            console.log(temp_client_data)
+            for (let i in recommend_items) {
+                if (Number(i) === (recommend_items.length-1)){
+                    recommend_items[(recommend_items.length-1) -i] = temp_client_data
+                }
+                else {
+                    recommend_items[(recommend_items.length-1) -i] = recommend_items[(recommend_items.length-1) - (Number(i)+1)]
+                }
+            }
+            let temp_recommendation_items = []
+            for (let i = 0; i< recommend_items.length; i++){
+                temp_recommendation_items.push(recommend_items[i])
+            }
+            setRecommendItemsState(temp_recommendation_items)
+        }
+    }
+
+    const getRecommendationClientDataFromDB = () => {
+
+        let all_recommendation_client_data_from_db = [
+            {
+                "src": "/images/homepage2/anemone.jpg",
+            },
+            {
+                "src": "/images/homepage2/coffee.png",
+            },
+            {
+                "src": "/images/homepage2/flowers.jpg",
+            },
+            {
+                "src": "/images/homepage2/freedom.jpg",
+            },
+            {
+                "src": "/images/homepage2/lemon.jpg",
+            },
+            {
+                "src": "/images/homepage2/milkyway.jpg",
+            },
+            {
+                "src": "/images/homepage2/river.jpg",
+            },
+            {
+                "src": "/images/homepage2/stairs.jpg",
+            },
+            {
+                "src": "/images/homepage2/woman.jpg",
+            },
+            {
+                "src": "/images/homepage2/yellow.jpg",
+            },
+        ]
+
+        return all_recommendation_client_data_from_db
+    }
+
+    useEffect(() => {
+        console.log('컴포넌트가 화면에서 나타남');
+        setRecommendItemsState(getRecommendationClientDataFromDB())
+        return () => {
+          console.log('컴포넌트가 화면에서 사라짐');
+        };
+    }, []);
+
+    useEffect(() => {
+        console.log('컴포넌트가 화면에서 나타남');
+        //recommendation_client_data = recommend_items
+        //console.log(selected_client_data)
+        // selected_client_data = selected_client_data.sort(function (a,b) {
+        //     return a.due_date - b.due_date
+        // })
+        //console.log(selected_client_data)
+        // console.log("222")
+        if (recommend_items.length < 8) {
+            for (var i = 0 ; i<recommend_items.length; i++) {
+                recommendation_client_data.push(recommend_items[i])
+            }
+        }else {
+            for (var i = 0; i<7; i++) {
+                recommendation_client_data.push(recommend_items[i])
+            }
+        }
+
+        let temp_recommendation_client_data_component = recommendation_client_data.map((client_data, k) => 
+            <Td style={{ width: '400px' }}>
+                <BrandBox 
+                    client_data = {client_data}
+                />
+            </Td>
+        );
+        
+        //setRecomendationClientDataState(recommendation_client_data)
+        setRecomendationClientDataComponent(temp_recommendation_client_data_component)
+
+        return () => {
+          console.log('컴포넌트가 화면에서 사라짐');
+        };
+    }, [recommend_items]);
 
     return (
         <CampaignStatusBox id="틀">
@@ -250,15 +466,17 @@ const Home_Main = () => {
                     <Positioner1_2 id="Positioner1_2">                           
                         <FlexDiv1>               
                         <Font1>인플루언서 마케팅 플랫폼</Font1> - <BoldFont>SampleLife</BoldFont>
-                        </FlexDiv1>
-                        <br></br>
-                        <Font2>
+                        </FlexDiv1>    
+                        <br></br>                    
+                        <Font2 style={{fontWeight:"300"}}>
                         나의 콘텐츠와 어울리는 맞춤 캠페인
-                        <br></br>
+                        </Font2>
+                        <Font2>                        
                         이제 SampleLIFE에서 만나보세요
                         </Font2>
                         <br></br>                        
-                        <Button onClick={buttonClick}>캠페인 현황보기</Button>                        
+                        <Button onClick={CampaignStatusClicked}>캠페인 현황보기</Button>   
+                        {campaign_status_modal}                     
                     </Positioner1_2>
                 </Positioner1_1>
             </Positioner1>
@@ -301,7 +519,7 @@ const Home_Main = () => {
                 <Positioner3_1 id="Positioner3_1">
                     {/* <Positioner3_1_1 id="Positioner3_1_1"> */}
                         <Positioner3_2 id="Positioner3_2">
-                            <Image src="/images/homepage/AI.jpg" style={{width:'300px'}} />
+                            <Image src="/images/homepage/AI.jpg" style={{width:'500px'}} />
                         </Positioner3_2>
 
                         <Position3_3 id="Positioner3_3">
@@ -370,11 +588,27 @@ const Home_Main = () => {
                                 <Font2>
                                     120,345
                                 </Font2>
-                            </ContentsBox5>    
-                        </FlexDiv1>                                   
+                            </ContentsBox5>  
+                        </FlexDiv1> 
+                        <Table style={{ height: "120px"}}>
+                                <Tr style={{ height: "100px"}}>
+                                    <Td style={{ width: '100px', textAlign: "center" }}>
+                                        <NextCampaignButton onClick={() => brandClick("before")}>
+                                            <NextCampaignImage src="/images/campaign/left_arrow.png" />
+                                        </NextCampaignButton>
+                                    </Td>
+                                        {recomendation_client_data_component}
+                                    <Td style={{ width: '100px', textAlign: "center" }}>
+                                        <NextCampaignButton onClick={() => brandClick("next")}>
+                                            <NextCampaignImage src="/images/campaign/right_arrow.png" />
+                                        </NextCampaignButton>
+                                    </Td>
+                                </Tr>
+                            </Table>
                         <div>
                         <br></br>
-                        <Button onClick={buttonClick}>캠페인 현황보기</Button>
+                        <br></br>
+                        <Button onClick={CampaignStatusClicked}>캠페인 현황보기</Button>
                         </div>
                     </Positioner5_2>
                 </Positioner5_1>                
