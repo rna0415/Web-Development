@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { Footer, Modal, RecommendationCampaign } from '../../components/Influencer/campaign_status';
-import { LoginModal,BrandBox } from '../../components/Home';
+import { LoginModal,BrandBox, Div3Component1, Div3Component2, Div3Component3} from '../../components/Home';
 import oc from 'open-color';
 
 const CampaignStatusBox = styled.div`
@@ -153,11 +153,16 @@ const Positioner3_1 = styled.div`
     position: absolute;
     
 `;
-//가운데 조절
-const Positioner3_1_1 = styled.div`    
+
+//3_2와 3_3 감싼
+const Position3_1_1 = styled.div`
     display:flex;
-    justify-content: center;
-    width:90%;
+
+`;
+
+const ArrowPosition = styled.div`    
+    margin-top:200px;
+    padding: 10px;
 
 `;
 
@@ -176,10 +181,9 @@ const Position3_3 = styled.div`
     margin-left:10px;    
     padding:30px;
     width:50%;
-    margin-right:100px;
+    margin-right:10x;
 
 `;
-
 
 
 
@@ -205,6 +209,10 @@ const Positioner4_1 = styled.div`
 const Positioner4_2 = styled.div` 
     margin-top:100px;
     color:white;
+`;
+
+const Positioner4_3 = styled.div`
+    margin-left:45px;
 `;
 
 const Positioner5 = styled.div`
@@ -255,54 +263,6 @@ const Td = styled.td`
     align-items: center;
 `;
 
-const Label = styled.div`
-    width: 100%; 
-    text-align: center;
-    font-size: 2.6rem;
-    font-family: 'Rajdhani';
-    font-weight: 1000;
-`;
-
-const ExplanationLabel = styled.div`
-    width: 100%; 
-    text-align: center;
-    font-size: 0.7rem;
-    font-family: 'Rajdhani';
-    font-weight: 1000;
-    color: ${oc.gray[7]};
-`;
-
-const TableLabel = styled.div`
-    width: 100%;
-    height: 100%;
-    font-size: 0.6rem;
-    font-family: 'Rajdhani';
-    font-weight: 600;
-    color: black;
-    text-align: center;
-    line-height: 40px;
-    background: #f1f1f1;
-    &:hover {
-        color: white;
-        background: #7f05e6;
-    }
-`;
-
-const TableContentLabel2 = styled.div`
-    width: 100%;
-    height: 100%;
-    font-size: 0.6rem;
-    font-family: 'Rajdhani';
-    font-weight: 600;
-    color: #7f05e6;
-    text-align: center;
-    line-height: 40px;
-    &:hover {
-        color: white;
-        background: #7f05e6;
-    }
-`;
-
 const NextCampaignButton = styled.div`
     width: 100%; 
     height: 30%;
@@ -321,6 +281,8 @@ const Home_Main = () => {
     const [campaign_status_modal, setCampaignStatusModalState] = useState([])
 
     let recommendation_client_data = []
+    const [ div3Item_index, setDiv3ItemIndexState] = useState(0);
+    const [ div3Item_component, setDiv3Item_component] = useState([])
     const [ recommend_items, setRecommendItemsState ] = useState([]);
     const [ recomendation_client_data_component, setRecomendationClientDataComponent] = useState([])
 
@@ -338,22 +300,44 @@ const Home_Main = () => {
         
     }
 
+    const DivClick = (e) => {
+        if (e === "next") {            
+            
+            if(div3Item_index === 2){
+                
+            }else{
+                setDiv3ItemIndexState(div3Item_index+1)
+            }
+
+        }else if (e ==="before"){
+            
+            if(div3Item_index === 0){
+                
+            }else{
+                setDiv3ItemIndexState(div3Item_index-1)
+            }
+        }
+    }
+
     const brandClick = (e) => {
         if (e === "next") {
             let temp_client_data = recommend_items[0]
-            console.log(temp_client_data)
+
             for (let i in recommend_items) {
-                console.log(i)
+
                 if (Number(i) === (recommend_items.length-1)){
                     recommend_items[(recommend_items.length-1)] = temp_client_data
+
                 }else {
                     recommend_items[i] = recommend_items[(Number(i)+1)]
+
                 }
                 
             }
             let temp_recommendation_items = []
             for (let i = 0; i< recommend_items.length; i++){
                 temp_recommendation_items.push(recommend_items[i])
+
             }
             setRecommendItemsState(temp_recommendation_items)
         }
@@ -375,6 +359,7 @@ const Home_Main = () => {
             setRecommendItemsState(temp_recommendation_items)
         }
     }
+
 
     const getRecommendationClientDataFromDB = () => {
 
@@ -417,10 +402,33 @@ const Home_Main = () => {
     useEffect(() => {
         console.log('컴포넌트가 화면에서 나타남');
         setRecommendItemsState(getRecommendationClientDataFromDB())
+
         return () => {
           console.log('컴포넌트가 화면에서 사라짐');
         };
     }, []);
+
+    useEffect(() => {
+        console.log('컴포넌트가 화면에서 나타남');
+
+        let temp_div3Item_component
+        if (div3Item_index === 0) {
+            temp_div3Item_component = <Div3Component1></Div3Component1>
+        }
+        else if (div3Item_index === 1) {
+            temp_div3Item_component = <Div3Component2></Div3Component2>
+        }
+        else if (div3Item_index === 2) {
+            temp_div3Item_component = <Div3Component3></Div3Component3>
+        }
+
+        setDiv3Item_component(temp_div3Item_component)
+        //setRecomendationClientDataState(recommendation_client_data)
+
+        return () => {
+          console.log('디브인덱스', div3Item_index);
+        };
+    }, [div3Item_index]);
 
     useEffect(() => {
         console.log('컴포넌트가 화면에서 나타남');
@@ -431,15 +439,13 @@ const Home_Main = () => {
         // })
         //console.log(selected_client_data)
         // console.log("222")
-        if (recommend_items.length < 8) {
-            for (var i = 0 ; i<recommend_items.length; i++) {
-                recommendation_client_data.push(recommend_items[i])
-            }
-        }else {
+
+        if (recommend_items.length != 0) {
             for (var i = 0; i<7; i++) {
                 recommendation_client_data.push(recommend_items[i])
             }
         }
+        
 
         let temp_recommendation_client_data_component = recommendation_client_data.map((client_data, k) => 
             <Td style={{ width: '400px' }}>
@@ -517,28 +523,18 @@ const Home_Main = () => {
 
             <Positioner3 id="Positioner3">                
                 <Positioner3_1 id="Positioner3_1">
-                    {/* <Positioner3_1_1 id="Positioner3_1_1"> */}
-                        <Positioner3_2 id="Positioner3_2">
-                            <Image src="/images/homepage/AI.jpg" style={{width:'500px'}} />
-                        </Positioner3_2>
 
-                        <Position3_3 id="Positioner3_3">
-                            <Font3 style = {{fontSize:"100px"}}>01</Font3>
-                            <Font3 style={{color:"#7f05e6", fontWeight:"900"}}>
-                                인공지능 기반의
-                                <br></br>
-                                빅데이터 분석
-                            </Font3>
-                            <Font1>
-                                SampleLife는 실시간으로 변화하는 인플루언서의 데이터와 콘텐츠를
-                                기계학습(Machine Learning)기법을 활용하여 정밀하게 분석하여
-                                나에게 맞는 캠페인에 참여할 수 있도록 지원합니다.
-
-                                SampleLife에 인플루언서 등록을 하면
-                                획기적인 SNS분석 서비스를 체험할 수 있습니다.
-                            </Font1>
-                        </Position3_3> 
-                    {/* </Positioner3_1_1> */}
+                        <ArrowPosition style={{ width: '100px', textAlign: "center" }}>
+                            <NextCampaignButton onClick={() => DivClick("before")}>
+                                <NextCampaignImage src="/images/campaign/left_arrow.png" />
+                            </NextCampaignButton>
+                        </ArrowPosition>
+                        {div3Item_component}
+                        <ArrowPosition style={{ width: '100px', textAlign: "center" }}>
+                            <NextCampaignButton onClick={() => DivClick("next")}>
+                                <NextCampaignImage src="/images/campaign/right_arrow.png" />
+                            </NextCampaignButton>
+                        </ArrowPosition>
                 </Positioner3_1>
             </Positioner3>
 
@@ -550,9 +546,65 @@ const Home_Main = () => {
                     <Positioner4_2 id="Positioner4_2">                    
                         <Font2>켐페인 참여방법</Font2>                                                
                         <br></br>                    
-                        <Font1>나에게 맞는 브랜드의 광고홍보 활동에 참여하여 포스팅을 수행하고 그에 따른 보상을 합니다.</Font1>                          
+                        <Font1>나에게 맞는 브랜드의 광고홍보 활동에 참여하여 포스팅을 수행하고 그에 따른 보상을 합니다.</Font1>
+                        <br></br>                        
+                        <Image src="/images/homepage/capture.PNG" />                                                
                         <br></br>
-                        01. 인플루언서 등록 02. 추천 캠페인 캠페인 현황 03. 캠페인 상세보기 캠페인 참여신청 04. 포스팅 05.성과측정 보상
+                        <FlexDiv>
+                            <div style={{marginLeft:"30px"}}>
+                                <Font2>
+                                    01. 
+                                </Font2>
+                                <br></br>
+                                <Font1>
+                                    인플루언서 
+                                    <br></br>
+                                    등록
+                                </Font1>                        
+                            </div>
+                            <Positioner4_3>
+                                <Font2>
+                                    02. 
+                                </Font2>
+                                <br></br>
+                                <Font1>
+                                    추천 캠페인 
+                                    <br></br>
+                                    캠페인 현황
+                                </Font1>                        
+                            </Positioner4_3>
+                            <Positioner4_3>
+                                <Font2>
+                                    03. 
+                                </Font2>
+                                <br></br>
+                                <Font1>
+                                    캠페인 상세보기 
+                                    <br></br>
+                                    캠페인 참여신청
+                                </Font1>                        
+                            </Positioner4_3>
+                            <Positioner4_3>
+                                <Font2>
+                                    04. 
+                                </Font2>
+                                <br></br>
+                                <Font1>
+                                    포스팅
+                                </Font1>                        
+                            </Positioner4_3>
+                            <Positioner4_3>
+                                <Font2>
+                                    05. 
+                                </Font2>
+                                <br></br>
+                                <Font1>
+                                    성과측정 
+                                    <br></br>
+                                    &보상
+                                </Font1>                        
+                            </Positioner4_3>       
+                        </FlexDiv>                  
                     </Positioner4_2>
                 </Positioner4_1>
             </Positioner4>
@@ -591,20 +643,20 @@ const Home_Main = () => {
                             </ContentsBox5>  
                         </FlexDiv1> 
                         <Table style={{ height: "120px"}}>
-                                <Tr style={{ height: "100px"}}>
-                                    <Td style={{ width: '100px', textAlign: "center" }}>
-                                        <NextCampaignButton onClick={() => brandClick("before")}>
-                                            <NextCampaignImage src="/images/campaign/left_arrow.png" />
-                                        </NextCampaignButton>
-                                    </Td>
-                                        {recomendation_client_data_component}
-                                    <Td style={{ width: '100px', textAlign: "center" }}>
-                                        <NextCampaignButton onClick={() => brandClick("next")}>
-                                            <NextCampaignImage src="/images/campaign/right_arrow.png" />
-                                        </NextCampaignButton>
-                                    </Td>
-                                </Tr>
-                            </Table>
+                            <Tr style={{ height: "100px"}}>
+                                <Td style={{ width: '100px', textAlign: "center" }}>
+                                    <NextCampaignButton onClick={() => brandClick("before")}>
+                                        <NextCampaignImage src="/images/campaign/left_arrow.png" />
+                                    </NextCampaignButton>
+                                </Td>
+                                    {recomendation_client_data_component}
+                                <Td style={{ width: '100px', textAlign: "center" }}>
+                                    <NextCampaignButton onClick={() => brandClick("next")}>
+                                        <NextCampaignImage src="/images/campaign/right_arrow.png" />
+                                    </NextCampaignButton>
+                                </Td>
+                            </Tr>
+                        </Table>
                         <div>
                         <br></br>
                         <br></br>
