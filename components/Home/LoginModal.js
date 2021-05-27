@@ -371,14 +371,14 @@ const LoginModal = ({setCloseModal}) => {
     // }
     
 
-    const setDeliveryInfo = (name, phone_num, address1, address2) => {
-        console.log("close clicked")
-        setNameState(name)
-        let temp_phone_num = phone_num.substring(0, 3) + "-" + phone_num.substring(3, 7) + "-" + phone_num.substring(7, 11) 
-        setPhoneNumState(temp_phone_num)
-        setAddressState(address1 + ", " + address2)
+    // const setDeliveryInfo = (name, phone_num, address1, address2) => {
+    //     console.log("close clicked")
+    //     setNameState(name)
+    //     let temp_phone_num = phone_num.substring(0, 3) + "-" + phone_num.substring(3, 7) + "-" + phone_num.substring(7, 11) 
+    //     setPhoneNumState(temp_phone_num)
+    //     setAddressState(address1 + ", " + address2)
 
-    }
+    // }
 
     const closeClicked = (e) => {
         if (e === "신청완료"){
