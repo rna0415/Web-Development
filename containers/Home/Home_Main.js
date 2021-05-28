@@ -118,6 +118,7 @@ const Positioner2_1 = styled.div`
 const Positioner2_2 = styled.div` 
     margin-top:100px;
     color:white;
+    width:
 
     
     
@@ -126,7 +127,7 @@ const Positioner2_2 = styled.div`
 //그림 div (용도는 2개 div사이 간격조절)
 const Position2_3 = styled.div`
     margin-left:20px;
-    width:30%;
+
 `;
 
 
