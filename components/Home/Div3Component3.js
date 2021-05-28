@@ -54,7 +54,7 @@ const ToolbarDiv = styled.div`
     display:flex;
     margin-top: -50px;
     position: absolute;
-    margin-left:15%;
+
 `;
 
 const Toolbar1 = styled.button`
@@ -118,9 +118,11 @@ const div3component3 = () => {
                 
             </Position3_3>
         </Position3_1_1>
-        <ToolbarDiv>
-            <Toolbar1></Toolbar1><Toolbar2></Toolbar2><Toolbar3></Toolbar3>
-        </ToolbarDiv>
+        <div style={{display:'flex', justifyContent: 'center'}}>
+            <ToolbarDiv>
+                <Toolbar1></Toolbar1><Toolbar2></Toolbar2><Toolbar3></Toolbar3>
+            </ToolbarDiv>
+        </div>
     </div>
     )
 }
