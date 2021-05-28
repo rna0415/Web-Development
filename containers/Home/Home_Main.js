@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { Footer, Modal, RecommendationCampaign } from '../../components/Influencer/campaign_status';
@@ -52,10 +52,6 @@ const Font3 = styled.div`
 const BlueFont = styled.div`
     color: #009DC4;
     font-weight:900;
-`;
-
-const PurpleFont = styled.div`
-    color: #7f05e6;
 `;
 
 const BoldFont= styled.div`
@@ -278,46 +274,95 @@ const NextCampaignImage = styled.img`
 const Home_Main = () => {
     const history = useHistory(); 
     
-    const [campaign_status_modal, setCampaignStatusModalState] = useState([])
+    const [Login_modal, setLogin_modal] = useState([])
 
     let recommendation_client_data = []
-    const [ div3Item_index, setDiv3ItemIndexState] = useState(0);
+    const [ div3Item_index, setDiv3ItemIndex] = useState(0);
+    
     const [ div3Item_component, setDiv3Item_component] = useState([])
     const [ recommend_items, setRecommendItemsState ] = useState([]);
     const [ recomendation_client_data_component, setRecomendationClientDataComponent] = useState([])
 
+    //시간
+    const [count, setCount] = useState(0);
+    const savedCallback = useRef();
+
     const setCloseModal = () => {
         console.log("close clicked")
         //setCampaignApplyModalState(false)
-        setCampaignStatusModalState([])
+        setLogin_modal([])
     }
     
     const CampaignStatusClicked = () => {
         console.log("status clicked")
         //setCampaignApplyModalState(true)
         let temp_campaign_status_modal = <LoginModal setCloseModal={setCloseModal} />
-        setCampaignStatusModalState(temp_campaign_status_modal)
+        setLogin_modal(temp_campaign_status_modal)
         
     }
 
     const DivClick = (e) => {
+        console.log('3click:',div3Item_index)
         if (e === "next") {            
             
             if(div3Item_index === 2){
-                
+                setDiv3ItemIndex(0)
             }else{
-                setDiv3ItemIndexState(div3Item_index+1)
+                setDiv3ItemIndex(div3Item_index+1)
             }
 
         }else if (e ==="before"){
             
             if(div3Item_index === 0){
-                
+                setDiv3ItemIndex(2)
             }else{
-                setDiv3ItemIndexState(div3Item_index-1)
+                setDiv3ItemIndex(div3Item_index-1)
             }
         }
     }
+
+    // const DivClick = (e) => {
+    //     console.log('3click:',div3Item_index)
+    //     if (e === "next") {            
+            
+    //         let temp_div_index = div3Item_index[0]
+
+    //         for( let i in div3Item_index){
+    //             if (Number(i) === div3Item_index.length-1){
+    //                 div3Item_index[(div3Item_index.length-1)] = temp_div_index
+                
+    //             }else{
+    //                 div3Item_index[i]= div3Item_index[(Number(i)+1)]
+    //             }
+
+    //         }        
+    //         let temp_div_list = []
+    //         for (let i = 0; i< div3Item_index.length; i++){
+    //             temp_div_list.push(div3Item_index[i])
+    //         }
+    //         console.log('templist',temp_div_list)
+    //         setDiv3ItemIndex(temp_div_list)
+
+    //     }else if (e ==="before"){
+            
+    //         let temp_div_index = div3Item_index[div3Item_index.length-1]
+
+    //         for( let i in div3Item_index){
+    //             if (Number(i) === div3Item_index.length-1){
+    //                 div3Item_index[(div3Item_index.length-1)] = temp_div_index
+                
+    //             }else{
+    //                 div3Item_index[div3Item_index.length-1]= div3Item_index[(div3Item_index.length-1)-(Number(i)+1)]
+    //             }
+
+    //         }
+    //         let temp_div_list = []
+    //         for (let i = 0; i< div3Item_index.length; i++){
+    //             temp_div_list.push(div3Item_index[i])
+    //         }
+    //         setDiv3ItemIndex(temp_div_list)    
+    //     }
+    // }
 
     const brandClick = (e) => {
         if (e === "next") {
@@ -347,6 +392,7 @@ const Home_Main = () => {
             for (let i in recommend_items) {
                 if (Number(i) === (recommend_items.length-1)){
                     recommend_items[(recommend_items.length-1) -i] = temp_client_data
+                    console.log('i',i)
                 }
                 else {
                     recommend_items[(recommend_items.length-1) -i] = recommend_items[(recommend_items.length-1) - (Number(i)+1)]
@@ -399,6 +445,8 @@ const Home_Main = () => {
         return all_recommendation_client_data_from_db
     }
 
+
+
     useEffect(() => {
         console.log('컴포넌트가 화면에서 나타남');
         setRecommendItemsState(getRecommendationClientDataFromDB())
@@ -408,18 +456,69 @@ const Home_Main = () => {
         };
     }, []);
 
-    useEffect(() => {
-        console.log('컴포넌트가 화면에서 나타남');
 
-        let temp_div3Item_component
+    useEffect(() => {
+        const countdown = setInterval(() => {
+            setCount((count) + 1);
+        }, 1000);
+        console.log(countdown)
+        console.log(count)
+
+        if (count % 3 === 0) {            
+            if(div3Item_index === 2){
+                setDiv3ItemIndex(0)
+            }else{
+                setDiv3ItemIndex(div3Item_index+1)
+            }
+        }
+
+        return () => clearInterval(countdown);
+    }, [count]);
+
+
+    // useEffect(() => {
+    //     if (count % 3 === 0) {            
+    //         if(div3Item_index === 2){
+    //             setDiv3ItemIndex(0)
+    //         }else{
+    //             setDiv3ItemIndex(div3Item_index+1)
+    //         }
+    //     }
+        
+        
+    // }, [count]);
+
+    // useEffect(() => {
+    //     savedCallback.current = callback;
+        
+        
+    // });
+
+    // useEffect(() => {
+    //     function tick(){
+    //         savedCallback.current();
+    //     }
+
+    //     let tid = setInterval(tick, 1000);
+    //     return () => clearInterval(tid);
+    // }, []);
+
+    useEffect(() => {
+
+        let temp_div3Item_component = [
+        <Div3Component1></Div3Component1>,
+        <Div3Component2></Div3Component2>,
+        <Div3Component3></Div3Component3>]
+
+
         if (div3Item_index === 0) {
-            temp_div3Item_component = <Div3Component1></Div3Component1>
+            temp_div3Item_component = temp_div3Item_component[0]
         }
         else if (div3Item_index === 1) {
-            temp_div3Item_component = <Div3Component2></Div3Component2>
+            temp_div3Item_component = temp_div3Item_component[1]
         }
         else if (div3Item_index === 2) {
-            temp_div3Item_component = <Div3Component3></Div3Component3>
+            temp_div3Item_component = temp_div3Item_component[2]
         }
 
         setDiv3Item_component(temp_div3Item_component)
@@ -482,7 +581,7 @@ const Home_Main = () => {
                         </Font2>
                         <br></br>                        
                         <Button onClick={CampaignStatusClicked}>캠페인 현황보기</Button>   
-                        {campaign_status_modal}                     
+                        {Login_modal}                     
                     </Positioner1_2>
                 </Positioner1_1>
             </Positioner1>
