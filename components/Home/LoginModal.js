@@ -55,9 +55,8 @@ const CloseButton = styled.img`
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 40px;
-    height: 40px;
-    background: #7f05e6;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
 `;
 
@@ -410,7 +409,8 @@ const LoginModal = ({setCloseModal}) => {
                     <CloseButton onClick={(e) => closeClicked(e)} src="/images/campaign/x.png" />
                 </Positioner1> */}
                 <AuthWrapper>          
-                    <CloseButton onClick={(e) => closeClicked(e)} src="/images/campaign/x.png" />                          
+                    {/* <button className="close" onClick={(e) => closeClicked(e)}> close </button> */}
+                    <CloseButton onClick={(e) => closeClicked(e)} src="/images/homepage/x.png" />
                     <Table align="center">
                         <Tbody>
                             <Tr>
