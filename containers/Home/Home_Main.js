@@ -284,9 +284,11 @@ const Home_Main = () => {
     const [ recommend_items, setRecommendItemsState ] = useState([]);
     const [ recomendation_client_data_component, setRecomendationClientDataComponent] = useState([])
 
+    const [pathname, setPathName] = useState("/influencer/main/campaign_status")
+
     //시간
     const [count, setCount] = useState(0);
-    const savedCallback = useRef();
+    // const savedCallback = useRef();
 
     const setCloseModal = () => {
         console.log("close clicked")
@@ -297,9 +299,8 @@ const Home_Main = () => {
     const CampaignStatusClicked = () => {
         console.log("status clicked")
         //setCampaignApplyModalState(true)
-        let temp_campaign_status_modal = <LoginModal setCloseModal={setCloseModal} />
+        let temp_campaign_status_modal = <LoginModal setCloseModal={setCloseModal} pathname = {pathname} />
         setLogin_modal(temp_campaign_status_modal)
-        
     }
 
     const DivClick = (e) => {
@@ -321,49 +322,6 @@ const Home_Main = () => {
             }
         }
     }
-
-    // const DivClick = (e) => {
-    //     console.log('3click:',div3Item_index)
-    //     if (e === "next") {            
-            
-    //         let temp_div_index = div3Item_index[0]
-
-    //         for( let i in div3Item_index){
-    //             if (Number(i) === div3Item_index.length-1){
-    //                 div3Item_index[(div3Item_index.length-1)] = temp_div_index
-                
-    //             }else{
-    //                 div3Item_index[i]= div3Item_index[(Number(i)+1)]
-    //             }
-
-    //         }        
-    //         let temp_div_list = []
-    //         for (let i = 0; i< div3Item_index.length; i++){
-    //             temp_div_list.push(div3Item_index[i])
-    //         }
-    //         console.log('templist',temp_div_list)
-    //         setDiv3ItemIndex(temp_div_list)
-
-    //     }else if (e ==="before"){
-            
-    //         let temp_div_index = div3Item_index[div3Item_index.length-1]
-
-    //         for( let i in div3Item_index){
-    //             if (Number(i) === div3Item_index.length-1){
-    //                 div3Item_index[(div3Item_index.length-1)] = temp_div_index
-                
-    //             }else{
-    //                 div3Item_index[div3Item_index.length-1]= div3Item_index[(div3Item_index.length-1)-(Number(i)+1)]
-    //             }
-
-    //         }
-    //         let temp_div_list = []
-    //         for (let i = 0; i< div3Item_index.length; i++){
-    //             temp_div_list.push(div3Item_index[i])
-    //         }
-    //         setDiv3ItemIndex(temp_div_list)    
-    //     }
-    // }
 
     const brandClick = (e) => {
         if (e === "next") {
@@ -462,7 +420,6 @@ const Home_Main = () => {
         const countdown = setInterval(() => {
             setCount((count) + 1);
         }, 1000);
-        console.log(countdown)
         console.log(count)
 
         if (count % 3 === 0) {            
