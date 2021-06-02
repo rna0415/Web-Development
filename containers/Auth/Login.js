@@ -163,8 +163,8 @@ const Login = () => {
         setSuccess(false)
         let client_id
         if (email.split("@").length === 2){
-            client_id = email.split("@")[0] + email.split("@")[1].split(".")[0]
-            
+            // client_id = email.split("@")[0] + email.split("@")[1].split(".")[0]
+            client_id = email
             let request = 'GET'
             let backend_api_url = "http://127.0.0.1:8000/api/user/client/" + client_id + "/"
             let backend_api_response = await ExecuteBackendAPI(backend_api_url, client_id, request);
