@@ -50,11 +50,11 @@ const SelectWithLabel1 = ({...rest}) => (
     <Wrapper>
         <Label><Select {...rest}>
             <Option value= "선택안함">Drop-Down Box</Option>
-            <Option value= "1">개인사업/자영업</Option>
-            <Option value= "2">중소기업</Option>
-            <Option value= "3">대기업</Option>
-            <Option value= "4">광고대행사</Option>
-            <Option value= "기타">기타</Option>
+            <Option value= "개인사업/자영업">개인사업/자영업</Option>
+            <Option value= "중소기업">중소기업</Option>
+            <Option value= "대기업">대기업</Option>
+            <Option value= "광고대행사">광고대행사</Option>
+            <Option value= "">기타</Option>
             
         </Select></Label>
     </Wrapper>

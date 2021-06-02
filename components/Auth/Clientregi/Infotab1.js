@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Input1, Check, CompanyNo, Info1, Label1, SubmitButton, Infotab2} from '.';
+import { Input1, Check, CompanyNo, Info1, Label1, SubmitButton1, Infotab2} from '.';
 import oc from 'open-color';
 import {isEmail, isStrongPassword, isAlphanumeric} from 'validator';
 import { useHistory } from "react-router-dom";
@@ -158,13 +158,23 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
     const [managerContact_info_msg, setManagerContactInfoMSG ] = useState("");
     const [managerContact_check_icon_color,set_managerContact_check_icon_color] =useState("white")
 
-    const [agreement, setAgreement] = useState("");
-    const [agreement1, setAgreement1] = useState("");
-    const [agreement2, setAgreement2] = useState("");
-    const [agreement3, setAgreement3] = useState("");
+    const [agreement, setAgreement] = useState(false);
+    const [agreement1, setAgreement1] = useState(false);
+    const [agreement2, setAgreement2] = useState(false);
+    const [agreement3, setAgreement3] = useState(false);
     const [agreement_info_msg, setAgreementInfoMSG ] = useState("");
     const [agreement_check_icon_color,set_agreement_check_icon_color] =useState("white")
 
+    const [success, setSuccess] = useState({
+        success1: false,
+        success2: false,
+        success3: false,
+        success4: false,
+        success5: false,
+        success6: false,
+        success7: false,
+        success8: false,
+    });
     const [success1, setSuccess1] = useState(false);
     const [success2, setSuccess2] = useState(false);
     const [success3, setSuccess3] = useState(false);
@@ -173,7 +183,8 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
     const [success6, setSuccess6] = useState(false);
     const [success7, setSuccess7] = useState(false);
     const [success8, setSuccess8] = useState(false);
-    const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [trigger, setTrigger] = useState(0);
+    const [buttonDisabled, setButtonDisabled] = useState(false);
     const [tab1Info, setTab1Info] = useState({
         email: "",
         password: "",
@@ -191,41 +202,56 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
     const history = useHistory();
 
-
+    //tab1Info data를 상위 컴포넌트인 MainService2에 전달, MainService는 받은 데이터를 tab1_info 리스트에 넣어서 다시 tab1Info에게 전달 -> 전달받은 데이터를 이용해 state값 초기화를 변경.
     useEffect(() => {
         console.log('setState변화 감지');
         console.log("유즈이펙트 석세스 상태: ",success1)
         console.log("tab1_info: ", tab1_info) 
- 
+        
+        //만약 넘겨받은 데이터가 있다면 아래 코드를 실행
         if (tab1_info != null){
             
-            console.log("객체형:", Object.values(tab1_info))
-            setEmail(Object.values(tab1_info)[0])
-            setPassword(Object.values(tab1_info)[1])
-            setpasswordConfirm(Object.values(tab1_info)[2])
-            setCompanyName(Object.values(tab1_info)[3])
-            setCompanyNumber(Object.values(tab1_info)[4])
-            setMangerName(Object.values(tab1_info)[5])
-            setManagerContact(Object.values(tab1_info)[6])
-            setAgreement(Object.values(tab1_info)[7])
-            setAgreement1(Object.values(tab1_info)[8])
-            setAgreement2(Object.values(tab1_info)[9])
-            setAgreement3(Object.values(tab1_info)[10])
-            setButtonDisabled(true)
+            // console.log("객체형:", Object.values(tab1_info))
+            // setEmail(Object.values(tab1_info)[0])
+            // setPassword(Object.values(tab1_info)[1])
+            // setpasswordConfirm(Object.values(tab1_info)[2])
+            // setCompanyName(Object.values(tab1_info)[3])
+            // setCompanyNumber(Object.values(tab1_info)[4])
+            // setMangerName(Object.values(tab1_info)[5])
+            // setManagerContact(Object.values(tab1_info)[6])
+            // setAgreement(Object.values(tab1_info)[7])
+            // setAgreement1(Object.values(tab1_info)[8])
+            // setAgreement2(Object.values(tab1_info)[9])
+            // setAgreement3(Object.values(tab1_info)[10])
+            setSuccess1(true)
+            setSuccess2(true)
+            setSuccess3(true)
+            setSuccess4(true)
+            setSuccess5(true)
+            setSuccess6(true)
+            setSuccess7(true)
+            setSuccess8(true)
+            setAgreement(tab1_info.agreement) //이것들은 상위 컴포넌트, MainService2로 넘겨줬던 데이터가 MainService2의 새로운 리스트에 저장된후 넘겨받은 데이터
+            setAgreement1(tab1_info.agreement1)
+            setAgreement2(tab1_info.agreement2)
+            setAgreement3(tab1_info.agreement3)
+            
+            console.log("버튼상태3",buttonDisabled)
+
+            setTab1Info(tab1_info)
+            
             console.log("버튼상태1",buttonDisabled)
             tab1_info = null
             console.log("tab_info상태는1:",tab1_info)
-        }else{
-            setButtonDisabled(false)
+
+        }else{           
 
             console.log("버튼상태2",buttonDisabled)
             console.log("tab_info상태는2:",tab1_info)
 
 
         }
-
-
-
+    }, []);
 
 
         // --------------------------------------------------------
@@ -247,54 +273,32 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
         // console.log("tempTab1Info1 바뀐거: ",tab1Info)
         // --------------------------------------------------------
         
-        
 
-        // if(success === false){        
-        //     setButtonDisabled(false)
-        // }
-        // else{
-            
-        //     setButtonDisabled(true)            
-        // }
 
-        // if(success === false){        
-        //     setButtonDisabled(false)
-        // }
-        // else{
-            
-        //     setSuccessful(successful+1) 
-            
-        // }
+    //입력한 데이터를 tab1Info 리스트에 담은 뒤, 담아진 데이터와 success의 조건에따라 버튼 활성화 / 비활성화
+    useEffect(() => {
+        console.log("데이터 상시확인: ",tab1Info)
+        console.log("0:",agreement)
+        console.log("1:",agreement1)
+        console.log("2:",agreement2)
+        console.log("3:",agreement3)
 
-        // for (let key in successlist) {
-        //     console.log(successlist[key])
-        // }
-        
-        if (success1 === true && success2 === true && success3 === true && success4 === true && success5 === true && success7 === true && success8 === true && agreement2 === "checked" && agreement3 === "checked"){
+        if (success1 === true && success2 === true && success3 === true && success4 === true && success5 === true && success7 === true && success8 === true && tab1Info.agreement2 === true && tab1Info.agreement3 === true){
             setButtonDisabled(true)
             console.log("버튼상태3",buttonDisabled)
-            // let tempTab1Info = {
-            //     email: email,
-            //     password: password,
-            //     passwordConfirm: passwordConfirm,
-            //     companyName: companyName,
-            //     companyNumber: companyNumber,
-            //     managerName: managerName,
-            //     managerContact: managerContact,
-            //     agreement: agreement,
-            //     agreement1: agreement1,
-            //     agreement2: agreement2,
-            //     agreement3: agreement3
-            // }
-            // setTab1Info(tempTab1Info)
-            // console.log("tempTab1Info 바뀌기전: ",tempTab1Info)
+
+        }else{
+            setButtonDisabled(false)
+   
         }
 
-    }, [success1,success2,success3,success4,success5,success7,success8, agreement2, agreement3]);
+    }, [success1, success2, success3, success4, success5, success7, success8, agreement2, agreement3, agreement, agreement1, tab1Info]);
 
+    //input값 입력시 setState와 동시에 tab1Info 리스트에 데이터를 담음
     const handleChange = (e) => {
         if (e.target.name === "email"){
             setEmail(e.target.value);
+            setTrigger(trigger+1)
             let temp_tab1Info = tab1Info
             temp_tab1Info.email = e.target.value
             setTab1Info(temp_tab1Info);
@@ -302,6 +306,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
         }else if (e.target.name === "password"){
             setPassword(e.target.value);
+            setTrigger(trigger+1)
             let temp_tab1Info = tab1Info
             temp_tab1Info.password = e.target.value
             setTab1Info(temp_tab1Info);  
@@ -309,6 +314,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
         }else if (e.target.name === "passwordConfirm"){
             setpasswordConfirm(e.target.value);
+            setTrigger(trigger+1)
             let temp_tab1Info = tab1Info
             temp_tab1Info.passwordConfirm = e.target.value
             setTab1Info(temp_tab1Info);
@@ -316,6 +322,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
         }else if (e.target.name === "companyName"){
             setCompanyName(e.target.value);
+            setTrigger(trigger+1)
             let temp_tab1Info = tab1Info
             temp_tab1Info.companyName = e.target.value
             setTab1Info(temp_tab1Info);            
@@ -323,6 +330,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
         }else if (e.target.name === "companyNumber"){
             setCompanyNumber(e.target.value);
+            setTrigger(trigger+1)
             let temp_tab1Info = tab1Info
             temp_tab1Info.companyNumber = e.target.value
             setTab1Info(temp_tab1Info);            
@@ -336,6 +344,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
         }else if (e.target.name === "managerName"){
             setMangerName(e.target.value);
+            setTrigger(trigger+1)
             let temp_tab1Info = tab1Info
             temp_tab1Info.managerName = e.target.value
             setTab1Info(temp_tab1Info);            
@@ -343,6 +352,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
         }else if (e.target.name === "managerContact"){
             setManagerContact(e.target.value);
+            setTrigger(trigger+1)
             let temp_tab1Info = tab1Info
             temp_tab1Info.managerContact = e.target.value
             setTab1Info(temp_tab1Info);            
@@ -352,6 +362,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
     }
 
+    //인풋박스 클릭후 그외 바깥을 클릭할시 활성화_ 조건에 따라 에러메세지 송출, 체크박스 활성화
     const CursorFocusOut = (e) => {
         if (e.target.name === "email"){
             if (e.target.value === "") {
@@ -537,12 +548,190 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
         }
     }
     
-    const allChecked = (e) =>{
-        let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement = e.target.checked_bool
-            setTab1Info(temp_tab1Info);     
+    //체크박스 클릭시, 클릭한 체크박스 외의 함수를 실행, tab1Info리스트에 boolean 값 추가
+    const checkboxCheck = (e) =>{
         
-        if (agreement === "checked"){
+        //0번 체크박스인 전체동의 체크박스
+        if(e.target.name === "agreement"){
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement = false
+            setTab1Info(temp_tab1Info); 
+
+            //전체동의가 체크되어있을경우에 클리했을때, 모든 체크 비활성화
+            if(agreement === true){ 
+                setAgreement(false)
+                setAgreement1(false)
+                setAgreement2(false)
+                setAgreement3(false)
+                setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")   
+                let temp_tab1Info = tab1Info
+                temp_tab1Info.agreement = false
+                temp_tab1Info.agreement1 = false
+                temp_tab1Info.agreement2 = false
+                temp_tab1Info.agreement3 = false
+                setTab1Info(temp_tab1Info); 
+
+            //전체동의가 비어있을때 클릭했을때, 모든 체크 활성화
+            }else{ 
+                setAgreement(true) 
+                setAgreement1(true)
+                setAgreement2(true)
+                setAgreement3(true)
+                setAgreementInfoMSG("")   
+                let temp_tab1Info = tab1Info
+                temp_tab1Info.agreement = true
+                temp_tab1Info.agreement1 = true
+                temp_tab1Info.agreement2 = true
+                temp_tab1Info.agreement3 = true
+                setTab1Info(temp_tab1Info); 
+
+            }
+        }
+        //1번 체크박스인 선택 체크박스
+        else if(e.target.name === "agreement1"){            
+
+            //누를때마다 전체체크 비활성화            
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement = false
+            setTab1Info(temp_tab1Info); 
+
+            setAgreement(false)
+
+            //선택한 1번 체크가 활성화되어있을때 눌렀을때 그 체크 비활성화
+            if(agreement1 === true){
+                
+                let temp_tab1Info = tab1Info
+                temp_tab1Info.agreement1 = false
+                setTab1Info(temp_tab1Info); 
+                 
+                setAgreement1(false)
+
+            //선택한 1번 체크가 비호라성화되어있었을때 눌렀을때, 그 체크 활성화
+            }else{ 
+
+                let temp_tab1Info = tab1Info
+                temp_tab1Info.agreement1 = true
+                setTab1Info(temp_tab1Info); 
+
+                setAgreement1(true)
+                
+                // 선택한 1번 체크가 비활성화 되어있을때, 2,3번 체크가 활성화되어있을때 클릭하면 전체 체크 활성화
+                if(agreement2 === true && agreement3 === true){
+                   
+                    let temp_tab1Info = tab1Info
+                    temp_tab1Info.agreement = true
+                    setTab1Info(temp_tab1Info); 
+
+                    setAgreement(true)
+                }
+            }
+        }
+        //2번 체크박스인 첫번째 필수 체크박스
+        else if(e.target.name === "agreement2"){
+
+            //누를때마다 전체체크 비활성화 
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement = false
+            setTab1Info(temp_tab1Info); 
+
+            setAgreement(false)
+
+            //선택한 2번체크가 활성화되어있을때 클릭할때 체크 비활성화
+            if(agreement2 === true){
+
+                let temp_tab1Info = tab1Info
+                temp_tab1Info.agreement2 = false
+                setTab1Info(temp_tab1Info); 
+
+                setAgreement2(false)
+
+                setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")
+            
+            // 선택한 2번체크가 비활성화 되어있을시에 클릭할때, 2번체크 활성화
+            }else{
+
+                let temp_tab1Info = tab1Info
+                temp_tab1Info.agreement2 = true
+                setTab1Info(temp_tab1Info); 
+                
+                setAgreement2(true)
+
+                setAgreementInfoMSG("")
+
+                // 선택한 2번체크가 비활성화 되어있을시에 클릭할때, 만약 1,3번 체크가 활성화 되어있다면 전체동의 활성화
+                if(agreement1 === true && agreement3 === true){
+                    
+                    let temp_tab1Info = tab1Info
+                    temp_tab1Info.agreement = true
+                    setTab1Info(temp_tab1Info); 
+
+                    setAgreement(true)
+
+                    setAgreementInfoMSG("")
+                }
+                //선택한 2번체크가 비활성화 되어있고 거기에 만약 3번 체크박스가 비어있다면 알림메세지
+                else if(agreement3 === false){
+                    setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")
+                }
+            }
+        }
+        //3번 체크박스인 두번째 필수 체크박스
+        else if(e.target.name === "agreement3"){
+            
+            //누를때마다 전체체크 비활성화            
+            let temp_tab1Info = tab1Info
+            temp_tab1Info.agreement = false
+            setTab1Info(temp_tab1Info); 
+
+            setAgreement(false)
+
+            //만약 3번 체크박스가 활성화되어있을시에 클릭하면 체크해제, 알림메세지 송출
+            if(agreement3 === true){
+
+                let temp_tab1Info = tab1Info
+                temp_tab1Info.agreement3 = false
+                setTab1Info(temp_tab1Info); 
+
+                setAgreement3(false)
+
+                setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")
+            
+            //만약 3번 체크박스가 비활성화 되어있을시에 클릭하면 체크
+            }else{
+
+                let temp_tab1Info = tab1Info
+                temp_tab1Info.agreement3 = true
+                setTab1Info(temp_tab1Info); 
+
+                setAgreement3(true)
+
+                setAgreementInfoMSG("")
+                
+                //3번 체크박스가 비활성화 되어있고 1,2번 체크가 활성화 되어있을시에 3번 체크박스 클릭하면 전체동의 체크, 알림메세지 비활성화
+                if(agreement1 === true && agreement2 === true){
+
+                    let temp_tab1Info = tab1Info
+                    temp_tab1Info.agreement = true
+                    setTab1Info(temp_tab1Info); 
+
+                    setAgreement(true)
+
+                    setAgreementInfoMSG("")
+
+                }// 3번 체크박스가 비활성화 되어있고 2번체크가 비활성화 되어있을시에 3번 체크박스 클릭하면 알림메세지 송출                               
+                else if(agreement2 === false){
+                    setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")
+                }
+            }
+        }
+
+    }
+
+    const allChecked = (e) =>{
+
+                
+        setAgreement("")
+        if (e.target.checked === false){
             setAgreement("")
             setAgreement1("");
             setAgreement2("");
@@ -562,19 +751,16 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
     const inidivualChecked1 = (e) =>{
         
         setAgreement("");
+
         if (agreement1 === "checked"){
             setAgreement1("")  
-            let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement1 = e.target.checked_bool
-            setTab1Info(temp_tab1Info); 
+
         }else{
             if (agreement2 === "checked" && agreement3 === "checked"){
                 setAgreement("checked")
             }
             setAgreement1("checked")
-            let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement1 = e.target.checked_bool
-            setTab1Info(temp_tab1Info); 
+
         }
      
     }
@@ -587,9 +773,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
             console.log('2-1:',agreement2)
             setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.") 
             // set_agreement_check_icon_color('white') 
-            let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement2 = e.target.checked_bool
-            setTab1Info(temp_tab1Info); 
+
 
         }else{
 
@@ -597,9 +781,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
             console.log('2-z',agreement2)
             setAgreementInfoMSG("") 
             // set_agreement_check_icon_color('#7f05e6') 
-            let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement2 = e.target.checked_bool
-            setTab1Info(temp_tab1Info); 
+
             
             if (agreement1 === "checked" && agreement3 === "checked"){
                 setAgreement("checked")
@@ -623,9 +805,9 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
             console.log('3-1:',agreement3)
             setAgreementInfoMSG("필수 동의 항목에 모두 체크해 주세요.")
             // set_agreement_check_icon_color('white')  
-            let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement3 = e.target.checked_bool
-            setTab1Info(temp_tab1Info); 
+            // let temp_tab1Info = tab1Info
+            // temp_tab1Info.agreement3 = e.target.checked_bool
+            // setTab1Info(temp_tab1Info); 
             
         }else{
 
@@ -633,9 +815,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
             console.log('3-z',agreement3)
             setAgreementInfoMSG("") 
             // set_agreement_check_icon_color('#7f05e6') 
-            let temp_tab1Info = tab1Info
-            temp_tab1Info.agreement3 = e.target.checked_bool
-            setTab1Info(temp_tab1Info); 
+
 
             if (agreement1 === "checked" && agreement2 === "checked"){
                 setAgreement("checked")
@@ -732,7 +912,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                         type="text" 
                                         name="email"
                                         placeholder="이메일"
-                                        value={email}
+                                        value={tab1Info.email}
                                         onBlur={CursorFocusOut}
                                         onChange={handleChange}
                                     />
@@ -756,7 +936,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                         type="password" 
                                         name="password"
                                         placeholder="비밀번호"
-                                        value={password}
+                                        value={tab1Info.password}
                                         onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
@@ -780,7 +960,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                         type="password" 
                                         name="passwordConfirm"
                                         placeholder="비밀번호 재확인"
-                                        value={passwordConfirm}
+                                        value={tab1Info.passwordConfirm}
                                         onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
@@ -811,7 +991,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                         type="text" 
                                         name="companyName"
                                         placeholder="회사명"
-                                        value={companyName}
+                                        value={tab1Info.companyName}
                                         onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
@@ -834,7 +1014,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                     <Input1
                                         type="text"
                                         name="companyNumber"
-                                        value={companyNumber}
+                                        value={tab1Info.companyNumber}
                                         onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
@@ -858,7 +1038,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                     <Input1 disabled
                                         type="text" 
                                         name="fileHrefRead" 
-                                        value={selectedFile}
+                                        value={tab1Info.selectedFile}
                                         placeholder="사업자 등록증 이미지를 첨부해 주세요"
                                         size="64"
                                     /></TD>
@@ -868,7 +1048,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                         type="file" 
                                         name="fileHref" 
                                         // onChange={handleFileput} //이거는 경로지정필요
-                                        value={selectedFile}
+                                        value={tab1Info.selectedFile}
                                         style = {{display:'none'}}
                                         // ref={hiddenFileInput}
                                     /></TD>
@@ -895,7 +1075,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                         type="text" 
                                         name="managerName"
                                         placeholder="담당자명"
-                                        value={managerName}
+                                        value={tab1Info.managerName}
                                         onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
@@ -919,7 +1099,7 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                                         type="text" 
                                         name="managerContact"
                                         placeholder="담당자 연락처"
-                                        value={managerContact}
+                                        value={tab1Info.managerContact}
                                         onBlur={CursorFocusOut} 
                                         onChange={handleChange}
                                     />
@@ -942,9 +1122,8 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                     name="agreement"
                     width="10%"
                     required={true}
-                    checked_bool={agreement}
-                    value = {agreement}                                  
-                    onChange={allChecked}                    
+                    checked_bool={tab1Info.agreement}                        
+                    onChange={checkboxCheck}                    
                     ></Check><Info1 label={agreement_info_msg} color ="red"/></div>
                     {/* <FontAwesomeIcon style={{color:agreement_check_icon_color, left: "50px",
                                         position: "relative",left:"620px",bottom:"12px"}}  icon={faCheck} /> */}
@@ -952,34 +1131,34 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                     <Check
                     label = "[선택] SampleLife에서 추천하는 캠페인 및 이벤트 정보 수신 동의"
                     type = "checkbox"
-                    name = "agreement2"
-                    checked_bool={agreement1}
-                    onChange={inidivualChecked1}                    
+                    name = "agreement1"
+                    checked_bool={tab1Info.agreement1}
+                    onChange={checkboxCheck}                    
                     ></Check>
                     <Check
                     label = "[필수] SampleLife의 서비스 이용약관 동의"
                     type = "checkbox"
-                    name = "agreement3"
-                    checked_bool={agreement2}
-                    onChange={inidivualChecked2}                    
+                    name = "agreement2"
+                    checked_bool={tab1Info.agreement2}
+                    onChange={checkboxCheck}                    
                     ></Check>
 
                     <Check
                     label = "[필수] SampleLife의 개인정보처리방침 동의"
                     type = "checkbox"
-                    name = "agreement4"
-                    checked_bool={agreement3}
-                    onChange={inidivualChecked3}                    
+                    name = "agreement3"
+                    checked_bool={tab1Info.agreement3}
+                    onChange={checkboxCheck}                    
                     ></Check>
                 </div>
                 {/* <button style = {submitStyle} type="submit" onClick={handleSubmit}>저장</button> */}
             
-            <SubmitButton
+            <SubmitButton1
             disabled = {buttonDisabled}
             setActiveTab = {setActiveTab}
             setTab1Information = {setTab1Information}
             tab1Info = {tab1Info}
-            ></SubmitButton>
+            ></SubmitButton1>
             </div>
         </div>
     );

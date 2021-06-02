@@ -50,12 +50,12 @@ const SelectWithLabel2 = ({label, ...rest}) => (
     <Wrapper>
         <Label>{label} <Select {...rest}>
             <Option value= "선택안함">Drop-Down Box</Option>
-            <Option value= "1">온라인광고</Option>
-            <Option value= "2">포털 검색</Option>
-            <Option value= "3">문자, 이메일</Option>
-            <Option value= "4">지인 추천</Option>
-            <Option value= "5">행사(박람회, 세미나</Option>            
-            <Option value= "기타">기타</Option>
+            <Option value= "온라인광고">온라인광고</Option>
+            <Option value= "포털 검색">포털 검색</Option>
+            <Option value= "문자, 이메일">문자, 이메일</Option>
+            <Option value= "지인 추천">지인 추천</Option>
+            <Option value= "행사(박람회, 세미나)">행사(박람회, 세미나)</Option>            
+            <Option value= "">기타</Option>
             
         </Select></Label>
     </Wrapper>

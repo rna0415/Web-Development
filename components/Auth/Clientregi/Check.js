@@ -81,17 +81,39 @@ const Input = styled.input`
 `;
 
 const Check = ({label,checked_bool, ...rest}) => {
-    const checkedb = checked_bool;
-    const background_color = ""
-    // console.log("Test Checked")
-    // console.log(checkedb)
+    const checked = checked_bool;
     
-    return(
-        <Div><Label>
-        <input style={checkStyle} {...rest} checked= {checkedb} ></input> {label}
-        <br></br>
-        </Label></Div>
-    )
+    if(checked === false){
+        return(
+            <Div><Label>
+            <input style={checkStyle} {...rest} ></input> {label}
+            <br></br>
+            </Label></Div>
+        )
+    }else{
+        return(
+            <Div><Label>
+            <input style={checkStyle} {...rest} checked= {checked} ></input> {label}
+            <br></br>
+            </Label></Div>
+        )
+
+    }
+
 }
 
 export default Check;
+
+// const Check = ({label,checked_bool, ...rest}) => {
+//     const checkedb = checked_bool;
+//     const background_color = ""
+
+//     return(
+//         <Div><Label>
+//         <input style={checkStyle} {...rest} checked= {checkedb} ></input> {label}
+//         <br></br>
+//         </Label></Div>
+//     )
+// }
+
+// export default Check;

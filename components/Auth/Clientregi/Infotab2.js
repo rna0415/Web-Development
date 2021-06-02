@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react';
 import styled from 'styled-components';
-import { Input1, Input2, Info1, Label1, SelectWithLabel1, SelectWithLabel2, Modal, Infotab1} from '.';
+import { Input1, Input2, Info1, Label1, SelectWithLabel1, SelectWithLabel2, Infotab1, SubmitButton2} from '.';
 import oc from 'open-color';
 import { Label } from '../Find';
 import { useHistory } from "react-router-dom";
@@ -68,14 +68,6 @@ const formStyle = {
     display: 'block'
 };
 
-
-
-const Div = styled.div`
-    width: 90%;
-    margin: 10px auto;
-    display: flex;
-`;
-
 const Positioner = styled.div`
 `;
 
@@ -104,28 +96,25 @@ const TdLable = styled.td`
     width: 130px;
 `;
 // 셀
-const TdButton = styled.td`
-    width: 100px;
-`;
+
 
 
 
 const Infotab2 = ({tab1_info}) => {
-    const [ email_info_msg, setEmailInfoMSG ] = useState("");
     const [url, setUrl] = useState("");
     const [category1, setCategory1] = useState("선택안함");
     const [category2, setCategory2] = useState("선택안함");
     const [success1, setSuccess1] = useState(false);
     const [success2, setSuccess2] = useState(false);
     const [success3, setSuccess3] = useState(false);
-    const [buttonColor1, setButtonColor1] = useState("clicked");
     const [button_click_num, setButtonClickNum] = useState(0);
+    const [selected_button, setSelectedButton] = useState([]);
+    // const [selected_button_list, setSelectedButton] = useState([]);
     const [theComponent1, setTheComponent1] = useState(false);
-    const [components1, setComponents1] = useState("");
-    const [components2, setComponents2] = useState("");
+    // const [components1, setComponents1] = useState("");
+    // const [components2, setComponents2] = useState("");
     const [theComponent2, setTheComponent2] = useState(false);
     const history = useHistory();
-    const [ modalOpen, setModalOpen ] = useState(false);
 
 
     // const value = {
@@ -140,8 +129,16 @@ const Infotab2 = ({tab1_info}) => {
     // }
     useEffect(() => {
         console.log("tab2페이지에서 tab1: ", tab1_info);
-
-    }, []);
+        console.log("category1:",category1)
+    }, [category1]);
+    useEffect(() => {
+        console.log("tab2페이지에서 tab1: ", tab1_info);
+        console.log('category2:',category2)
+    }, [category2]);
+    useEffect(() => {
+        console.log("tab2페이지에서 tab1: ", tab1_info);
+        console.log('selected_button:',selected_button)
+    }, [selected_button]);
 
 
 
@@ -156,74 +153,77 @@ const Infotab2 = ({tab1_info}) => {
             }
         } else if (e.target.name === "category1"){
             setCategory1(e.target.value);
-            if (e.target.value === "기타"){
-                setTheComponent1(true)               
-    
+            
+            if (e.target.value === ""){
+                setTheComponent1(true)    
+                setSuccess2(false)
+            
             } else if (e.target.value === "선택안함"){
                 setTheComponent1(false)
                 setSuccess2(false) 
     
-            } else if (e.target.value === "1"){
+            } else if (e.target.value === "개인사업/자영업"){
                 setTheComponent1(false)
                 setSuccess2(true)
     
-            } else if (e.target.value === "2"){
+            } else if (e.target.value === "중소기업"){
                 setTheComponent1(false)
                 setSuccess2(true)
     
-            } else if (e.target.value === "3"){
+            } else if (e.target.value === "대기업"){
                 setTheComponent1(false)
                 setSuccess2(true)
     
-            } else if (e.target.value === "4"){
+            } else if (e.target.value === "광고대행사"){
                 setTheComponent1(false)
                 setSuccess2(true)
             }
         }else if(e.target.name === "components1"){
             if(e.target.value === ""){
-                setComponents1(e.target.value)
+                setCategory1(e.target.value)
                 setSuccess2(false)  
             }else{
-                setComponents1(e.target.value)
+                setCategory1(e.target.value)
                 setSuccess2(true)  
             }
         
         } else if (e.target.name === "category2"){
             setCategory2(e.target.value);
-            if (e.target.value === "기타"){
-                setTheComponent2(true)                
+            if (e.target.value === ""){
+                setTheComponent2(true)  
+                setSuccess3(false)              
     
             } else if (e.target.value === "선택안함"){
                 setTheComponent2(false)
                 setSuccess3(false)
     
-            } else if (e.target.value === "1"){
+            } else if (e.target.value === "온라인광고"){
                 setTheComponent2(false)
                 setSuccess3(true)
     
-            } else if (e.target.value === "2"){
+            } else if (e.target.value === "포털 검색"){
                 setTheComponent2(false)
                 setSuccess3(true)
     
-            } else if (e.target.value === "3"){
+            } else if (e.target.value === "문자, 이메일"){
                 setTheComponent2(false)
                 setSuccess3(true)
     
-            } else if (e.target.value === "4"){
+            } else if (e.target.value === "지인 추천"){
                 setTheComponent2(false)
                 setSuccess3(true)
     
-            } else if (e.target.value === "5"){
+            } else if (e.target.value === "행사(박람회, 세미나)"){
                 setTheComponent2(false)
                 setSuccess3(true)
             }
             
         }else if(e.target.name === "components2"){
             if(e.target.value === ""){
-                setComponents2(e.target.value)
+                setCategory2(e.target.value)
                 setSuccess3(false)  
             }else{
-                setComponents2(e.target.value)
+                setCategory2(e.target.value)
                 setSuccess3(true)  
             }
         }
@@ -232,69 +232,50 @@ const Infotab2 = ({tab1_info}) => {
 
     const buttonClicked =(e) =>{
         // e.preventDefault();
-        console.log(e)
-        console.log(buttonColor1)
-        console.log(e.target.value)
+        console.log('id: ',e.target.id)
+        console.log('value:',e.target.value)
         console.log(button_click_num)
-        if (e.target.value === ""){
+
+        
+        let temp_selected_button = selected_button  //값을 넘겨줌
+        console.log("1list:",temp_selected_button) //빈리스트에서 시작
+        
+        let temp_list = [] 
+        for (var i in temp_selected_button) {    //선택한 리스트 내에서 loop 
+            temp_list.push(temp_selected_button[i])     //새로 버튼 클릭하기까지 선택된 버튼 범위 안에서 append함
+        }
+        if (e.target.id === ""){
             if (button_click_num < 3) {
-                e.target.style.background = "#7f05e6"       //보라색
+                e.target.style.background = "#7f05e6" // 보라색
                 e.target.style.color = 'white'
-                e.target.value = "clicked"
+                e.target.id = "clicked"
                 setButtonClickNum(button_click_num+1)
                 //setButtonColor1("")
+                //temp_selected_button.push(e.target.value)
+                temp_list.push(e.target.value) //당장 클릭한거 append함
+                setSelectedButton(temp_list) //선택한 리스트내에서 2개 + 당장선택한거 1개 append함 
+                console.log('selected_button:',selected_button)
             }
         }
-        else if (e.target.value === "clicked"){
+        else if (e.target.id === "clicked"){
             e.target.style.background = "#ffffff" // 흰색
             e.target.style.color = "black"
-            e.target.value = ""
+            e.target.id = ""
             if (button_click_num != 0) { 
                 setButtonClickNum(button_click_num-1)
             //setButtonColor1("clicked")
+                temp_list.pop(e.target.value)
+                setSelectedButton(temp_list)
+                // console.log('selected_button:',selected_button)
             }
         }
-        console.log(button_click_num)
+        
         
     }
 
-    const closeModal = () => {
-        setModalOpen(false);
-    }
-
-    const handleSubmit = () => {       
-        if(success1 === false){
-            setModalOpen(true);
-        }
-        if(success2 === false){
-            setModalOpen(true);
-        }
-        if(success3 === false){
-            setModalOpen(true);
-        }if(button_click_num <= 0){
-            setModalOpen(true);
-        }
-        
-        if(success1 === true && success2 === true && success3 === true && button_click_num >= 1){
-            history.push({pathname: "/auth/MainService",
-                state: {companyName:tab1_info.companyName}});
-            
-            
-
-        }
-
-
-        // else if(success === true){
-        //     history.push({pathname: "/auth/MainService"});
-            
-
-        // }
-    //한번만에 
-    }
 
     return (                
-        <div style = {appStyle}>     
-        <Modal open={ modalOpen } close={ closeModal }></Modal>       
+        <div style = {appStyle}>           
             <div style = {formStyle}>
         
                 <Positioner>
@@ -345,7 +326,6 @@ const Infotab2 = ({tab1_info}) => {
                                     type='text' 
                                     placeholder="기타업종 직접 입력" 
                                     name = "components1"
-                                    value = {components1}
                                     onChange={handleChange} 
                                     component={theComponent1}></Input2>
                                 </TD>                               
@@ -362,48 +342,78 @@ const Infotab2 = ({tab1_info}) => {
                                 <TD colSpan ="3">
                                 <Tr>
                                 <TD>                            
-                                <Button onClick={buttonClicked}>화장품</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="화장품">화장품</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>패션</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="패션"
+                                >패션</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>핫플레이스</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="핫플레이스"
+                                >핫플레이스</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>요리/음식</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="요리/음식">요리/음식</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>여행</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="여행">여행</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>뷰티</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="뷰티">뷰티</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>육아</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="육아">육아</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>반려동물</Button>  
+                                <Button 
+                                onClick={buttonClicked}
+                                value="반려동물">반려동물</Button>  
                                 </TD>                                
                                 </Tr>
                                 <Tr> 
                                 <TD>  
-                                <Button onClick={buttonClicked}>인테리어</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="인테리어">인테리어</Button>
                                 </TD>                     
                                 <TD>
-                                <Button onClick={buttonClicked}>엔터</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="엔터">엔터</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>스포츠</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="스포츠">스포츠</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>사진</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="사진">사진</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>IT</Button>
+                                <Button 
+                                onClick={buttonClicked}
+                                value="IT">IT</Button>
                                 </TD>
                                 <TD>
-                                <Button onClick={buttonClicked}>자동차</Button>
+                                <Button
+                                onClick={buttonClicked}
+                                value="자동차">자동차</Button>
                                 </TD>                                
                                 </Tr>
                                 </TD>
@@ -425,8 +435,7 @@ const Infotab2 = ({tab1_info}) => {
                                 <TD>
                                     <Input2 
                                     style={{width: '95%'}} 
-                                    name="components2"
-                                    value={components2}
+                                    name="components2"                                    
                                     type='text' 
                                     placeholder="기타 경로 직접 입력"
                                     onChange={handleChange}  
@@ -438,7 +447,13 @@ const Infotab2 = ({tab1_info}) => {
                     </Table>
                 </Positioner>
 
-                <button style = {submitStyle} type="submit" onClick = {handleSubmit}>필수정보 저장</button>
+                <SubmitButton2
+                success1 = {success1}
+                success2 = {success2}
+                success3 = {success3}
+                button_click_num = {button_click_num}
+                tab1_info = {tab1_info}>
+                </SubmitButton2>
              </div>
          </div>
                         
