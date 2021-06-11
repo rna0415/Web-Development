@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Home_Main } from '../containers/Home';
 import styled from 'styled-components';
+import HeaderContainer from '../containers/Base/HeaderContainer';
 
 const Positioner = styled.div`
     width: 100%;
@@ -18,6 +19,7 @@ class Home extends Component {
         return (
             <div>
                 <Route exact path="/" component={Home_Main}/>  
+                <HeaderContainer/>
             </div>
         );
     }
