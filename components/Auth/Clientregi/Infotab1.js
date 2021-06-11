@@ -599,7 +599,6 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
             //선택한 1번 체크가 활성화되어있을때 눌렀을때 그 체크 비활성화
             if(agreement1 === true){
-                
                 let temp_tab1Info = tab1Info
                 temp_tab1Info.agreement1 = false
                 setTab1Info(temp_tab1Info); 
@@ -608,7 +607,6 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
 
             //선택한 1번 체크가 비호라성화되어있었을때 눌렀을때, 그 체크 활성화
             }else{ 
-
                 let temp_tab1Info = tab1Info
                 temp_tab1Info.agreement1 = true
                 setTab1Info(temp_tab1Info); 
@@ -649,7 +647,6 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
             
             // 선택한 2번체크가 비활성화 되어있을시에 클릭할때, 2번체크 활성화
             }else{
-
                 let temp_tab1Info = tab1Info
                 temp_tab1Info.agreement2 = true
                 setTab1Info(temp_tab1Info); 
@@ -698,7 +695,6 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
             
             //만약 3번 체크박스가 비활성화 되어있을시에 클릭하면 체크
             }else{
-
                 let temp_tab1Info = tab1Info
                 temp_tab1Info.agreement3 = true
                 setTab1Info(temp_tab1Info); 
@@ -709,13 +705,12 @@ const Infotab1 = ({setActiveTab, setTab1Information,tab1_info}) => {
                 
                 //3번 체크박스가 비활성화 되어있고 1,2번 체크가 활성화 되어있을시에 3번 체크박스 클릭하면 전체동의 체크, 알림메세지 비활성화
                 if(agreement1 === true && agreement2 === true){
-
                     let temp_tab1Info = tab1Info
                     temp_tab1Info.agreement = true
                     setTab1Info(temp_tab1Info); 
 
                     setAgreement(true)
-
+                    
                     setAgreementInfoMSG("")
 
                 }// 3번 체크박스가 비활성화 되어있고 2번체크가 비활성화 되어있을시에 3번 체크박스 클릭하면 알림메세지 송출                               

@@ -452,7 +452,11 @@ const Infotab2 = ({tab1_info}) => {
                 success2 = {success2}
                 success3 = {success3}
                 button_click_num = {button_click_num}
-                tab1_info = {tab1_info}>
+                tab1_info = {tab1_info}
+                url = {url}
+                category1= {category1}
+                selected_button={selected_button}
+                category2={category2}>
                 </SubmitButton2>
              </div>
          </div>
