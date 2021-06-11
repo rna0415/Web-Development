@@ -1,7 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
-import { Footer, Modal, RecommendationCampaign } from '../../components/Influencer/campaign_status';
+import { Footer } from '../../components/Influencer/campaign_status';
+import { AlertModal } from '../../components/Influencer/my_campaign';
 import oc from 'open-color';
 
 const CampaignStatusBox = styled.div`
@@ -128,7 +129,7 @@ const CampaignApplyButton = styled.button`
     display: flex;
     width: 300px;
     height: 100%;
-    background: #7f05e6;
+    background: ${oc.gray[5]};
     color: white;
     float: left;
     font-size: 1.2rem;
@@ -138,8 +139,43 @@ const CampaignApplyButton = styled.button`
     justify-content: center;
     line-height: 45px;
     border: solid 0px;
+`;
+
+const BackButton = styled.button`
+    display: flex;
+    width: 300px;
+    height: 50%;
+    background: white;
+    color: #7f05e6;
+    float: left;
+    font-size: 1.2rem;
+    font-family: 'Rajdhani';
+    font-weight: 1000;
+    text-align: center;
+    justify-content: center;
+    line-height: 45px;
+    border: 1px solid #7f05e6;
     cursor: pointer;
 `;
+
+const CampaignCancelButton = styled.button`
+    display: flex;
+    width: 200px;
+    height: 50%;
+    background: #7f05e6;
+    color: white;
+    float: left;
+    font-size: 1.2rem;
+    font-family: 'Rajdhani';
+    font-weight: 1000;
+    text-align: center;
+    justify-content: center;
+    line-height: 45px;
+    border: 1px solid #7f05e6;
+    cursor: pointer;
+    margin-left: 20px;
+`;
+
 
 const ClippingBox = styled.div`
     display: flex;
@@ -212,9 +248,8 @@ const Positioner3 = styled.div`
 const Container3 = styled.div`
     display: flex;
     width: 950px;
-    height: 90px;
     background: white;
-    justify-content: space-around;
+    height: 90px;
 `;
 
 const Container4 = styled.div`
@@ -224,7 +259,7 @@ const Container4 = styled.div`
     justify-content: space-around;
 `;
 
-const CampaignDetail = () => {
+const MyCampaignDetail = () => {
     const history = useHistory();
     console.log(history)
     const [campaign_apply_modal, setCampaignApplyModalState] = useState([])
@@ -284,12 +319,17 @@ const CampaignDetail = () => {
         setCampaignApplyModalState([])
     }
     
-    const CampaignApplyClicked = () => {
+    const CampaignCancelClicked = () => {
         console.log("apply clicked")
         //setCampaignApplyModalState(true)
-        let temp_campaign_apply_modal = <Modal setCloseModal={setCloseModal} />
+        let temp_campaign_apply_modal = <AlertModal setCloseModal={setCloseModal} />
         setCampaignApplyModalState(temp_campaign_apply_modal)
-        
+    }
+
+    const BackButtonClicked = () => {
+        history.push({
+            pathname: "/influencer/main/my_campaign/"
+        })  
     }
 
     useEffect(() => {
@@ -389,7 +429,7 @@ const CampaignDetail = () => {
                         </RowDiv>
                         <RowDiv style={{ height: "25px"}}></RowDiv>
                         <RowDiv style={{ height: "45px"}}>
-                            <CampaignApplyButton  onClick={() => CampaignApplyClicked()}>캠페인 신청하기</CampaignApplyButton>
+                            <CampaignApplyButton  disabled>캠페인 신청 완료</CampaignApplyButton>
                             <ClippingBox>스크랩</ClippingBox>
                         </RowDiv>
                     </RightBox>
@@ -468,20 +508,50 @@ const CampaignDetail = () => {
                     </RightBox2>
                 </Container2>
             </Positioner2>
+            <Positioner2>
+                <Container2>
+                    <LeftBox2>
+                        <Label2 style={{ fontSize: "1.2rem", color: "black", borderBottom: "solid 2px gray"}}>캠페인 Reward</Label2>
+                    </LeftBox2>
+                    <RightBox2>
+                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>캠페인 가이드를 준수하여 성공적으로 콘텐츠 등록을 완료하면 다음의 혜택이 제공됩니다.</Label2>
+                        <RightBox2 style={{ marginTop: "30px", height: "170px", width: "100%", border: "1px solid gray"}}>
+                            <RowDiv style={{ height: "15px"}}></RowDiv>
+                            <Label2 style={{ marginLeft: "10px", fontSize: "0.7rem", color: "gray"}}>캠페인에 사용된&nbsp;</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "blue"}}>Galaxy 21 Ultra 5</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>은(는)&nbsp;</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "blue"}}>제품협찬방법&nbsp;</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>하며&nbsp;</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "blue"}}>Galaxy 21 Ultra 5</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>의 혜택은&nbsp;</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "blue"}}>60만</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>원에 상당합니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ marginLeft: "10px", fontSize: "0.7rem", color: "gray"}}>또한&nbsp;</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "blue"}}>홍길동</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>님께서 진행한 캠페인 미션의 대가로 지급되는 예상 원고료는 10만원입니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ marginLeft: "10px", fontSize: "0.7rem", color: "gray"}}>캠페인 Reward는 캠페인 가이드 내용을 완수한 건에 한하여 캠페인 기간 완료 이후에 최종 확정되어 정산됩니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ marginLeft: "10px", fontSize: "0.7rem", color: "gray"}}>캠페인을 미이행 하거나, 기간을 준수하지 않으면 제품 가격의 환불 및 콘텐츠 원고료가 지급되지 않을 수 있습니다.</Label2>
+                        </RightBox2>
+                    </RightBox2>
+                </Container2>
+            </Positioner2>
             <Positioner3 >
-                <Container3 style={{ borderBottom: "solid 2px gray"}}>
-                    <CampaignApplyButton style={{ height: "50%"  }} onClick={() => CampaignApplyClicked()} >캠페인 신청하기</CampaignApplyButton>
-                    {campaign_apply_modal}
-                    {/* <Modal setCloseModal={setCloseModal} /> */}
+                <Container3>
+                    <LeftBox2></LeftBox2>
+                    <RightBox2>
+                        <BackButton onClick={() => BackButtonClicked()}> My 캠페인 돌아가기</BackButton>
+                        <CampaignCancelButton onClick={() => CampaignCancelClicked()}> 참여 신청 취소</CampaignCancelButton>
+                        {campaign_apply_modal}
+                    </RightBox2>
                 </Container3>
             </Positioner3>
-            <BlankDiv style={{ height: "45px"}}>
-            </BlankDiv>
-                <RecommendationCampaign></RecommendationCampaign>
             <Footer>
             </Footer>
         </CampaignStatusBox>
     );
 }
 
-export default CampaignDetail;
+export default MyCampaignDetail;

@@ -234,6 +234,7 @@ const Campaign_Status = () => {
             let temp_client_data = recommend_items[0]
             console.log(temp_client_data)
             for (let i in recommend_items) {
+                console.log(i)
                 if (Number(i) === (recommend_items.length-1)){
                     recommend_items[(recommend_items.length-1)] = temp_client_data
                 }else {
