@@ -517,6 +517,8 @@ const Home_Main = () => {
 
         return () => {
           console.log('컴포넌트가 화면에서 사라짐');
+          console.log("*",recommendation_client_data)
+          console.log("&",temp_recommendation_client_data_component)
         };
     }, [recommend_items]);
 
