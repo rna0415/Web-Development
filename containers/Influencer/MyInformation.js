@@ -1,9 +1,10 @@
 import React, { Component, useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import oc from 'open-color';
 import { RecommendationCampaignBox, CampaignBox, TableContentLabel, SortLabel, Footer } from '../../components/Influencer/campaign_status';
 import { MemberTab, MemberInfoTab, MyProfileTab, InqueryTab } from '../../components/Influencer/member_information'
-
+import HeaderContainerLogined from '../../containers/Base/HeaderContainerLogined';
 
 const CampaignStatusBox = styled.div`
     width: 100%;
@@ -71,17 +72,19 @@ const Positioner1_2 = styled.div`
 
 const MyInformation = () => {
 
+    const history = useHistory();
+    
+    const [ facebook_info, setFacebookInfoState ] = useState(history.location.state)
+
     const [activeTab, setActiveTab] = useState("memberInfo")
 
     const tabs = {
-        memberInfo: <MemberInfoTab />,
-        myProfile: <MyProfileTab />,
-        inquery: <InqueryTab />,
+        memberInfo: <MemberInfoTab facebook_info = {facebook_info}/>,
+        myProfile: <MyProfileTab facebook_info = {facebook_info}/>,
+        inquery: <InqueryTab facebook_info = {facebook_info}/>,
     };
 
     const setTabActive = (e) => {
-        console.log("1")
-        console.log(e)
         if (e == "memberInfo"){
             setActiveTab("memberInfo")
         }else if(e == "myProfile"){
@@ -94,26 +97,28 @@ const MyInformation = () => {
 
 
     return(
-        <CampaignStatusBox>
-            <Positioner1>
-                <Container1>
-                    <RowDiv>
-                        
-                    </RowDiv>
-                    <MemberTab 
-                        activeTab={activeTab} 
-                        setTabActive={setTabActive}
-                    /> 
-                </Container1>
-            </Positioner1>
-            <Positioner2>
-                <Container2>
-                    {tabs[activeTab]}
-                </Container2>
-            </Positioner2>   
-            <Footer>
-            </Footer> 
-        </CampaignStatusBox>
+        <div>
+            <HeaderContainerLogined facebook_info = {history.location.state}/>
+            <CampaignStatusBox>
+                <Positioner1>
+                    <Container1>
+                        <RowDiv>
+                        </RowDiv>
+                        <MemberTab 
+                            activeTab={activeTab} 
+                            setTabActive={setTabActive}
+                        /> 
+                    </Container1>
+                </Positioner1>
+                <Positioner2>
+                    <Container2>
+                        {tabs[activeTab]}
+                    </Container2>
+                </Positioner2>   
+                <Footer>
+                </Footer> 
+            </CampaignStatusBox>
+        </div>
     )
 };
 

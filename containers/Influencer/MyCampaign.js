@@ -5,6 +5,7 @@ import { Footer, Modal, RecommendationCampaign } from '../../components/Influenc
 import oc from 'open-color';
 import {Content, IDTab, PasswordTab, AddtionalInfoTab} from "../../components/Auth/JoinInflu";
 import {Tab, Participation_Campaign_Table, Campaign_Settlement_Details_Table, Clipping_Table, Campaign_Message_Table} from "../../components/Influencer/my_campaign";
+import HeaderContainerLogined from '../../containers/Base/HeaderContainerLogined';
 
 const CampaignStatusBox = styled.div`
     width: 100%;
@@ -71,7 +72,8 @@ const Positioner2 = styled.div`
 const MyCampaign = () => {
     const history = useHistory();
     const [ active_tab, setActiveTabState ] = useState("participation_campaign");
-    
+    const [ facebook_info, setFacebookInfoState ] = useState(history.location.state)
+
     const tabs = {
         participation_campaign: <Participation_Campaign_Table />,
         campaign_settlement_details: <Campaign_Settlement_Details_Table />,
@@ -94,26 +96,29 @@ const MyCampaign = () => {
     }
 
     return (
-        <CampaignStatusBox>
-            <Positioner1 style={{backgroundImage: "url( '/images/my_campaign/background.jpg' )"}}>
-                <Container>
-                    <RowDiv style={{marginTop: "45px", height: "45px", justifyContent: "center"}}>
-                        <Label>My 캠페인</Label>
-                    </RowDiv>
-                    <Tab 
-                        active_tab = {active_tab} 
-                        setActiveTab = {setActiveTab}
-                    />
-                </Container>
-            </Positioner1>
-            <Positioner2>
-                <Container style={{width: "1250px"}}>
-                    {tabs[active_tab]}
-                </Container>
-            </Positioner2>
-            <Footer>
-            </Footer>
-        </CampaignStatusBox>
+        <div>
+            <HeaderContainerLogined facebook_info = {facebook_info} />
+            <CampaignStatusBox>
+                <Positioner1 style={{backgroundImage: "url( '/images/my_campaign/background.jpg' )"}}>
+                    <Container>
+                        <RowDiv style={{marginTop: "45px", height: "45px", justifyContent: "center"}}>
+                            <Label>My 캠페인</Label>
+                        </RowDiv>
+                        <Tab 
+                            active_tab = {active_tab} 
+                            setActiveTab = {setActiveTab}
+                        />
+                    </Container>
+                </Positioner1>
+                <Positioner2>
+                    <Container style={{width: "1250px"}}>
+                        {tabs[active_tab]}
+                    </Container>
+                </Positioner2>
+                <Footer>
+                </Footer>
+            </CampaignStatusBox>
+        </div>
     );
 }
 

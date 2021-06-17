@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { Footer, Modal, RecommendationCampaign } from '../../components/Influencer/campaign_status';
 import oc from 'open-color';
+import HeaderContainerLogined from '../../containers/Base/HeaderContainerLogined';
 
 const CampaignStatusBox = styled.div`
     width: 100%;
@@ -312,175 +313,178 @@ const CampaignDetail = () => {
     }, [current_image]);
     
     return (
-        <CampaignStatusBox>
-            <BlankDiv>
-            </BlankDiv>
-            <Positioner1>
-                <Container1>
-                    <LeftBox>
-                        <LeftTopBox>
-                            <CampaignImage src={current_image} />
-                        </LeftTopBox>
-                        <LeftBottomBox>
-                            <LeftBottomPcitureBox>
-                                <CampaignImage style={{border: images[0].border, width: images[0].width, height: images[0].height}} src={images[0].src} onMouseOver={() => componentOvered("0")}/>
-                            </LeftBottomPcitureBox>
-                            <LeftBottomPcitureBox>
-                                <CampaignImage style={{border: images[1].border, width: images[0].width, height: images[0].height}} src={images[1].src} onMouseOver={() => componentOvered("1")}/>
-                            </LeftBottomPcitureBox>
-                            <LeftBottomPcitureBox>
-                                <CampaignImage style={{border: images[2].border, width: images[0].width, height: images[0].height}} src={images[2].src} onMouseOver={() => componentOvered("2")}/>
-                            </LeftBottomPcitureBox>
-                            <LeftBottomPcitureBox>
-                                <CampaignImage style={{border: images[3].border, width: images[0].width, height: images[0].height}} src={images[3].src} onMouseOver={() => componentOvered("3")}/>
-                            </LeftBottomPcitureBox>
-                            <LeftBottomPcitureBox style={{ marginRight: "0px"  }}>
-                                <CampaignImage style={{border: images[4].border, width: images[0].width, height: images[0].height}} src={images[4].src} onMouseOver={() => componentOvered("4")}/>
-                            </LeftBottomPcitureBox>
-                        </LeftBottomBox>
-                    </LeftBox>
-                    <RightBox>
-                        <RowDiv style={{ height: "20px"}}>
-                            <TypeBox>인스타그램</TypeBox>
-                            <TypeBox>제품 리뷰</TypeBox>
-                            <TypeBox>오늘 마감</TypeBox>
-                        </RowDiv>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <RowDiv style={{ height: "25px"}}>
-                            <Label style={{ fontSize: "1.2rem", width: "20%", borderRight: "solid 1px gray"}}>삼성전자</Label>
-                            <Label style={{ fontSize: "1.2rem", width: "200px", marginLeft: "10px"}}>Galaxy 21 Ultra 5</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "5px"}}></RowDiv>
-                        <RowDiv style={{ height: "60px"}}>
-                            <Label style={{ fontSize: "2.0rem"}}>갤럭시 신제품 체험단 모집</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "20px"}}>
-                            <Label style={{ fontSize: "0.8rem", color: "gray"}}>갤럭시 신제품 s21을 받아보고 언박싱 체험후기를 올려주세요.</Label>
+        <div>
+            <HeaderContainerLogined />
+            <CampaignStatusBox>
+                <BlankDiv>
+                </BlankDiv>
+                <Positioner1>
+                    <Container1>
+                        <LeftBox>
+                            <LeftTopBox>
+                                <CampaignImage src={current_image} />
+                            </LeftTopBox>
+                            <LeftBottomBox>
+                                <LeftBottomPcitureBox>
+                                    <CampaignImage style={{border: images[0].border, width: images[0].width, height: images[0].height}} src={images[0].src} onMouseOver={() => componentOvered("0")}/>
+                                </LeftBottomPcitureBox>
+                                <LeftBottomPcitureBox>
+                                    <CampaignImage style={{border: images[1].border, width: images[0].width, height: images[0].height}} src={images[1].src} onMouseOver={() => componentOvered("1")}/>
+                                </LeftBottomPcitureBox>
+                                <LeftBottomPcitureBox>
+                                    <CampaignImage style={{border: images[2].border, width: images[0].width, height: images[0].height}} src={images[2].src} onMouseOver={() => componentOvered("2")}/>
+                                </LeftBottomPcitureBox>
+                                <LeftBottomPcitureBox>
+                                    <CampaignImage style={{border: images[3].border, width: images[0].width, height: images[0].height}} src={images[3].src} onMouseOver={() => componentOvered("3")}/>
+                                </LeftBottomPcitureBox>
+                                <LeftBottomPcitureBox style={{ marginRight: "0px"  }}>
+                                    <CampaignImage style={{border: images[4].border, width: images[0].width, height: images[0].height}} src={images[4].src} onMouseOver={() => componentOvered("4")}/>
+                                </LeftBottomPcitureBox>
+                            </LeftBottomBox>
+                        </LeftBox>
+                        <RightBox>
+                            <RowDiv style={{ height: "20px"}}>
+                                <TypeBox>인스타그램</TypeBox>
+                                <TypeBox>제품 리뷰</TypeBox>
+                                <TypeBox>오늘 마감</TypeBox>
                             </RowDiv>
-                        <RowDiv style={{ height: "10px", borderBottom: "solid 1px gray"}}></RowDiv>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <RowDiv style={{ height: "20px"}}>
-                            <Label style={{ fontSize: "0.9rem", color: "#7f05e6"}}>할인혜택(60만원 상당) + 콘텐츠 원고료</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "20px"}}>
-                            <Label style={{color: "orange"}}>*콘텐츠 원고료는 인플루언서의 등급에 따라 차등 지급되어 선정 후에 확인할 수 있습니다.</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "10px", borderBottom: "solid 1px gray"}}></RowDiv>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <RowDiv style={{ height: "20px"}}>
-                            <Label style={{ fontSize: "0.7rem",  width: "30%", color: "gray"}}>캠페인 NO.</Label>
-                            <Label style={{ fontSize: "0.7rem", color: "gray"}}>A2021PR0005</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "20px"}}>
-                            <Label style={{ fontSize: "0.7rem", width: "30%", color: "gray"}}>모집현황</Label>
-                            <Label style={{ fontSize: "0.7rem", color: "gray"}}>모집 100명 / 현재 150명 / 경쟁률 1:1.5</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "20px"}}>
-                            <Label style={{ fontSize: "0.7rem", width: "30%", color: "gray"}}>모집기간</Label>
-                            <Label style={{ fontSize: "0.7rem", color: "gray"}}>21.04.29 ~ 21.05.05</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "20px"}}>
-                            <Label style={{ fontSize: "0.7rem", width: "30%", color: "gray"}}>포스팅기간</Label>
-                            <Label style={{ fontSize: "0.7rem", color: "gray"}}>21.05.07 ~ 21.05.21</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "20px"}}>
-                            <Label style={{ fontSize: "0.7rem", width: "30%", color: "gray"}}>컨텐츠 유형</Label>
-                            <Label style={{ fontSize: "0.7rem", color: "gray"}}>이미지 5컷 또는 동영상 1분 이상</Label>
-                        </RowDiv>
-                        <RowDiv style={{ height: "25px"}}></RowDiv>
-                        <RowDiv style={{ height: "45px"}}>
-                            <CampaignApplyButton  onClick={() => CampaignApplyClicked()}>캠페인 신청하기</CampaignApplyButton>
-                            <ClippingBox>스크랩</ClippingBox>
-                        </RowDiv>
-                    </RightBox>
-                </Container1>
-            </Positioner1>
-            <BlankDiv style={{ height: "15px"}}>
-            </BlankDiv>
-            <Positioner2>
-                <Container2>
-                    <LeftBox2>
-                        <Label2 style={{ fontSize: "1.2rem", color: "black", borderBottom: "solid 2px gray"}}>인플루언서 선정 기준</Label2>
-                    </LeftBox2>
-                    <RightBox2>
-                        <Label2 style={{ fontSize: "0.7rem", color: "#7f05e6"}}>팔로워 10,000명 이상 참여 가능</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "#7f05e6"}}>현재 사용하고 있는 휴대폰의 기종의 정보</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>연령 20, 30대</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>성별 무관</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>지역 상관없음</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                    </RightBox2>
-                </Container2>
-            </Positioner2>
-            <Positioner2>
-                <Container2>
-                    <LeftBox2>
-                        <Label2 style={{ fontSize: "1.2rem", color: "black", borderBottom: "solid 2px gray"}}>캠페인 가이드라인</Label2>
-                    </LeftBox2>
-                    <RightBox2>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>포스팅 가이드</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>- 갤럭시S21의 언박싱 과정을 촬영하고 후기를 올려주세요</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>- 제품 포장과 제품 및 부속품이 모두 촬영해주세요</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>콘텐츠 가이드 - 셀카(얼굴노출)/제품사용장면/제품위주/기타(클라이언트가 직접 입력한 내용)중 1</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>텍스트 가이드 - &nbsp;</Label2>
-                        <Label2 style={{ fontSize: "0.7rem", color: "#7f05e6"}}>본문 작성 시 "Galaxy 21 Ultra 5G"를 필수 기재</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>해시태그 가이드 - &nbsp;</Label2>
-                        <Label2 style={{ fontSize: "0.7rem", color: "#7f05e6"}}>#갤럭시 #스마트폰 #언박싱 #S21 #삼성스마트폰</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>링크 가이드 - https://www.samsung.com/sec/galaxy-s21</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>캠페인 제품 배송방법 - 택배/직접 수령/해당없음 중 1</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                    </RightBox2>
-                </Container2>
-            </Positioner2>
-            <Positioner2>
-                <Container2>
-                    <LeftBox2>
-                        <Label2 style={{ fontSize: "1.2rem", color: "black", borderBottom: "solid 2px gray"}}>신청 전 확인사항</Label2>
-                    </LeftBox2>
-                    <RightBox2>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>본 캠페인의 포스팅 마감일은 [포스팅 마감일자] yyyy-mm-dd입니다.</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>기간 내에 포스팅을 하지 않은 경우에는 제공된 혜택에 대하여 비용 청구됩니다.</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>반드시 포스팅 마감일 이전에 콘텐츠 등록을 완료해야 합니다.</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>제공받은 제품을 타인에게 양도 및 판매, 교환 불가하며, 적발시에는 제품의 가격환불 및 캠페인 참여 제한됩니다.</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>캠페인 선정 후 배송지 변경은 불가합니다. 신청 시 정확한 배송주소를 확인해주세요.</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>반드시 제공된 제품만으로 콘텐츠를 작성하여 포스팅 해야 합니다.</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>작성하신 콘텐츠는 최소 6개월 유지해야 하며, 이전에 삭제할 경우에는 페널티가 부과됩니다.</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                        <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>광고 콘텐츠 업로드 시에는 광고표시 기준에 의거하여 #광고, #협찬, #AD 등의 해시태그를 첫 화면에 보이도록 본문에 '광고'임을 알 수 있도록 표시합니다.</Label2>
-                        <RowDiv style={{ height: "10px"}}></RowDiv>
-                    </RightBox2>
-                </Container2>
-            </Positioner2>
-            <Positioner3 >
-                <Container3 style={{ borderBottom: "solid 2px gray"}}>
-                    <CampaignApplyButton style={{ height: "50%"  }} onClick={() => CampaignApplyClicked()} >캠페인 신청하기</CampaignApplyButton>
-                    {campaign_apply_modal}
-                    {/* <Modal setCloseModal={setCloseModal} /> */}
-                </Container3>
-            </Positioner3>
-            <BlankDiv style={{ height: "45px"}}>
-            </BlankDiv>
-                <RecommendationCampaign></RecommendationCampaign>
-            <Footer>
-            </Footer>
-        </CampaignStatusBox>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <RowDiv style={{ height: "25px"}}>
+                                <Label style={{ fontSize: "1.2rem", width: "20%", borderRight: "solid 1px gray"}}>삼성전자</Label>
+                                <Label style={{ fontSize: "1.2rem", width: "200px", marginLeft: "10px"}}>Galaxy 21 Ultra 5</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "5px"}}></RowDiv>
+                            <RowDiv style={{ height: "60px"}}>
+                                <Label style={{ fontSize: "2.0rem"}}>갤럭시 신제품 체험단 모집</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "20px"}}>
+                                <Label style={{ fontSize: "0.8rem", color: "gray"}}>갤럭시 신제품 s21을 받아보고 언박싱 체험후기를 올려주세요.</Label>
+                                </RowDiv>
+                            <RowDiv style={{ height: "10px", borderBottom: "solid 1px gray"}}></RowDiv>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <RowDiv style={{ height: "20px"}}>
+                                <Label style={{ fontSize: "0.9rem", color: "#7f05e6"}}>할인혜택(60만원 상당) + 콘텐츠 원고료</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "20px"}}>
+                                <Label style={{color: "orange"}}>*콘텐츠 원고료는 인플루언서의 등급에 따라 차등 지급되어 선정 후에 확인할 수 있습니다.</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "10px", borderBottom: "solid 1px gray"}}></RowDiv>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <RowDiv style={{ height: "20px"}}>
+                                <Label style={{ fontSize: "0.7rem",  width: "30%", color: "gray"}}>캠페인 NO.</Label>
+                                <Label style={{ fontSize: "0.7rem", color: "gray"}}>A2021PR0005</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "20px"}}>
+                                <Label style={{ fontSize: "0.7rem", width: "30%", color: "gray"}}>모집현황</Label>
+                                <Label style={{ fontSize: "0.7rem", color: "gray"}}>모집 100명 / 현재 150명 / 경쟁률 1:1.5</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "20px"}}>
+                                <Label style={{ fontSize: "0.7rem", width: "30%", color: "gray"}}>모집기간</Label>
+                                <Label style={{ fontSize: "0.7rem", color: "gray"}}>21.04.29 ~ 21.05.05</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "20px"}}>
+                                <Label style={{ fontSize: "0.7rem", width: "30%", color: "gray"}}>포스팅기간</Label>
+                                <Label style={{ fontSize: "0.7rem", color: "gray"}}>21.05.07 ~ 21.05.21</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "20px"}}>
+                                <Label style={{ fontSize: "0.7rem", width: "30%", color: "gray"}}>컨텐츠 유형</Label>
+                                <Label style={{ fontSize: "0.7rem", color: "gray"}}>이미지 5컷 또는 동영상 1분 이상</Label>
+                            </RowDiv>
+                            <RowDiv style={{ height: "25px"}}></RowDiv>
+                            <RowDiv style={{ height: "45px"}}>
+                                <CampaignApplyButton  onClick={() => CampaignApplyClicked()}>캠페인 신청하기</CampaignApplyButton>
+                                <ClippingBox>스크랩</ClippingBox>
+                            </RowDiv>
+                        </RightBox>
+                    </Container1>
+                </Positioner1>
+                <BlankDiv style={{ height: "15px"}}>
+                </BlankDiv>
+                <Positioner2>
+                    <Container2>
+                        <LeftBox2>
+                            <Label2 style={{ fontSize: "1.2rem", color: "black", borderBottom: "solid 2px gray"}}>인플루언서 선정 기준</Label2>
+                        </LeftBox2>
+                        <RightBox2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "#7f05e6"}}>팔로워 10,000명 이상 참여 가능</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "#7f05e6"}}>현재 사용하고 있는 휴대폰의 기종의 정보</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>연령 20, 30대</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>성별 무관</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>지역 상관없음</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                        </RightBox2>
+                    </Container2>
+                </Positioner2>
+                <Positioner2>
+                    <Container2>
+                        <LeftBox2>
+                            <Label2 style={{ fontSize: "1.2rem", color: "black", borderBottom: "solid 2px gray"}}>캠페인 가이드라인</Label2>
+                        </LeftBox2>
+                        <RightBox2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>포스팅 가이드</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>- 갤럭시S21의 언박싱 과정을 촬영하고 후기를 올려주세요</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>- 제품 포장과 제품 및 부속품이 모두 촬영해주세요</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>콘텐츠 가이드 - 셀카(얼굴노출)/제품사용장면/제품위주/기타(클라이언트가 직접 입력한 내용)중 1</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>텍스트 가이드 - &nbsp;</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "#7f05e6"}}>본문 작성 시 "Galaxy 21 Ultra 5G"를 필수 기재</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>해시태그 가이드 - &nbsp;</Label2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "#7f05e6"}}>#갤럭시 #스마트폰 #언박싱 #S21 #삼성스마트폰</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>링크 가이드 - https://www.samsung.com/sec/galaxy-s21</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>캠페인 제품 배송방법 - 택배/직접 수령/해당없음 중 1</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                        </RightBox2>
+                    </Container2>
+                </Positioner2>
+                <Positioner2>
+                    <Container2>
+                        <LeftBox2>
+                            <Label2 style={{ fontSize: "1.2rem", color: "black", borderBottom: "solid 2px gray"}}>신청 전 확인사항</Label2>
+                        </LeftBox2>
+                        <RightBox2>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>본 캠페인의 포스팅 마감일은 [포스팅 마감일자] yyyy-mm-dd입니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>기간 내에 포스팅을 하지 않은 경우에는 제공된 혜택에 대하여 비용 청구됩니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>반드시 포스팅 마감일 이전에 콘텐츠 등록을 완료해야 합니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>제공받은 제품을 타인에게 양도 및 판매, 교환 불가하며, 적발시에는 제품의 가격환불 및 캠페인 참여 제한됩니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>캠페인 선정 후 배송지 변경은 불가합니다. 신청 시 정확한 배송주소를 확인해주세요.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>반드시 제공된 제품만으로 콘텐츠를 작성하여 포스팅 해야 합니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>작성하신 콘텐츠는 최소 6개월 유지해야 하며, 이전에 삭제할 경우에는 페널티가 부과됩니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                            <Label2 style={{ fontSize: "0.7rem", color: "gray"}}>광고 콘텐츠 업로드 시에는 광고표시 기준에 의거하여 #광고, #협찬, #AD 등의 해시태그를 첫 화면에 보이도록 본문에 '광고'임을 알 수 있도록 표시합니다.</Label2>
+                            <RowDiv style={{ height: "10px"}}></RowDiv>
+                        </RightBox2>
+                    </Container2>
+                </Positioner2>
+                <Positioner3 >
+                    <Container3 style={{ borderBottom: "solid 2px gray"}}>
+                        <CampaignApplyButton style={{ height: "50%"  }} onClick={() => CampaignApplyClicked()} >캠페인 신청하기</CampaignApplyButton>
+                        {campaign_apply_modal}
+                        {/* <Modal setCloseModal={setCloseModal} /> */}
+                    </Container3>
+                </Positioner3>
+                <BlankDiv style={{ height: "45px"}}>
+                </BlankDiv>
+                    <RecommendationCampaign></RecommendationCampaign>
+                <Footer>
+                </Footer>
+            </CampaignStatusBox>
+        </div>
     );
 }
 

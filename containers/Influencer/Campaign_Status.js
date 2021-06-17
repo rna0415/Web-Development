@@ -1,7 +1,9 @@
 import React, { Component, useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import oc from 'open-color';
 import { RecommendationCampaignBox, CampaignBox, TableContentLabel, SortLabel, Footer } from '../../components/Influencer/campaign_status';
+import HeaderContainerLogined from '../../containers/Base/HeaderContainerLogined';
 
 const CampaignStatusBox = styled.div`
     width: 100%;
@@ -161,6 +163,8 @@ const NextCampaignImage = styled.img`
 const Campaign_Status = () => {
     let selected_client_data = []
     let recommendation_client_data = []
+    const history = useHistory();
+    
     const [ test, setTestState ] = useState(true)
 
     // 전체 캠페인 데이터!
@@ -178,6 +182,11 @@ const Campaign_Status = () => {
     // 요건 비어있다가 4개씩 보여주기 위한 변수
     const [ recommend_items, setRecommendItemsState ] = useState([]);
     const [ recomendation_client_data_component, setRecomendationClientDataComponent] = useState([])
+
+    const [trigger, setTrigger] = useState(0);
+    const [header_component, setHeaderComponent] = useState("");
+
+    const [ facebook_info, setFacebookInfoState ] = useState(history.location.state)
 
     // 관심 분야에 따른 정렬을 위한 변수
     const [ interest_type, setInterestTypeState ] = useState(
@@ -232,9 +241,7 @@ const Campaign_Status = () => {
     const componentClicked = (e) => {
         if (e === "next") {
             let temp_client_data = recommend_items[0]
-            console.log(temp_client_data)
             for (let i in recommend_items) {
-                console.log(i)
                 if (Number(i) === (recommend_items.length-1)){
                     recommend_items[(recommend_items.length-1)] = temp_client_data
                 }else {
@@ -250,7 +257,6 @@ const Campaign_Status = () => {
         }
         else if (e === "before") {
             let temp_client_data = recommend_items[recommend_items.length-1]
-            console.log(temp_client_data)
             for (let i in recommend_items) {
                 if (Number(i) === (recommend_items.length-1)){
                     recommend_items[(recommend_items.length-1) -i] = temp_client_data
@@ -344,7 +350,6 @@ const Campaign_Status = () => {
                 setTestState(!test)
             }
         }
-        //console.log(interest_type)
         setAllCampaign(interest_type, campaign_type, region_type)
     }
 
@@ -372,7 +377,6 @@ const Campaign_Status = () => {
                 setTestState(!test)
             }
         }
-        //console.log(campaign_type)
         setAllCampaign(interest_type, campaign_type, region_type)
     }
     
@@ -424,7 +428,6 @@ const Campaign_Status = () => {
                 setTestState(!test)
             }
         }
-        //console.log(region_type)
         setAllCampaign(interest_type, campaign_type, region_type)
     }
 
@@ -436,12 +439,10 @@ const Campaign_Status = () => {
             sort_type.registration_date = false
             sort_type.total_num = false
             sort_type.apply_num = false
-            console.log(selected_client_data_state)
 
             selected_client_data = selected_client_data_state.sort(function (a,b ) {
                 return a.due_date - b.due_date
             })
-            //console.log(selected_client_data)
         } else if (label === "최근등록순") {
             sort_type.due_date = false
             sort_type.registration_date = true
@@ -483,12 +484,10 @@ const Campaign_Status = () => {
     }
 
     const setAllCampaign = (interest_type, campaign_type, region_type) => {
-        // for (var key in interest_type) {
-        //     console.log("key: " + key + ", value: " + interest_type[key]) 
-        // }
+
         //// 전체 캠페인에서 테이블을 클릭했을 때
         let campaign_type_checked = false
-        //console.log(all_client_data)
+
         for (var key in campaign_type) {
             if (campaign_type[key] === true) {
                 campaign_type_checked = true
@@ -496,26 +495,22 @@ const Campaign_Status = () => {
         }
         if (campaign_type_checked === true) {
             for (var key in campaign_type) {
-                //console.log("key: " + key + ", value: " + campaign_type[key])
                 if (campaign_type[key] === true) {
                     if (key === "product_experience") {
                         for (let i in all_client_data) {
                             if (all_client_data[i].campaign_type == "제품리뷰") {
-                                //console.log(all_client_data[i])
                                 selected_client_data.push(all_client_data[i])
                             }
                         }    
                     }else if (key === "on_site_visit") {
                         for (let i in all_client_data) {
                             if (all_client_data[i].campaign_type == "현장방문") {
-                                //console.log(all_client_data[i])
                                 selected_client_data.push(all_client_data[i])
                             }
                         }    
                     }else if (key === "reposting") {
                         for (let i in all_client_data) {
                             if (all_client_data[i].campaign_type == "리포스팅") {
-                                //console.log(all_client_data[i])
                                 selected_client_data.push(all_client_data[i])
                             }
                         }    
@@ -526,7 +521,7 @@ const Campaign_Status = () => {
         }else {
             selected_client_data = all_client_data
         }
-        //console.log(selected_client_data)
+
         if (sort_type.due_date === true) {
             selected_client_data = selected_client_data.sort(function (a,b ) {
                 return a.due_date - b.due_date
@@ -544,7 +539,7 @@ const Campaign_Status = () => {
                 return b.apply_num - a.apply_num
             })
         }
-        //console.log(selected_client_data)
+
         let temp_selected_client_data_component = selected_client_data.map((client_data, k) =>
             <CampaignBox
                 client_data = {client_data}
@@ -692,22 +687,18 @@ const Campaign_Status = () => {
     }
 
     useEffect(() => {
-        console.log('컴포넌트가 화면에서 나타남');
         setAllClientDataState(getAllClientDataFromDB())
         setRecommendItemsState(getRecommendationClientDataFromDB())
         return () => {
-          console.log('컴포넌트가 화면에서 사라짐');
+
         };
     }, []);
 
     useEffect(() => {
-        console.log('컴포넌트가 화면에서 나타남');
         selected_client_data = all_client_data
-        //console.log(selected_client_data)
         selected_client_data = selected_client_data.sort(function (a,b) {
             return a.due_date - b.due_date
         })
-        //console.log(selected_client_data)
         let temp_selected_client_data_component = selected_client_data.map((client_data, k) =>
             <CampaignBox
                 client_data = {client_data}
@@ -717,19 +708,10 @@ const Campaign_Status = () => {
         setSelectedClientDataComponent(temp_selected_client_data_component)
 
         return () => {
-          console.log('컴포넌트가 화면에서 사라짐');
         };
     }, [all_client_data]);
 
     useEffect(() => {
-        console.log('컴포넌트가 화면에서 나타남');
-        //recommendation_client_data = recommend_items
-        //console.log(selected_client_data)
-        // selected_client_data = selected_client_data.sort(function (a,b) {
-        //     return a.due_date - b.due_date
-        // })
-        //console.log(selected_client_data)
-        // console.log("222")
         if (recommend_items.length < 5) {
             for (var i = 0 ; i<recommend_items.length; i++) {
                 recommendation_client_data.push(recommend_items[i])
@@ -752,272 +734,274 @@ const Campaign_Status = () => {
         setRecomendationClientDataComponent(temp_recommendation_client_data_component)
 
         return () => {
-          console.log('컴포넌트가 화면에서 사라짐');
         };
     }, [recommend_items]);
 
 
     return (
-        <CampaignStatusBox>
-            <Positioner1>
-                <Table style={{ height: "600px"}}>
-                    <Tr style={{ height: "30px"}}>
-                    </Tr>
-                    <Tr style={{ height: "50px"}}>
-                        <Td colSpan="7">
-                            <Label>추천 캠페인</Label>
-                        </Td>
-                    </Tr>
-                    <Tr style={{ height: "60px"}}>
-                        <Td colSpan="7">
-                            <ExplanationLabel>SampleLife의 매칭 알고리즘에 따른 timkim0923님의 추천 캠페인 현황입니다</ExplanationLabel>
-                            <ExplanationLabel>매칭 적합도가 높을수록 캠페인에 신정될 확률이 높습니다. 원하는 캠페인에 지금 참여하세요!</ExplanationLabel>
-                        </Td>
-                    </Tr>
-                    <Tr style={{ height: "250px"}}>
-                        <Td style={{ width: '100px', textAlign: "center" }}>
-                            <NextCampaignButton onClick={() => componentClicked("before")}>
-                                <NextCampaignImage src="/images/campaign/left_arrow.png" />
-                            </NextCampaignButton>
-                        </Td>
-                            {recomendation_client_data_component}
-                        <Td style={{ width: '100px', textAlign: "center" }}>
-                            <NextCampaignButton onClick={() => componentClicked("next")}>
-                                <NextCampaignImage src="/images/campaign/right_arrow.png" />
-                            </NextCampaignButton>
-                        </Td>
-                    </Tr>
-                    <Tr style={{ height: "100px"}}>
-                    </Tr>
-                </Table>
-            </Positioner1>
-            <Positioner2>
-                <Table>
-                    <Tr style={{ height: "30px"}}>
-                    </Tr>
-                    <Tr style={{ height: "50px"}}>
-                        <Td >
-                            <Label>전체 캠페인</Label>
-                        </Td>
-                    </Tr>
-                    <Tr style={{ height: "60px"}}>
-                        <Td >
-                            <ExplanationLabel>현재 참여 가능한 모든 캠페인입니다. 캠페인 카드를 클릭하여 상세내용을 확인해보세요.</ExplanationLabel>
-                        </Td>
-                    </Tr>
-                </Table>
-            </Positioner2>
-            <Positioner3>
-                <Table style={{ width: "850px"}} >
-                    <AllCampaignTr>
-                        <AllCampaignTd style={{ cursor: "text"  }}>
-                            <TableLabel style={{ background: 'black', color: 'white' }}>관심 분야</TableLabel>
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "화장품·패션·뷰티"
-                                type = "beauty"
-                                setType = {setInterestType}
-                                checked = {interest_type.beauty}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "엔터테인먼트·취미"
-                                type = "entertainment"
-                                setType = {setInterestType}
-                                checked = {interest_type.entertainment}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "여행·아웃도어"
-                                type = "travel"
-                                setType = {setInterestType}
-                                checked = {interest_type.travel}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "요리·음식·맛집"
-                                type = "food"
-                                setType = {setInterestType}
-                                checked = {interest_type.food}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "IT·인테리어"
-                                type = "it_and_interior"
-                                setType = {setInterestType}
-                                checked = {interest_type.it_and_interior}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "육아·반려동물"
-                                type = "childcare_and_animals"
-                                setType = {setInterestType}
-                                checked = {interest_type.childcare_and_animals}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "헬스·피트니스"
-                                type = "health"
-                                setType = {setInterestType}
-                                checked = {interest_type.health}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel2 onClick={() => AllCelarComponentClicked("interest_type")}>전체해제</TableContentLabel2>
-                        </AllCampaignTd>
-                    </AllCampaignTr>
-                    <AllCampaignTr>
-                        <AllCampaignTd style={{ cursor: "text"  }}>
-                            <TableLabel style={{ background: 'black', color: 'white' }}>캠페인 유형</TableLabel>
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "제품 체험"
-                                type = "product_experience"
-                                setType = {setCampaignType}
-                                checked = {campaign_type.product_experience}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "현장방문"
-                                type = "on_site_visit"
-                                setType = {setCampaignType}
-                                checked = {campaign_type.on_site_visit}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "리포스팅"
-                                type = "reposting"
-                                setType = {setCampaignType}
-                                checked = {campaign_type.reposting}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel2 onClick={() => AllCelarComponentClicked("campaign_type")}>전체해제</TableContentLabel2>
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableLabel></TableLabel>
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableLabel></TableLabel>
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableLabel></TableLabel>
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableLabel></TableLabel>
-                        </AllCampaignTd>
-                    </AllCampaignTr>
-                    <AllCampaignTr>
-                        <AllCampaignTd style={{cursor: "text"  }}>
-                            <TableLabel style={{ background: 'black', color: 'white' }}>지역 선택</TableLabel>
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "서울"
-                                type = "seoul"
-                                setType = {setRegionType}
-                                checked = {region_type.seoul}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "경기·인천"
-                                type = "gyeonggi_and_incheon"
-                                setType = {setRegionType}
-                                checked = {region_type.gyeonggi_and_incheon}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "충청 지역"
-                                type = "chungcheong"
-                                setType = {setRegionType}
-                                checked = {region_type.chungcheong}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "경상 지역"
-                                type = "gyeongsang"
-                                setType = {setRegionType}
-                                checked = {region_type.gyeongsang}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "전라 지역"
-                                type = "jeolla"
-                                setType = {setRegionType}
-                                checked = {region_type.jeolla}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "강원 지역"
-                                type = "gangwon"
-                                setType = {setRegionType}
-                                checked = {region_type.gangwon}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >
-                            <TableContentLabel 
-                                label = "제주 지역"
-                                type = "jeju"
-                                setType = {setRegionType}
-                                checked = {region_type.jeju}
-                            />
-                        </AllCampaignTd>
-                        <AllCampaignTd >    
-                            <TableContentLabel2  onClick={() => AllCelarComponentClicked("region_type")}>전체해제</TableContentLabel2>
-                        </AllCampaignTd>
-                    </AllCampaignTr>
-                </Table>
-            </Positioner3>
-            <Positioner4>
-                <div style={{ width: "850px", marginRight: "10px"}} >
-                    <SortLabel
-                        label = "신청자순"
-                        setSortType = {setSortType}
-                        checked = {sort_type.apply_num}
-                    />
-                    <SortLabel
-                        label = "모집인원순"
-                        setSortType = {setSortType}
-                        checked = {sort_type.total_num}
-                        border_right_prop = "solid 1px gray"
-                    />
-                    <SortLabel
-                        label = "최근등록순"
-                        setSortType = {setSortType}
-                        checked = {sort_type.registration_date}
-                        border_right_prop = "solid 1px gray"
-                    />
-                    <SortLabel
-                        label = "마감일자순"
-                        setSortType = {setSortType}
-                        checked = {sort_type.due_date}
-                        border_right_prop = "solid 1px gray"
-                    />
-                </div>
-            </Positioner4>
-            <Positioner5>
-                <div style={{ width: "850px"}} >
-                    {selected_client_data_component}
-                </div>
-            </Positioner5>
-            <Footer>
-            </Footer>
-        </CampaignStatusBox>
+        <div>
+            <HeaderContainerLogined facebook_info = {facebook_info}/>
+            <CampaignStatusBox>
+                <Positioner1>
+                    <Table style={{ height: "600px"}}>
+                        <Tr style={{ height: "30px"}}>
+                        </Tr>
+                        <Tr style={{ height: "50px"}}>
+                            <Td colSpan="7">
+                                <Label>추천 캠페인</Label>
+                            </Td>
+                        </Tr>
+                        <Tr style={{ height: "60px"}}>
+                            <Td colSpan="7">
+                                <ExplanationLabel>SampleLife의 매칭 알고리즘에 따른 timkim0923님의 추천 캠페인 현황입니다</ExplanationLabel>
+                                <ExplanationLabel>매칭 적합도가 높을수록 캠페인에 신정될 확률이 높습니다. 원하는 캠페인에 지금 참여하세요!</ExplanationLabel>
+                            </Td>
+                        </Tr>
+                        <Tr style={{ height: "250px"}}>
+                            <Td style={{ width: '100px', textAlign: "center" }}>
+                                <NextCampaignButton onClick={() => componentClicked("before")}>
+                                    <NextCampaignImage src="/images/campaign/left_arrow.png" />
+                                </NextCampaignButton>
+                            </Td>
+                                {recomendation_client_data_component}
+                            <Td style={{ width: '100px', textAlign: "center" }}>
+                                <NextCampaignButton onClick={() => componentClicked("next")}>
+                                    <NextCampaignImage src="/images/campaign/right_arrow.png" />
+                                </NextCampaignButton>
+                            </Td>
+                        </Tr>
+                        <Tr style={{ height: "100px"}}>
+                        </Tr>
+                    </Table>
+                </Positioner1>
+                <Positioner2>
+                    <Table>
+                        <Tr style={{ height: "30px"}}>
+                        </Tr>
+                        <Tr style={{ height: "50px"}}>
+                            <Td >
+                                <Label>전체 캠페인</Label>
+                            </Td>
+                        </Tr>
+                        <Tr style={{ height: "60px"}}>
+                            <Td >
+                                <ExplanationLabel>현재 참여 가능한 모든 캠페인입니다. 캠페인 카드를 클릭하여 상세내용을 확인해보세요.</ExplanationLabel>
+                            </Td>
+                        </Tr>
+                    </Table>
+                </Positioner2>
+                <Positioner3>
+                    <Table style={{ width: "850px"}} >
+                        <AllCampaignTr>
+                            <AllCampaignTd style={{ cursor: "text"  }}>
+                                <TableLabel style={{ background: 'black', color: 'white' }}>관심 분야</TableLabel>
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "화장품·패션·뷰티"
+                                    type = "beauty"
+                                    setType = {setInterestType}
+                                    checked = {interest_type.beauty}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "엔터테인먼트·취미"
+                                    type = "entertainment"
+                                    setType = {setInterestType}
+                                    checked = {interest_type.entertainment}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "여행·아웃도어"
+                                    type = "travel"
+                                    setType = {setInterestType}
+                                    checked = {interest_type.travel}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "요리·음식·맛집"
+                                    type = "food"
+                                    setType = {setInterestType}
+                                    checked = {interest_type.food}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "IT·인테리어"
+                                    type = "it_and_interior"
+                                    setType = {setInterestType}
+                                    checked = {interest_type.it_and_interior}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "육아·반려동물"
+                                    type = "childcare_and_animals"
+                                    setType = {setInterestType}
+                                    checked = {interest_type.childcare_and_animals}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "헬스·피트니스"
+                                    type = "health"
+                                    setType = {setInterestType}
+                                    checked = {interest_type.health}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel2 onClick={() => AllCelarComponentClicked("interest_type")}>전체해제</TableContentLabel2>
+                            </AllCampaignTd>
+                        </AllCampaignTr>
+                        <AllCampaignTr>
+                            <AllCampaignTd style={{ cursor: "text"  }}>
+                                <TableLabel style={{ background: 'black', color: 'white' }}>캠페인 유형</TableLabel>
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "제품 체험"
+                                    type = "product_experience"
+                                    setType = {setCampaignType}
+                                    checked = {campaign_type.product_experience}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "현장방문"
+                                    type = "on_site_visit"
+                                    setType = {setCampaignType}
+                                    checked = {campaign_type.on_site_visit}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "리포스팅"
+                                    type = "reposting"
+                                    setType = {setCampaignType}
+                                    checked = {campaign_type.reposting}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel2 onClick={() => AllCelarComponentClicked("campaign_type")}>전체해제</TableContentLabel2>
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableLabel></TableLabel>
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableLabel></TableLabel>
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableLabel></TableLabel>
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableLabel></TableLabel>
+                            </AllCampaignTd>
+                        </AllCampaignTr>
+                        <AllCampaignTr>
+                            <AllCampaignTd style={{cursor: "text"  }}>
+                                <TableLabel style={{ background: 'black', color: 'white' }}>지역 선택</TableLabel>
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "서울"
+                                    type = "seoul"
+                                    setType = {setRegionType}
+                                    checked = {region_type.seoul}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "경기·인천"
+                                    type = "gyeonggi_and_incheon"
+                                    setType = {setRegionType}
+                                    checked = {region_type.gyeonggi_and_incheon}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "충청 지역"
+                                    type = "chungcheong"
+                                    setType = {setRegionType}
+                                    checked = {region_type.chungcheong}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "경상 지역"
+                                    type = "gyeongsang"
+                                    setType = {setRegionType}
+                                    checked = {region_type.gyeongsang}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "전라 지역"
+                                    type = "jeolla"
+                                    setType = {setRegionType}
+                                    checked = {region_type.jeolla}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "강원 지역"
+                                    type = "gangwon"
+                                    setType = {setRegionType}
+                                    checked = {region_type.gangwon}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >
+                                <TableContentLabel 
+                                    label = "제주 지역"
+                                    type = "jeju"
+                                    setType = {setRegionType}
+                                    checked = {region_type.jeju}
+                                />
+                            </AllCampaignTd>
+                            <AllCampaignTd >    
+                                <TableContentLabel2  onClick={() => AllCelarComponentClicked("region_type")}>전체해제</TableContentLabel2>
+                            </AllCampaignTd>
+                        </AllCampaignTr>
+                    </Table>
+                </Positioner3>
+                <Positioner4>
+                    <div style={{ width: "850px", marginRight: "10px"}} >
+                        <SortLabel
+                            label = "신청자순"
+                            setSortType = {setSortType}
+                            checked = {sort_type.apply_num}
+                        />
+                        <SortLabel
+                            label = "모집인원순"
+                            setSortType = {setSortType}
+                            checked = {sort_type.total_num}
+                            border_right_prop = "solid 1px gray"
+                        />
+                        <SortLabel
+                            label = "최근등록순"
+                            setSortType = {setSortType}
+                            checked = {sort_type.registration_date}
+                            border_right_prop = "solid 1px gray"
+                        />
+                        <SortLabel
+                            label = "마감일자순"
+                            setSortType = {setSortType}
+                            checked = {sort_type.due_date}
+                            border_right_prop = "solid 1px gray"
+                        />
+                    </div>
+                </Positioner4>
+                <Positioner5>
+                    <div style={{ width: "850px"}} >
+                        {selected_client_data_component}
+                    </div>
+                </Positioner5>
+                <Footer>
+                </Footer>
+            </CampaignStatusBox>
+        </div>
     )
 };
 

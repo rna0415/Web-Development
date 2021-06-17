@@ -4,6 +4,7 @@ import { RightAlignedLink } from '../../components/Auth';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 import { Footer, RecommendationCampaign } from '../../components/Influencer/campaign_status';
+import HeaderContainerLogined from '../../containers/Base/HeaderContainerLogined';
 
 const CampaignStatusBox = styled.div`
     width: 100%;
@@ -106,50 +107,54 @@ const CompleteCampaignCancel = () => {
     }, []);
 
     return (
-        <CampaignStatusBox>
-            <Positioner1>
-                <Container1>
-                    <BlankDiv>
-                    </BlankDiv>
-                    <ContentsBox>
-                        <RowDiv style={{marginTop: "45px", height: "45px"}}>                    
-                            <Label style={{ fontSize: "2.0rem", fontWeight: "1000"}}>캠페인 참여신청 취소완료</Label>
-                        </RowDiv>
-                        <RowDiv style={{marginTop: "40px"}}>                    
-                            <Label style={{ fontSize: "0.8rem", color: "gray"}}>다음 캠페인의 참여신청이 취소되었습니다.</Label>
-                        </RowDiv>
-                        <RowDiv style={{marginTop: "5px"}}>                    
-                            <Label style={{ fontSize: "0.8rem", color: "gray"}}>캠페인 참여현황은&nbsp;</Label>
-                            <Label style={{ fontSize: "0.8rem", color: "black", fontWeight: "1000"}}>My 캠페인</Label>
-                            <Label style={{ fontSize: "0.8rem", color: "gray"}}>에서 확인하실 수 있습니다.</Label>
-                        </RowDiv>
-                        <RowDiv style={{marginTop: "40px", justifyContent: "left"}}>               
-                            <Label style={{ fontSize: "0.8rem", width: "290px", color: "gray"}}></Label>     
-                            <Label style={{ fontSize: "1.3rem", width: "100px", borderRight: "solid 1px black", fontWeight: "1000"}}>삼성전자</Label>
-                            <Label style={{ fontSize: "1.3rem", marginLeft: "20px", fontWeight: "1000"}}>갤럭시 신제품 체험단 모집</Label>
-                        </RowDiv>
-                        <RowDiv style={{marginTop: "30px", justifyContent: "left"}}>                    
-                            <Label style={{ fontSize: "0.8rem", width: "290px", color: "gray"}}></Label>
-                            <Label style={{ fontSize: "0.8rem", width: "100px", color: "gray"}}>모집현황</Label>
-                            <Label style={{ fontSize: "0.8rem", marginLeft: "20px", color: "gray"}}>모집 100명 / 현재 150명 / 경재률 1:1.5</Label>
-                        </RowDiv>
-                        <RowDiv style={{marginTop: "5px", justifyContent: "left"}}>                    
-                            <Label style={{ fontSize: "0.8rem", width: "290px", color: "gray"}}></Label>
-                            <Label style={{ fontSize: "0.8rem", width: "100px", color: "gray"}}>모집기간</Label>
-                            <Label style={{ fontSize: "0.8rem", marginLeft: "20px", color: "gray"}}>21.04.29 ~ 21.05.05</Label>
-                        </RowDiv>
-                        <RowDiv style={{marginTop: "40px"}}>
-                            <Button onClick={(e) => componentClicked()}>확인</Button>
-                        </RowDiv>
-                    </ContentsBox>
-                </Container1>
-            </Positioner1>
-            <BlankDiv>
-            </BlankDiv>
-            <RecommendationCampaign></RecommendationCampaign>
-            <Footer>
-            </Footer>
-        </CampaignStatusBox>
+        <div>
+            <HeaderContainerLogined />
+            <CampaignStatusBox>
+                <HeaderContainerLogined />
+                <Positioner1>
+                    <Container1>
+                        <BlankDiv>
+                        </BlankDiv>
+                        <ContentsBox>
+                            <RowDiv style={{marginTop: "45px", height: "45px"}}>                    
+                                <Label style={{ fontSize: "2.0rem", fontWeight: "1000"}}>캠페인 참여신청 취소완료</Label>
+                            </RowDiv>
+                            <RowDiv style={{marginTop: "40px"}}>                    
+                                <Label style={{ fontSize: "0.8rem", color: "gray"}}>다음 캠페인의 참여신청이 취소되었습니다.</Label>
+                            </RowDiv>
+                            <RowDiv style={{marginTop: "5px"}}>                    
+                                <Label style={{ fontSize: "0.8rem", color: "gray"}}>캠페인 참여현황은&nbsp;</Label>
+                                <Label style={{ fontSize: "0.8rem", color: "black", fontWeight: "1000"}}>My 캠페인</Label>
+                                <Label style={{ fontSize: "0.8rem", color: "gray"}}>에서 확인하실 수 있습니다.</Label>
+                            </RowDiv>
+                            <RowDiv style={{marginTop: "40px", justifyContent: "left"}}>               
+                                <Label style={{ fontSize: "0.8rem", width: "290px", color: "gray"}}></Label>     
+                                <Label style={{ fontSize: "1.3rem", width: "100px", borderRight: "solid 1px black", fontWeight: "1000"}}>삼성전자</Label>
+                                <Label style={{ fontSize: "1.3rem", marginLeft: "20px", fontWeight: "1000"}}>갤럭시 신제품 체험단 모집</Label>
+                            </RowDiv>
+                            <RowDiv style={{marginTop: "30px", justifyContent: "left"}}>                    
+                                <Label style={{ fontSize: "0.8rem", width: "290px", color: "gray"}}></Label>
+                                <Label style={{ fontSize: "0.8rem", width: "100px", color: "gray"}}>모집현황</Label>
+                                <Label style={{ fontSize: "0.8rem", marginLeft: "20px", color: "gray"}}>모집 100명 / 현재 150명 / 경재률 1:1.5</Label>
+                            </RowDiv>
+                            <RowDiv style={{marginTop: "5px", justifyContent: "left"}}>                    
+                                <Label style={{ fontSize: "0.8rem", width: "290px", color: "gray"}}></Label>
+                                <Label style={{ fontSize: "0.8rem", width: "100px", color: "gray"}}>모집기간</Label>
+                                <Label style={{ fontSize: "0.8rem", marginLeft: "20px", color: "gray"}}>21.04.29 ~ 21.05.05</Label>
+                            </RowDiv>
+                            <RowDiv style={{marginTop: "40px"}}>
+                                <Button onClick={(e) => componentClicked()}>확인</Button>
+                            </RowDiv>
+                        </ContentsBox>
+                    </Container1>
+                </Positioner1>
+                <BlankDiv>
+                </BlankDiv>
+                <RecommendationCampaign></RecommendationCampaign>
+                <Footer>
+                </Footer>
+            </CampaignStatusBox>
+        </div>
 
     );
 }
