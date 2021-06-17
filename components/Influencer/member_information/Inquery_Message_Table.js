@@ -168,10 +168,10 @@ const Inquery_Message_Table = ({inquery_data, index, background_color}) => {
                     <Tbody >
                         <Tr id={index}>
                             <Td style={{borderRight: "1px solid white",  width: "210px", background: background_color, color: "black"}}>{inquery_data.message_no}</Td>
-                            <Td style={{display: "flex", borderRight: "1px solid white", width: "790px", background: background_color, color: "black"}} >
+                            <Td style={{display: "flex", borderRight: "1px solid white", width: "790px", background: background_color, color: "black",cursor: 'pointer'}} onClick={() => messageClicked(index)} >
                                 <div style= {{marginTop: "16px", marginLeft: "45px"}}>{inquery_data.title}</div>
                                 <ArrowDiv style= {{marginTop: "16px", marginLeft: "10px", width: "15px", height: "15px"}}>
-                                    <Image src= {campaign_up_down_arrow[index]} onClick={() => messageClicked(index)}/>
+                                    <Image src= {campaign_up_down_arrow[index]} />
                                 </ArrowDiv>
                             </Td>
                             <Td style={{borderRight: "1px solid white", width: "140px", background: background_color, color: "black"}}>{inquery_data.date}</Td>

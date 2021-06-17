@@ -342,6 +342,7 @@ const MyProfileTab = () =>{
     let let_instagram_picture1 = []
     let let_graph_data = []
     let let_profile_picture = []
+    const history = useHistory();
 
     const [instagram_picture, setInstagram_picture] = useState([]);
     const [display_instagram_picture, setDisplay_instagram_picture ] = useState([]);
@@ -352,10 +353,12 @@ const MyProfileTab = () =>{
 
     const [profile_picture, setProfile_picture] = useState([]);
     const [display_profile_picture, setDisplay_profile_picture ] = useState([]);
+    
+    const [ facebook_info, setFacebookInfoState ] = useState(history.location.state)
 
     const getPictureDataFromDB = () => {
 
-        //인스타그램 사진 가져오는 느낌
+        //인스타그램사진 간이 데이터베이스
         let instagram_picture_data_from_db = [
             
             {"src":"/images/influencer_info/1.PNG"},
@@ -366,7 +369,7 @@ const MyProfileTab = () =>{
         return instagram_picture_data_from_db
     }
 
-    //그래프 데이터 가져오는 느낌
+    //그래프 데이터 간이 데이터베이스
     const getGraphDataFromDB = () => {
 
         let graph_data_from_db = [
@@ -389,18 +392,19 @@ const MyProfileTab = () =>{
         return graph_data_from_db
     }
 
-    //프로필 사진 데이터 가져오는 느낌
+    //프로필 사진 간이 데이터베이스
     const getProfileFromDB = () => {
 
         let profile_picture_data_from_db = [            
             
-            {"src":"/images/influencer_info/lilka.png"}     
+            {"src":facebook_info.profile_picture_url}     
         ]
 
         return profile_picture_data_from_db
     }
 
     useEffect(() => {
+        console.log(facebook_info)
         setInstagram_picture(getPictureDataFromDB)
         console.log('instagram_picture' ,instagram_picture)
         setGraph_data(getGraphDataFromDB)
@@ -494,12 +498,7 @@ const MyProfileTab = () =>{
         setDisplay_profile_picture(temp_profile_picture)
 
     }, [profile_picture]);
-
-
     
-
-
-
     return(
     <Positioner>
         <RowDiv>

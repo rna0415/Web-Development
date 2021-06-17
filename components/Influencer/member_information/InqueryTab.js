@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import styled from 'styled-components';
 import oc from 'open-color';
 import { useHistory } from "react-router-dom";
-import {Inquery_Message_Table} from "./";
+import {Inquery_Message_Table,InqueryModal} from "./";
 
 const Positioner = styled.div`
     position: relative;
@@ -35,7 +35,7 @@ const Td = styled.td`
 // 빈칸
 const RowDiv = styled.div`
     width: 100%;
-    height: 20px;
+    height: 40px;
 `;
 
 const Label = styled.div`
@@ -110,10 +110,44 @@ const Option = styled.option`
     height: 100%;
 `;
 
-const InqueryTab = ({}) => {
+const Button = styled.button`
+    width: 180px;
+    height: 50px;
+    color: white;
+    font-size:1rem;
+    background-color: #7f05e6;
+    border: 1px solid #7f05e6;
+    border-radius:5px;
+    position:absolute;
+    right:10px;
+    cursor:pointer;
+`;
+
+
+const InqueryTab = () => {
     const history = useHistory();
+    const [ inqueryModal, setInqueryModal] = useState([]);
     const [ inquery_message_campaign_data, setInquery_message_campaign_data ] = useState([])
     const [ inquery_message_campaign_data_component, setInquery_message_campaign_data_component ] = useState([])
+
+    const handleChange = () => {
+        history.push()
+    }
+
+    const setCloseModal = () => {
+        console.log("close clicked")
+
+        
+        setInqueryModal([])
+    }
+    
+
+    const componentClick = () =>{ 
+        
+        let temp_inquery_modal = <InqueryModal setCloseModal={setCloseModal} />
+        setInqueryModal(temp_inquery_modal)
+        
+    };
 
     ////////////// 디비로부터 모든 캠페인 데이터(상위 16개씩) 가지고 옴 /////////////
     const get_inquery_message_data_from_db = () => {
@@ -249,6 +283,8 @@ const InqueryTab = ({}) => {
         <Positioner>
             <RowDiv style={{marginTop: "20px", marginBottom: "20px"}}>
                 <Label  style={{marginLeft: "50px", fontSize: "1.0rem", fontWeight: "1000", height: "100%"}}>$회원명님의 상담 이력입니다.</Label>
+                <Button onClick={componentClick}>1:1 상담 신청하기</Button>
+                {inqueryModal}
             </RowDiv>
             <Table className="table">
                 <Tbody className="tbody">
