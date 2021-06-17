@@ -28,9 +28,8 @@ class Influencer extends Component {
                     <Route exact path="/influencer/main/campaign_status/application_completed" component={CompleteApplication}/>
                     <Route exact path="/influencer/main/campaign_status/*" component={CampaignDetail}/>
                     <Route exact path="/influencer/main/my_information" component={MyInformation}/>
-
                 </Switch>
-                <HeaderContainerLogined/>
+                {/* <HeaderContainerLogined/> */}
             </Positioner>
         );
     }
