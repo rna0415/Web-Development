@@ -46,14 +46,7 @@ const Contents = styled.div`
     height: auto;
 `;
 
-const CloseButton = styled.img`
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-`;
+
 
 // 로그인 CSS
 const AlignerCenter = styled.div`
@@ -89,7 +82,6 @@ const Button1 = styled.button`
     border: 1px solid black;
     border-radius:5px;
     cursor:pointer;
-    margin-left:20px;
     font-weight:600;
 `;
 
@@ -153,11 +145,10 @@ const Flexdiv = styled.div`
 `;
 
 
-const SuccessModal = ({setCloseModal2,setCloseModal}) => {
+const SuccessModal = ({setCloseModal2,setCloseModal,inqueryCategory,facebook_info, influencerID_From_DB}) => {
 
     const history = useHistory();
     
-
 
     const closeClicked = (e) => {
         if (e === 'close'){
@@ -178,17 +169,17 @@ const SuccessModal = ({setCloseModal2,setCloseModal}) => {
                     <LogoWrapper>
                         <Label  style={{marginTop:'10px',marginLeft:'10px', fontSize: "1.0rem", fontWeight: "1000", height: "100%"}}>1:1상담 신청 완료</Label>
                     </LogoWrapper>
-                    <Contents>
-                        회원명님의 상담유형을 제출하였습니다.
-                        영업일 기준 2일이내에 SampleLife운영자가 회신해 드리겠습니다
-                        감사합니다.
-                        <Flexdiv>
+                    <Contents style={{textAlign:'center'}}>
+
+                        {influencerID_From_DB}님의 {inqueryCategory}를 제출하였습니다.
+                        <br></br>
+                        영업일 기준 2일 이내에 SampleLife 운영자가 회신해 드리겠습니다.
+                        <br></br>
+                        <br></br>
+                        감사합니다.                                            
+                        
+                        <AlignerCenter>  
                             <Button1 style={{backgroundColor:'#E6E6FA', color:'black'}} onClick={(e) => closeClicked('close')}>확인</Button1>
-                        </Flexdiv>
-                        
-                        
-                        <AlignerCenter>
-                            
                         </AlignerCenter>
                     </Contents>
                 </ShadowedBox>

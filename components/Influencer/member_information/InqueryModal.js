@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import oc from 'open-color';
 import { useHistory } from "react-router-dom";
 import {SuccessModal} from ".";
+import {GetBackendIP} from '../../../settings';
+import { ExecuteBackendAPI, ExecuteFacebookAPI } from '../../../lib/api/restapi';
 
 
 
@@ -155,7 +157,7 @@ const checkStyle = {
     borderRadius: '5px',
     position: 'relative',
     height: '16px',
-    width: '16px',
+	width: '16px',
     border: '1px solid blue',
     borderRadius: '4px',
     outline: 'none',
@@ -211,8 +213,7 @@ const Flexdiv = styled.div`
 `;
 
 
-const InqueryModal = ({setCloseModal}) => {
-
+const InqueryModal = ({setCloseModal,facebook_info,setTriggerDB,trigger}) => {
     const history = useHistory();
     const [check,setCheck] = useState(false);
     const [successModal, setSuccessModal] = useState([]);
@@ -220,8 +221,71 @@ const InqueryModal = ({setCloseModal}) => {
     const [title, setTitle] = useState('');
     const [inqueryContent, setInqueryContent] = useState('');
     const [buttonEnable, setButtonEnable] = useState(false)
+    const [influencerID_From_DB, setInfluencerIdFromDB ] = useState([]);
+    const [inqueryData, setInqueryData] = useState(
+        {
 
-    
+            "influencer_id": "",
+            "inquery_category": "",
+            "inquery_title": "",
+            "inquery_contents": "",
+            "inquery_file": "",
+            "inquery_terms": "",
+        }
+    )
+
+    const getInfluencerIdFromDB = async () => {
+        // console.log(facebook_info)
+        // 백엔드 서버 API 통신
+
+        //로컬용
+        let data 
+        let id='1'
+        let request = 'GET'
+        let backend_ip_address = GetBackendIP()
+        let backend_api_url = "http://" + backend_ip_address + "/api/influencer/" +id // https /get_user_info
+        let backend_api_response = await ExecuteBackendAPI(backend_api_url, data, request);
+        console.log(backend_api_response)
+        let temp_account_info_from_db = backend_api_response.data
+        console.log(temp_account_info_from_db)
+        console.log(temp_account_info_from_db.influencer_id)
+
+        //aws용
+        // let data = {
+        //     "influencer_email": facebook_info.email
+        // }
+        // let request = 'GET'
+
+        // let backend_ip_address = GetBackendIP()
+        // let backend_api_url = "https://" + backend_ip_address + "/api/influencer/get_user_info/"
+        // let backend_api_response = await ExecuteBackendAPI(backend_api_url, data, request)
+        // console.log(backend_api_response)
+        // let temp_account_info_from_db = backend_api_response.data[0]
+
+        setInfluencerIdFromDB(temp_account_info_from_db.influencer_id)
+        return temp_account_info_from_db
+    }
+
+    const putInqueryDataInfoDB = async () => {
+
+        let request = 'POST'
+        let backend_ip_address = GetBackendIP()
+        // let backend_api_url = "https://" + backend_ip_address + "/api/influencer/inquery/" // aws용
+        let backend_api_url = "http://" + backend_ip_address + "/api/influencer/inquery/" // 로컬용
+        let backend_api_reponse = await ExecuteBackendAPI(backend_api_url, inqueryData, request);
+        console.log(backend_api_reponse)
+        setTriggerDB(trigger+1)
+    }
+
+    useEffect(() => {
+        getInfluencerIdFromDB()
+    }, []);
+
+    useEffect(() => {
+        let temp_inquery_data = inqueryData
+        temp_inquery_data.influencer_id = influencerID_From_DB
+        setInqueryData(temp_inquery_data)
+    }, [influencerID_From_DB]);
 
 
     const closeClicked = (e) => {
@@ -238,8 +302,30 @@ const InqueryModal = ({setCloseModal}) => {
 
     const componentClick = () =>{ 
         
-        let temp_inquery_modal = <SuccessModal setCloseModal ={setCloseModal} setCloseModal2={setCloseModal2} />
+        putInqueryDataInfoDB();
+
+        let temp_inquery_modal = <SuccessModal 
+            facebook_info = {facebook_info} 
+            influencerID_From_DB={influencerID_From_DB} 
+            inqueryCategory={inqueryCategory} 
+            setCloseModal ={setCloseModal} 
+            setCloseModal2={setCloseModal2}
+            />
+
         setSuccessModal(temp_inquery_modal)
+        // let temp_setInquery_message_campaign_data = inquery_data
+        // temp_setInquery_message_campaign_data.push({
+        //     "date":"2021-05-05",
+        //     "message_no":"11",
+        //     "status":"확인중",
+        //     "title":'['+inqueryCategory+']'+title,
+        //     "message":inqueryContent,
+        //     "writer":"$회원명"
+            
+        // })
+        // console.log(temp_setInquery_message_campaign_data)
+
+        // updateData(temp_setInquery_message_campaign_data)
         
     };
 
@@ -262,7 +348,7 @@ const InqueryModal = ({setCloseModal}) => {
             )
         }else{
             return(
-                <Button1 style={{backgroundColor:'#E6E6FA', color:'black'}} disabled>제출하기</Button1>
+                <Button1 style={{backgroundColor:'#E6E6FA', color:'black', cursor:'default'}} disabled>제출하기</Button1>
             )
         }
     }
@@ -270,32 +356,57 @@ const InqueryModal = ({setCloseModal}) => {
     const handleChange = (e) => {
         if(e.target.name ==="title"){
             setTitle(e.target.value);
+            let temp_inquery_data = inqueryData
+            temp_inquery_data.inquery_title = e.target.value
+            setInqueryData(temp_inquery_data)
         }else if(e.target.name ==="inquerycontent"){
             setInqueryContent(e.target.value);
+            let temp_inquery_data = inqueryData
+            temp_inquery_data.inquery_contents = e.target.value
+            setInqueryData(temp_inquery_data)
         }else if(e.target.name === "inquerycategory"){
-            setInqueryCategory(e.target.value)
+            setInqueryCategory(e.target.value);
+            let temp_inquery_data = inqueryData
+            temp_inquery_data.inquery_category = e.target.value
+            setInqueryData(temp_inquery_data)
         }
     }
 
     const handleOnChange = () =>{
         if(check === true){
             setCheck(false)
+            let temp_inquery_data = inqueryData
+            temp_inquery_data.inquery_terms = false
+            setInqueryData(temp_inquery_data)
         }else{
             setCheck(true)
+            let temp_inquery_data = inqueryData
+            temp_inquery_data.inquery_terms = true
+            setInqueryData(temp_inquery_data)
         }
     }
 
     useEffect(() => {
-        console.log(buttonEnable)
+        let temp_inquery_data = inqueryData
+        temp_inquery_data.inquery_category = "회원가입 문의"
+        setInqueryData(temp_inquery_data)
 
-        if(inqueryCategory !== "" && title !== "" && inqueryCategory !=="" && check ===true){
+    }, []);
+
+
+    useEffect(() => {
+        console.log("buttonEnable",buttonEnable)
+        console.log("inqueryData",inqueryData)
+        
+        if(inqueryCategory !== "" && title !== "" && inqueryContent !=="" && check ===true){
             setButtonEnable(true)
 
         }else{
             setButtonEnable(false)
         }
+        
 
-    }, [inqueryCategory,title,inqueryContent,check]);
+    }, [inqueryCategory,title,inqueryContent,check,buttonEnable]);
       
 
 
@@ -398,21 +509,16 @@ const InqueryModal = ({setCloseModal}) => {
                                             />
                                     </Td>
                                 </Tr>        
-
-                                <TdBlank></TdBlank>                
                             </Tbody>
-                        </Table>
-                        <Flexdiv>
-                            <ButtonControl
-                            buttonEnable = {buttonEnable} 
-                            componentClick={componentClick}>제출하기</ButtonControl>
-                            {successModal}
-                            <Button1 style={{backgroundColor:'#E6E6FA', color:'black'}} onClick={(e) => closeClicked('close')}>취소</Button1>
-                        </Flexdiv>
-                        
-                        
+                        </Table>                
                         <AlignerCenter>
-                            
+                            <Flexdiv>
+                                <ButtonControl
+                                buttonEnable = {buttonEnable} 
+                                componentClick={componentClick}>제출하기</ButtonControl>
+                                {successModal}
+                                <Button1 style={{backgroundColor:'#E6E6FA', color:'black'}} onClick={(e) => closeClicked('close')}>취소</Button1>
+                            </Flexdiv>                            
                         </AlignerCenter>
                     </Contents>
                 </ShadowedBox>

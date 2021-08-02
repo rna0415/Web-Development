@@ -10,6 +10,8 @@ const Table = styled.table`
     border: 1px solid;
     border-collapse: collapse;
     border-color: ${oc.gray[5]};
+    table-layout: auto;
+    
 `;
 
 const Tbody = styled.tbody``;
@@ -41,149 +43,128 @@ const Image = styled.img`
     height: 100%;
 `;
 
-const Inquery_Message_Table = ({inquery_data, index, background_color}) => {
+const Inquery_Message_Table = ({inquery_data, index, background_color,loading,temp_index}) => {
+    // console.log('데이터',inquery_data)
     const history = useHistory();
-    const [ campaign_message_component, setCampaingMessageComponent ] = useState({
-        "0": "",
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
-        "6": "",
-        "7": "",
-        "8": "",
-        "9": ""
-    })
-    const [ campaign_message_component2, setCampaingMessageComponent2 ] = useState({
-        "0": "",
-        "1": "",
-        "2": "",
-        "3": "",
-        "4": "",
-        "5": "",
-        "6": "",
-        "7": "",
-        "8": "",
-        "9": ""
-    })
-
-    const [ campaign_up_down_arrow, setCampaingUpDownArrow ] = useState({
-        "0": "/images/my_campaign/down_arrow.png",
-        "1": "/images/my_campaign/down_arrow.png",
-        "2": "/images/my_campaign/down_arrow.png",
-        "3": "/images/my_campaign/down_arrow.png",
-        "4": "/images/my_campaign/down_arrow.png",
-        "5": "/images/my_campaign/down_arrow.png",
-        "6": "/images/my_campaign/down_arrow.png",
-        "7": "/images/my_campaign/down_arrow.png",
-        "8": "/images/my_campaign/down_arrow.png",
-        "9": "/images/my_campaign/down_arrow.png"
-    })
+    const [ inquery, setInquery ] = useState(inquery_data)
     const [ trigger, setTrigger ] = useState(0)
+    const [ status, setStatus] = useState('확인중')
+    const [ display, setDisplay] = useState('none')
 
 
-    const messageClicked = (id) => {
+    const messageClicked = (index) => {
         setTrigger(trigger+1)
-        let temp_campaign_message_component = campaign_message_component
-        let temp_campaign_message_component2 = campaign_message_component2
+        let temp_inquery_data = inquery_data
+        // let temp_campaign_message_component = inquery_data['inquery_component']
+        // let temp_campaign_message_component2 = inquery_data['inquery_component2']
 
-        let temp_campaign_up_down_arrow = campaign_up_down_arrow
+        // let temp_campaign_up_down_arrow = inquery_data['up_down_arrow']
 
-        if (temp_campaign_message_component[id] === ""){
-            temp_campaign_message_component[id] = 
-                
+        if (temp_inquery_data['inquery_component'] === ""){
+            temp_inquery_data['inquery_component'] = 
                     <Tr>
-                        <Td style={{paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}}>
-                            <pre style={{color: "black", float: "left", marginLeft: "80px"}}>
-                                {inquery_data.messagetype}
+                        <Td style={{paddingLeft: "35px", paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}}>
+                            <pre style={{color: "black", float: "left"}}>
+                                {inquery_data.inquery_category}
                             </pre>
                         </Td>
-                        <Td style={{paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} colSpan="4">
-                            <pre style={{color: "black", float: "left", marginLeft: "40px"}}>
-                                {inquery_data.message}
+                        <Td style={{paddingLeft: "45px", paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} colSpan="4">
+                            <pre style={{color: "black", float: "left"}}>
+                                {inquery_data.inquery_contents}
                             </pre>
                         </Td>
                     </Tr>               
             
-            temp_campaign_up_down_arrow[id] = "/images/my_campaign/up_arrow.png"
+            temp_inquery_data['up_down_arrow'] = "/images/my_campaign/up_arrow.png"
         } else {
-            temp_campaign_message_component[id] = ""
-            temp_campaign_up_down_arrow[id] = "/images/my_campaign/down_arrow.png"
+            temp_inquery_data['inquery_component'] = ""
+            temp_inquery_data['up_down_arrow'] = "/images/my_campaign/down_arrow.png"
         }
 
-
-        if(temp_campaign_message_component2[id]===""){
-            temp_campaign_message_component2[id]=
-            <Tr>
-                <Td style={{paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}}>
-                    <pre style={{color: "black", float: "left", marginLeft: "80px"}}>
+        
+        if(temp_inquery_data['inquery_component2'] ===""){
+            temp_inquery_data['inquery_component2']=
+            <Tr style={{display:display}}>
+                <Td style={{paddingLeft: "35px", paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}}>
+                    <pre style={{color: "black", float: "left"}}>
                         {inquery_data.answertype}
                     </pre>
                 </Td>
-                <Td style={{paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} >
-                    <pre style={{color: "black", float: "left", marginLeft: "40px"}}>
-                        {inquery_data.answer}
+                <Td style={{paddingLeft: "45px", paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} >
+                    <pre style={{color: "black", float: "left"}}>
+                        {/* {inquery_data.answer} */}기타문의는 답변완료로 해놓았음
                     </pre>
                 </Td>
-                <Td style={{paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} >
-                    <pre style={{color: "black", float: "left", marginLeft: "40px"}}>
+                <Td style={{paddingLeft: "45px", paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} >
+                    <pre style={{color: "black", float: "left"}}>
                         {inquery_data.date}
                     </pre>
                 </Td>
-                <Td style={{paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} >
-                    <pre style={{color: "black", float: "left", marginLeft: "40px"}}>
+                <Td style={{paddingLeft: "45px", paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} >
+                    <pre style={{color: "black", float: "left"}}>
                         {inquery_data.answerwriter}
                     </pre>
                 </Td>
-                <Td style={{paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} >
-                    <pre style={{color: "black", float: "left", marginLeft: "40px"}}>
+                <Td style={{paddingLeft: "45px", paddingTop: "20px", paddingBottom: "20px", borderTop: "1px solid black", borderBottom: "1px solid black", background: "white"}} >
+                    <pre style={{color: "black", float: "left"}}>
                         {inquery_data.status}
                     </pre>
                 </Td>
             </Tr>
-            temp_campaign_up_down_arrow[id] = "/images/my_campaign/up_arrow.png"
         }else{
-            temp_campaign_message_component2[id] = ""
-            temp_campaign_up_down_arrow[id] = "/images/my_campaign/down_arrow.png"
+            temp_inquery_data['inquery_component2'] = ""
         }
+       
 
-        setCampaingMessageComponent(temp_campaign_message_component)
-        setCampaingMessageComponent2(temp_campaign_message_component2)
-        setCampaingUpDownArrow(temp_campaign_up_down_arrow)
+        setInquery(temp_inquery_data)
+        // setInqueryComponent(temp_campaign_message_component)
+        // setInqueryComponent2(temp_campaign_message_component2)
+        // setUpDownArrow(temp_campaign_up_down_arrow)
     }
 
 
+    //# 상담현황 컨트롤
+    // useEffect(() => {
+    //     if(inquery_data.inquery_category !== '기타 문의'){
+    //         setDisplay('none')
+    //         setStatus('확인중')
+    //     }else{
+    //         setDisplay('')
+    //         setStatus('답변완료')
+    //     }
 
-    useEffect(() => {
-        return () => {
-          console.log('컴포넌트가 화면에서 사라짐');
-        };
-    }, [trigger]);
+    // }, []);
+
 
     return (
+        <>
+        { loading &&
+            <div> loading... </div>
+          }
         <Tr className="tabs">
             <Td  style={{padding: "0px"}} colSpan="5">
                 <Table style={{border: "none"}}>
                     <Tbody >
                         <Tr id={index}>
-                            <Td style={{borderRight: "1px solid white",  width: "210px", background: background_color, color: "black"}}>{inquery_data.message_no}</Td>
-                            <Td style={{display: "flex", borderRight: "1px solid white", width: "790px", background: background_color, color: "black",cursor: 'pointer'}} onClick={() => messageClicked(index)} >
-                                <div style= {{marginTop: "16px", marginLeft: "45px"}}>{inquery_data.title}</div>
+                            <Td style={{borderRight: "1px solid white",  width: "140px", background: background_color, color: "black"}}>{temp_index[index]}</Td>
+                            <Td style={{display: "flex", borderRight: "1px solid white", width: "780px", background: background_color, color: "black",cursor: 'pointer'}} onClick={() => messageClicked(index)} >
+                                <div style= {{marginTop: "16px", marginLeft: "45px"}}>{inquery_data.inquery_title}</div>
                                 <ArrowDiv style= {{marginTop: "16px", marginLeft: "10px", width: "15px", height: "15px"}}>
-                                    <Image src= {campaign_up_down_arrow[index]} />
+                                    <Image src= {inquery['up_down_arrow']} />
                                 </ArrowDiv>
                             </Td>
-                            <Td style={{borderRight: "1px solid white", width: "140px", background: background_color, color: "black"}}>{inquery_data.date}</Td>
-                            <Td style={{borderRight: "1px solid white", width: "140px", background: background_color, color: "black"}}>{inquery_data.writer}</Td>
-                            <Td style={{width: "140px", background: background_color, color: "black"}}>{inquery_data.status}</Td>
+                            <Td style={{borderRight: "1px solid white", width: "140px", background: background_color, color: "black"}}>{inquery_data.create_at}</Td>
+                            <Td style={{borderRight: "1px solid white", width: "140px", background: background_color, color: "black"}}>{inquery_data.influencer_id}</Td>
+                            <Td style={{width: "140px", background: background_color, color: "black"}}>{status}</Td>
                         </Tr>
-                            {campaign_message_component[index]}
-                            {campaign_message_component2[index]}
+                            {inquery['inquery_component']}
+                            
+                            {inquery['inquery_component2']}
                     </Tbody>
                 </Table>
             </Td>
         </Tr>
+        </>
     )
 };
 export default Inquery_Message_Table;

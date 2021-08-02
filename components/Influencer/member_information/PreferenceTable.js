@@ -28,8 +28,8 @@ const PreferenceTable = ({preference,index}) => {
 
     useEffect(() => {
 
-        console.log('123123' ,preference)
-        console.log('123123' ,index)
+        // console.log('123123' ,preference)
+        // console.log('123123' ,index)
 
     }, []);
     

@@ -86,6 +86,7 @@ const MemberInfoTab = ({facebook_info}) =>{
 
     const [fixModal, setFixModal] = useState([])
     const [account_info_from_db, setAccountInfoFromDB ] = useState([]);
+    const [hidden_password, setHiddenPassword] = useState('');
     const [marriage, setMarriage ] = useState('');
     const [children, setChildren] = useState('');
     const [region, setRegion] = useState('');
@@ -115,12 +116,12 @@ const MemberInfoTab = ({facebook_info}) =>{
         volunteer: ""
     });
 
-    const [instagram_info, setInstagramInfo] = useState({
+    const [instagram_user, setInstagramUser] = useState({
         instagram_id: "",
-        instagram_user_id: "",
+        instagram_username: "",
         profile_picture_url: "",
-        follower_count: "",
-        follow_count: "",
+        followers_count: "",
+        follows_count: "",
     });
 
     const [display_preference, setDisplay_preference]= useState([]);
@@ -139,28 +140,32 @@ const MemberInfoTab = ({facebook_info}) =>{
     const getAccountInfoFromDB = async () => {
         console.log(facebook_info)
         // 백엔드 서버 API 통신
-        let data = {
-            "influencer_email": facebook_info.email
-        }
-
         // console.log(email)
+
+        //로컬용
+        let data
         let request = 'GET'
         let backend_ip_address = GetBackendIP()
-        let backend_api_url = "https://" + backend_ip_address + "/api/influencer/get_user_info/"
+        let backend_api_url = "http://" + backend_ip_address + "/api/influencer/1/" // https /get_user_info
         let backend_api_response = await ExecuteBackendAPI(backend_api_url, data, request);
-        console.log(facebook_info.email)
-        console.log(backend_api_response)
-        // // 백엔드 서버 API 통신
-        // let influencer_id = 1
-        // let params = {}
+        let temp_account_info_from_db = backend_api_response.data
+       
+        //aws용
+        // let data = {
+        //     "influencer_email": facebook_info.email
+        // }
         // let request = 'GET'
+
         // let backend_ip_address = GetBackendIP()
-        // let backend_api_url = "https://" + backend_ip_address + "/api/influencer/" + influencer_id + "/"
-        // let backend_api_response = await ExecuteBackendAPI(backend_api_url, params, request);
+        // let backend_api_url = "https://" + backend_ip_address + "/api/influencer/get_user_info/"
+        // let backend_api_response = await ExecuteBackendAPI(backend_api_url, data, request)
         // console.log(backend_api_response)
-        let temp_account_info_from_db = backend_api_response.data[0]
+        // let temp_account_info_from_db = backend_api_response.data[0]
+
         console.log(temp_account_info_from_db)
         setAccountInfoFromDB(temp_account_info_from_db)
+
+
         return temp_account_info_from_db
     }
 
@@ -174,7 +179,7 @@ const MemberInfoTab = ({facebook_info}) =>{
    
     const ModalClicked = (e) => {
         console.log("modal clicked")
-
+        console.log(account_info_from_db)
         console.log(account_info_from_db.region.length)
 
         if(e === "password"){
@@ -207,6 +212,12 @@ const MemberInfoTab = ({facebook_info}) =>{
         console.log('account_info_from_db:',account_info_from_db)
         if(account_info_from_db.length !== 0){
             console.log(account_info_from_db)
+
+            if (account_info_from_db.password !== null) {
+                let temp_password = "*".repeat(account_info_from_db.password.length)
+                setHiddenPassword(temp_password)
+            }
+
             if(account_info_from_db.marriage === true){
                 setMarriage('기혼')
                 
@@ -325,14 +336,14 @@ const MemberInfoTab = ({facebook_info}) =>{
                 setDisplay_preference(preference_list)
             }
 
-            if (account_info_from_db.instagram_info !== null) {
-                let temp_instagram_info = instagram_info
-                temp_instagram_info.instagram_id = account_info_from_db.instagram_info.instagram_id
-                temp_instagram_info.instagram_user_id = account_info_from_db.instagram_info.instagram_user_id
-                temp_instagram_info.profile_picture_url = account_info_from_db.instagram_info.profile_picture_url
-                temp_instagram_info.follower_count = account_info_from_db.instagram_info.follower_count
-                temp_instagram_info.follow_count = account_info_from_db.instagram_info.follow_count
-                setInstagramInfo(temp_instagram_info)
+            if (account_info_from_db.instagram_user !== null) {
+                let temp_instagram_user = instagram_user
+                temp_instagram_user.instagram_id = account_info_from_db.instagram_user.instagram_id
+                temp_instagram_user.instagram_username = account_info_from_db.instagram_user.instagram_username
+                temp_instagram_user.profile_picture_url = account_info_from_db.instagram_user.profile_picture_url
+                temp_instagram_user.followers_count = account_info_from_db.instagram_user.followers_count
+                temp_instagram_user.follows_count = account_info_from_db.instagram_user.follows_count
+                setInstagramUser(temp_instagram_user)
             }
         }
         
@@ -427,7 +438,7 @@ const MemberInfoTab = ({facebook_info}) =>{
                             비밀번호    
                         </TdLable>
                         <Td colSpan ="4">
-                            {account_info_from_db.password}  
+                            {hidden_password}  
                         </Td>
                         <Td>
                             <FixButton onClick={(e) =>ModalClicked('password')}>수정하기</FixButton> 
@@ -513,7 +524,7 @@ const MemberInfoTab = ({facebook_info}) =>{
                             미디어정보  
                         </TdLable>
                         <Td colSpan ="5">
-                            {instagram_info.instagram_user_id}  
+                            {instagram_user.instagram_username}  
                         </Td>
                     </Tr>
 

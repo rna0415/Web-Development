@@ -16,19 +16,12 @@ const Image = styled.img`
 
 // rest 쪽에는 onChange, type, name, value, placeholder 등의 input 에서 사용 하는 값들을 넣어줄수 있다.
 const ProfilePicture = ({profilepic}) => {
-
-
-    useEffect(() => {
-
-        // console.log('profilepic' ,profilepic)
-
-    }, []);
     
     return(
         
         
         <div>
-            <Image src={profilepic.src} />
+            <Image src={profilepic} />
             {/* <Image src='/images/influencer_info/lilka.png'></Image> */}
         </div>
     )
