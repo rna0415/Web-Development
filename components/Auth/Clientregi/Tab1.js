@@ -66,9 +66,14 @@ const InactiveTd = styled.td`
 `;
 
 
-const Tab1 = ({active_tab, setActiveTab}) => {
+const Tab1 = ({active_tab, setActiveTab, setTab1Information, tab1_info}) => {
     const componentClicked = (event_id) => {
         setActiveTab(event_id)
+    }
+
+    const saveinfo2 = (e) =>{
+        console.log(tab1_info)
+        setTab1Information(tab1_info)
     }
 
     if (active_tab === "info1") {

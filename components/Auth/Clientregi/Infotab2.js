@@ -11,22 +11,20 @@ import { useHistory } from "react-router-dom";
 // import { InputWithLabel } from '../../components/Auth';
 // import { AuthWrapper3 } from '../../components/Auth';
 
-const submitStyle = {
-    margin: '10px 0 0 0',
-    padding: '7px 10px',
-    border: '1px solid #efffff',
-    borderRadius: '3px',
-    background: '#7f05e6',
-    width: '100%', 
-    fontSize: '15px',
-    color: 'white',
-    display: 'block'
-};
+const App = styled.div`
+    height:250px;
+    display:flex;    
+`;
 
-const appStyle = {
-    height: '250px',
-    display: 'flex'
-};
+const Form = styled.div`
+    margin: auto;
+    padding:10px;
+    border: 1px solid #ffffff;
+    border-radius:5px;
+    width:660px;
+    display:block;
+
+`;
 
 const Button = styled.button`
     width: 77px;
@@ -59,14 +57,6 @@ const Button = styled.button`
 `;
 
 
-const formStyle = {
-    margin: 'auto',
-    padding: '10px',
-    border: '1px solid #ffffff',
-    borderRadius: '5px',
-    width: '660px',
-    display: 'block'
-};
 
 const Positioner = styled.div`
 `;
@@ -100,7 +90,8 @@ const TdLable = styled.td`
 
 
 
-const Infotab2 = ({tab1_info}) => {
+const Infotab2 = ({tab1_info,setTab1Information}) => {
+    const [tab2info,setTab2info] =useState(tab1_info)
     const [url, setUrl] = useState("");
     const [category1, setCategory1] = useState("선택안함");
     const [category2, setCategory2] = useState("선택안함");
@@ -114,6 +105,8 @@ const Infotab2 = ({tab1_info}) => {
     // const [components1, setComponents1] = useState("");
     // const [components2, setComponents2] = useState("");
     const [theComponent2, setTheComponent2] = useState(false);
+
+
     const history = useHistory();
 
 
@@ -127,8 +120,15 @@ const Infotab2 = ({tab1_info}) => {
     //     "managerContact": <Infotab1 managerContact ={managerContact}/>
 
     // }
+
     useEffect(() => {
-        console.log("tab2페이지에서 tab1: ", tab1_info);
+        if(tab1_info !== null){
+            setTab2info(tab2info)
+        }
+    }, [tab2info]);
+
+    useEffect(() => {
+        console.log("tab2페이지에서 tab1: ", tab2info);
         console.log("category1:",category1)
     }, [category1]);
     useEffect(() => {
@@ -138,7 +138,7 @@ const Infotab2 = ({tab1_info}) => {
     useEffect(() => {
         console.log("tab2페이지에서 tab1: ", tab1_info);
         console.log('selected_button:',selected_button)
-    }, [selected_button]);
+    }, [selected_button,tab2info]);
 
 
 
@@ -146,13 +146,22 @@ const Infotab2 = ({tab1_info}) => {
         if(e.target.name === "url"){
             if (e.target.value === "") {
                 setUrl(e.target.value)
+                let temp_tab2Info = tab2info
+                temp_tab2Info.company_url = e.target.value
+                setTab2info(temp_tab2Info);
                 setSuccess1(false)          
             } else {
                 setUrl(e.target.value)
+                let temp_tab2Info = tab2info
+                temp_tab2Info.company_url = e.target.value
+                setTab2info(temp_tab2Info);
                 setSuccess1(true)             
             }
         } else if (e.target.name === "category1"){
             setCategory1(e.target.value);
+            let temp_tab2Info = tab2info
+            temp_tab2Info.company_category = e.target.value
+            setTab2info(temp_tab2Info);
             
             if (e.target.value === ""){
                 setTheComponent1(true)    
@@ -181,14 +190,25 @@ const Infotab2 = ({tab1_info}) => {
         }else if(e.target.name === "components1"){
             if(e.target.value === ""){
                 setCategory1(e.target.value)
+                let temp_tab2Info = tab2info
+                temp_tab2Info.company_category = e.target.value
+                setTab2info(temp_tab2Info);
                 setSuccess2(false)  
             }else{
                 setCategory1(e.target.value)
+                let temp_tab2Info = tab2info
+                temp_tab2Info.company_category = e.target.value
+                setTab2info(temp_tab2Info);
                 setSuccess2(true)  
             }
         
         } else if (e.target.name === "category2"){
             setCategory2(e.target.value);
+
+            let temp_tab2Info = tab2info
+            temp_tab2Info.subscription_path = e.target.value
+            setTab2info(temp_tab2Info);
+
             if (e.target.value === ""){
                 setTheComponent2(true)  
                 setSuccess3(false)              
@@ -221,9 +241,15 @@ const Infotab2 = ({tab1_info}) => {
         }else if(e.target.name === "components2"){
             if(e.target.value === ""){
                 setCategory2(e.target.value)
+                let temp_tab2Info = tab2info
+                temp_tab2Info.subscription_path = e.target.value
+                setTab2info(temp_tab2Info);
                 setSuccess3(false)  
             }else{
                 setCategory2(e.target.value)
+                let temp_tab2Info = tab2info
+                temp_tab2Info.subscription_path = e.target.value
+                setTab2info(temp_tab2Info);
                 setSuccess3(true)  
             }
         }
@@ -252,8 +278,11 @@ const Infotab2 = ({tab1_info}) => {
                 setButtonClickNum(button_click_num+1)
                 //setButtonColor1("")
                 //temp_selected_button.push(e.target.value)
-                temp_list.push(e.target.value) //당장 클릭한거 append함
-                setSelectedButton(temp_list) //선택한 리스트내에서 2개 + 당장선택한거 1개 append함 
+                let temp_tab2Info = tab2info
+                temp_tab2Info.criteria_info = temp_list
+                temp_list.push({"criteria":e.target.value}) //당장 클릭한거 append함
+                setTab2info(temp_tab2Info); //선택한 리스트내에서 2개 + 당장선택한거 1개 append함 
+                setSelectedButton(temp_list) 
                 console.log('selected_button:',selected_button)
             }
         }
@@ -262,21 +291,29 @@ const Infotab2 = ({tab1_info}) => {
             e.target.style.color = "black"
             e.target.id = ""
             if (button_click_num != 0) { 
-                setButtonClickNum(button_click_num-1)
             //setButtonColor1("clicked")
-                temp_list.pop(e.target.value)
-                setSelectedButton(temp_list)
+                let temp_tab2Info = tab2info
+                temp_tab2Info.criteria_info = temp_list
+                let targetindex;
+
+                for(let i =0; i<temp_list.length;i++){
+                    if(e.target.value===temp_list[i]["criteria"]){targetindex=i} 
+                }
+            
+                console.log('targetindex',targetindex)
+                temp_list.splice(targetindex, 1)
+                setTab2info(temp_tab2Info);
+                setSelectedButton(temp_list);
+                setButtonClickNum(button_click_num-1);
                 // console.log('selected_button:',selected_button)
             }
-        }
-        
-        
+        }                
     }
 
 
     return (                
-        <div style = {appStyle}>           
-            <div style = {formStyle}>
+        <App>           
+            <Form>
         
                 <Positioner>
                     <Table className="table">
@@ -326,6 +363,7 @@ const Infotab2 = ({tab1_info}) => {
                                     type='text' 
                                     placeholder="기타업종 직접 입력" 
                                     name = "components1"
+                                    // value={tab2info.company_category}
                                     onChange={handleChange} 
                                     component={theComponent1}></Input2>
                                 </TD>                               
@@ -438,6 +476,7 @@ const Infotab2 = ({tab1_info}) => {
                                     name="components2"                                    
                                     type='text' 
                                     placeholder="기타 경로 직접 입력"
+                                    // value={tab2info.subscription_path}
                                     onChange={handleChange}  
                                     component={theComponent2}></Input2>
                                 </TD>
@@ -456,10 +495,12 @@ const Infotab2 = ({tab1_info}) => {
                 url = {url}
                 category1= {category1}
                 selected_button={selected_button}
-                category2={category2}>
+                category2={category2}
+                setTab1Information={setTab1Information}
+                tab2info={tab2info}>
                 </SubmitButton2>
-             </div>
-         </div>
+             </Form>
+         </App>
                         
          
     ); 
